@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        /* Your existing CSS styles remain the same */
         :root {
             --primary: #4CAF50;
             --primary-dark: #388E3C;
@@ -432,6 +433,157 @@
             color: white;
         }
         
+        /* Payment Modal Styles */
+        .payment-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 9999;
+            overflow-y: auto;
+        }
+        
+        .payment-content {
+            background: var(--dark);
+            margin: 5% auto;
+            width: 90%;
+            max-width: 600px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
+            border: 2px solid var(--primary);
+        }
+        
+        .payment-header {
+            background: linear-gradient(45deg, var(--primary), var(--primary-dark));
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .payment-body {
+            padding: 30px;
+        }
+        
+        .payment-method {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .payment-method:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .payment-method.selected {
+            border-color: var(--primary);
+            background: rgba(76, 175, 80, 0.1);
+        }
+        
+        .payment-form input, .payment-form select {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+        
+        .payment-form input:focus, .payment-form select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        
+        .payment-summary {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .payment-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        
+        .payment-step {
+            text-align: center;
+            flex: 1;
+            position: relative;
+        }
+        
+        .payment-step:not(:last-child):after {
+            content: '';
+            position: absolute;
+            top: 15px;
+            right: -50%;
+            width: 100%;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.2);
+            z-index: 1;
+        }
+        
+        .step-number {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .step-number.active {
+            background: var(--primary);
+        }
+        
+        .step-name {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+        
+        .step-name.active {
+            color: var(--primary);
+            font-weight: bold;
+        }
+        
+        .payment-instruction {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .bkash-color {
+            background: linear-gradient(45deg, #E2136E, #D10A5A);
+        }
+        
+        .nagad-color {
+            background: linear-gradient(45deg, #F12C14, #D9230D);
+        }
+        
         /* Responsive adjustments */
         @media (max-width: 768px) {
             .hero-title {
@@ -455,6 +607,20 @@
                 margin-bottom: 10px;
                 width: 100%;
                 max-width: 250px;
+            }
+            
+            .payment-content {
+                width: 95%;
+                margin: 10% auto;
+            }
+            
+            .payment-steps {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .payment-step:not(:last-child):after {
+                display: none;
             }
         }
     </style>
@@ -562,9 +728,9 @@
                             <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Special Particle Effects</li>
                             <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Colorful Nickname</li>
                         </ul>
-                        <a href="#" class="btn btn-primary-custom w-100">
+                        <button class="btn btn-primary-custom w-100" onclick="openPaymentModal('VIP Rank', 1.23, 'VIP')">
                             <i class="fas fa-shopping-cart me-2"></i>Purchase Now
-                        </a>
+                        </button>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -579,9 +745,9 @@
                             <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Exclusive Particle Effects</li>
                             <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Fly Command</li>
                         </ul>
-                        <a href="#" class="btn btn-primary-custom w-100">
+                        <button class="btn btn-primary-custom w-100" onclick="openPaymentModal('MVP Rank', 2.43, 'MVP')">
                             <i class="fas fa-shopping-cart me-2"></i>Purchase Now
-                        </a>
+                        </button>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -597,9 +763,9 @@
                             <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Custom Join Message</li>
                             <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Priority Support</li>
                         </ul>
-                        <a href="#" class="btn btn-primary-custom w-100">
+                        <button class="btn btn-primary-custom w-100" onclick="openPaymentModal('Legend Rank', 5.01, 'LEGEND')">
                             <i class="fas fa-shopping-cart me-2"></i>Purchase Now
-                        </a>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -799,25 +965,214 @@
         </div>
     </footer>
 
+    <!-- Payment Modal -->
+    <div id="paymentModal" class="payment-modal">
+        <div class="payment-content">
+            <button class="close-modal" onclick="closePaymentModal()">&times;</button>
+            <div class="payment-header">
+                <h3 class="minecraft-font mb-0">Complete Your Purchase</h3>
+            </div>
+            <div class="payment-body">
+                <div class="payment-steps">
+                    <div class="payment-step">
+                        <div class="step-number active">1</div>
+                        <div class="step-name active">Payment Method</div>
+                    </div>
+                    <div class="payment-step">
+                        <div class="step-number" id="step2">2</div>
+                        <div class="step-name" id="step2Name">Payment Details</div>
+                    </div>
+                    <div class="payment-step">
+                        <div class="step-number" id="step3">3</div>
+                        <div class="step-name" id="step3Name">Complete</div>
+                    </div>
+                </div>
+                
+                <div class="payment-summary">
+                    <h4 id="selectedRank" class="minecraft-font">VIP Rank</h4>
+                    <p class="mb-2">Price: <span id="selectedPrice" class="price-tag">$1.23</span></p>
+                    <p class="text-muted">Please complete the payment to receive your rank</p>
+                </div>
+                
+                <!-- Step 1: Payment Method Selection -->
+                <div id="paymentMethodStep">
+                    <h5 class="mb-3">Select Payment Method</h5>
+                    <div class="payment-methods mb-4">
+                        <div class="payment-method" onclick="selectPaymentMethod('bkash')">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-mobile-alt fa-2x me-3" style="color: #E2136E;"></i>
+                                <div>
+                                    <h6 class="mb-1">bKash</h6>
+                                    <p class="text-muted mb-0">Pay with bKash Mobile Banking</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="payment-method" onclick="selectPaymentMethod('nagad')">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-wallet fa-2x me-3" style="color: #F12C14;"></i>
+                                <div>
+                                    <h6 class="mb-1">Nagad</h6>
+                                    <p class="text-muted mb-0">Pay with Nagad Mobile Banking</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="payment-method" onclick="selectPaymentMethod('discord')">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-flag fa-2x me-3" style="color: gray;" title="Other"></i>
+                                <div>
+                                    <h6 class="mb-1">Other's country</h6>
+                                    <p class="text-muted mb-0">Create a ticket in our Discord</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-primary-custom w-100" id="nextStepBtn" onclick="goToStep2()" disabled>
+                        Next Step <i class="fas fa-arrow-right ms-2"></i>
+                    </button>
+                </div>
+                
+                <!-- Step 2: Payment Details -->
+                <div id="paymentDetailsStep" style="display: none;">
+                    <!-- bKash Payment Form -->
+                    <div id="bkashForm" class="payment-form" style="display: none;">
+                        <div class="payment-instruction">
+                            <h5><i class="fas fa-info-circle me-2"></i>Payment Instructions</h5>
+                            <p class="mb-2">1. Send <span id="bkashAmount" class="fw-bold">৳135</span> to our bKash number:</p>
+                            <div class="ip-box mb-3">
+                                <code id="bkashNumber">01942811884</code>
+                                <button class="copy-btn ms-2" onclick="copyText('bkashNumber')">
+                                    <i class="fas fa-copy me-1"></i>Copy
+                                </button>
+                            </div>
+                            <p class="mb-2">2. Fill out the form below with your payment details</p>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Your bKash Number *</label>
+                            <input type="text" id="userBkashNumber" placeholder="01XXXXXXXXX" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Transaction ID (TrxID) *</label>
+                            <input type="text" id="bkashTrxId" placeholder="Enter your bKash TrxID" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Your In-Game Name *</label>
+                            <input type="text" id="bkashIngameName" placeholder="Enter your Minecraft username" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Your Full Name</label>
+                            <input type="text" id="bkashFullName" placeholder="Enter your full name">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Your Email</label>
+                            <input type="email" id="bkashEmail" placeholder="Enter your email address">
+                        </div>
+                        
+                        <button class="btn btn-primary-custom w-100" onclick="submitBkashPayment()">
+                            <i class="fas fa-paper-plane me-2"></i>Submit Order
+                        </button>
+                    </div>
+                    
+                    <!-- Nagad Payment Form -->
+                    <div id="nagadForm" class="payment-form" style="display: none;">
+                        <div class="payment-instruction">
+                            <h5><i class="fas fa-info-circle me-2"></i>Payment Instructions</h5>
+                            <p class="mb-2">1. Send <span id="nagadAmount" class="fw-bold">৳135</span> to our Nagad number:</p>
+                            <div class="ip-box mb-3">
+                                <code id="nagadNumber">01827656503</code>
+                                <button class="copy-btn ms-2" onclick="copyText('nagadNumber')">
+                                    <i class="fas fa-copy me-1"></i>Copy
+                                </button>
+                            </div>
+                            <p class="mb-2">2. Fill out the form below with your payment details</p>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Your Nagad Number *</label>
+                            <input type="text" id="userNagadNumber" placeholder="01XXXXXXXXX" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Transaction ID (TrxID) *</label>
+                            <input type="text" id="nagadTrxId" placeholder="Enter your Nagad TrxID" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Your In-Game Name *</label>
+                            <input type="text" id="nagadIngameName" placeholder="Enter your Minecraft username" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Your Full Name</label>
+                            <input type="text" id="nagadFullName" placeholder="Enter your full name">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Your Email</label>
+                            <input type="email" id="nagadEmail" placeholder="Enter your email address">
+                        </div>
+                        
+                        <button class="btn btn-primary-custom w-100" onclick="submitNagadPayment()">
+                            <i class="fas fa-paper-plane me-2"></i>Submit Order
+                        </button>
+                    </div>
+                    
+                    <!-- Discord Ticket Option -->
+                    <div id="discordForm" class="payment-form" style="display: none;">
+                        <div class="payment-instruction">
+                            <h5><i class="fab fa-discord me-2"></i>Create Discord Ticket</h5>
+                            <p class="mb-3">Click the button below to join our Discord server and create a ticket for manual payment processing.</p>
+                            <p class="text-muted">Our staff will assist you with the payment process in Discord.</p>
+                        </div>
+                        
+                        <a href="https://discord.gg/ewhzuszuu" target="_blank">
+                            <button class="btn discord-widget w-100">
+                                <i class="fab fa-discord me-2"></i>Join Discord & Create Ticket
+                            </button>
+                        </a>
+                    </div>
+                    
+                    <button class="btn btn-secondary-custom w-100 mt-3" onclick="goToStep1()">
+                        <i class="fas fa-arrow-left me-2"></i>Back
+                    </button>
+                </div>
+                
+                <!-- Step 3: Completion -->
+                <div id="completionStep" style="display: none;">
+                    <div class="text-center py-4">
+                        <i class="fas fa-check-circle fa-5x text-success mb-3"></i>
+                        <h4 class="minecraft-font">Order Submitted Successfully!</h4>
+                        <p class="mb-4">Your order has been received and will be processed shortly.</p>
+                        <p class="text-muted">You will receive your rank within 1-2 hours after payment verification.</p>
+                        
+                        <button class="btn btn-primary-custom mt-3" onclick="closePaymentModal()">
+                            <i class="fas fa-check me-2"></i>Done
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="mt-4 text-center">
+                    <p class="text-muted small">By completing this purchase, you agree to our <a href="#" class="text-primary">Terms of Service</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        // Google Apps Script URL - Apnar actual URL
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwDaeiasfDCV4YDYW50UQgslAciAiHNAeiiOQMTY17ahmiyYByaGKaaWBENFmkwI91yyA/exec';
+
         // Website Functions
         function copyIP() {
             const ip = 'play.drksurvraze.top';
             navigator.clipboard.writeText(ip).then(() => {
-                const alert = document.createElement('div');
-                alert.className = 'alert alert-success position-fixed top-0 start-50 translate-middle-x mt-5';
-                alert.style.zIndex = '9999';
-                alert.innerHTML = `
-                    <i class="fas fa-check-circle me-2"></i>
-                    Server IP copied: <strong>${ip}</strong>
-                `;
-                document.body.appendChild(alert);
-                
-                setTimeout(() => {
-                    alert.remove();
-                }, 3000);
+                showAlert('Server IP copied: ' + ip, 'success');
+            });
+        }
+        
+        function copyText(elementId) {
+            const text = document.getElementById(elementId).textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                showAlert('Copied: ' + text, 'success');
             });
         }
         
@@ -835,6 +1190,253 @@
         
         function joinDiscord() {
             window.open('https://discord.gg/SjefnHedt', '_blank');
+        }
+        
+        function showAlert(message, type) {
+            const alert = document.createElement('div');
+            alert.className = `alert alert-${type} position-fixed top-0 start-50 translate-middle-x mt-5`;
+            alert.style.zIndex = '9999';
+            alert.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'} me-2"></i>
+                ${message}
+            `;
+            document.body.appendChild(alert);
+            
+            setTimeout(() => {
+                alert.remove();
+            }, 5000);
+        }
+
+        // Payment Functions
+        let selectedRank = '';
+        let selectedPrice = 0;
+        let selectedRankType = '';
+        let selectedPaymentMethod = '';
+        
+        function openPaymentModal(rank, price, rankType) {
+            selectedRank = rank;
+            selectedPrice = price;
+            selectedRankType = rankType;
+            
+            document.getElementById('selectedRank').textContent = rank;
+            document.getElementById('selectedPrice').textContent = `$${price}`;
+            
+            // Convert to BDT (approximate conversion)
+            const bdtPrice = (price * 110).toFixed(0);
+            document.getElementById('bkashAmount').textContent = `৳${bdtPrice}`;
+            document.getElementById('nagadAmount').textContent = `৳${bdtPrice}`;
+            
+            document.getElementById('paymentModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+            
+            // Reset to step 1
+            goToStep1();
+        }
+        
+        function closePaymentModal() {
+            document.getElementById('paymentModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+            resetPaymentForms();
+        }
+        
+        function selectPaymentMethod(method) {
+            selectedPaymentMethod = method;
+            
+            // Reset all payment methods
+            document.querySelectorAll('.payment-method').forEach(el => {
+                el.classList.remove('selected');
+            });
+            
+            // Select the clicked method
+            event.currentTarget.classList.add('selected');
+            
+            // Enable next button
+            document.getElementById('nextStepBtn').disabled = false;
+        }
+        
+        function goToStep1() {
+            document.getElementById('paymentMethodStep').style.display = 'block';
+            document.getElementById('paymentDetailsStep').style.display = 'none';
+            document.getElementById('completionStep').style.display = 'none';
+            
+            // Update step indicators
+            document.getElementById('step2').classList.remove('active');
+            document.getElementById('step2Name').classList.remove('active');
+            document.getElementById('step3').classList.remove('active');
+            document.getElementById('step3Name').classList.remove('active');
+        }
+        
+        function goToStep2() {
+            if (!selectedPaymentMethod) {
+                showAlert('Please select a payment method', 'warning');
+                return;
+            }
+            
+            document.getElementById('paymentMethodStep').style.display = 'none';
+            document.getElementById('paymentDetailsStep').style.display = 'block';
+            document.getElementById('completionStep').style.display = 'none';
+            
+            // Hide all payment forms
+            document.getElementById('bkashForm').style.display = 'none';
+            document.getElementById('nagadForm').style.display = 'none';
+            document.getElementById('discordForm').style.display = 'none';
+            
+            // Show selected payment form
+            if (selectedPaymentMethod === 'bkash') {
+                document.getElementById('bkashForm').style.display = 'block';
+            } else if (selectedPaymentMethod === 'nagad') {
+                document.getElementById('nagadForm').style.display = 'block';
+            } else if (selectedPaymentMethod === 'discord') {
+                document.getElementById('discordForm').style.display = 'block';
+            }
+            
+            // Update step indicators
+            document.getElementById('step2').classList.add('active');
+            document.getElementById('step2Name').classList.add('active');
+        }
+        
+        function submitBkashPayment() {
+            // Get form values
+            const userNumber = document.getElementById('userBkashNumber').value;
+            const trxId = document.getElementById('bkashTrxId').value;
+            const ingameName = document.getElementById('bkashIngameName').value;
+            const fullName = document.getElementById('bkashFullName').value;
+            const email = document.getElementById('bkashEmail').value;
+            
+            // Validate required fields
+            if (!userNumber || !trxId || !ingameName) {
+                showAlert('Please fill in all required fields', 'warning');
+                return;
+            }
+            
+            // Prepare data for Google Sheets
+            const formData = {
+                timestamp: new Date().toISOString(),
+                rank: selectedRank,
+                price: selectedPrice,
+                paymentMethod: 'bKash',
+                userNumber: userNumber,
+                trxId: trxId,
+                ingameName: ingameName,
+                fullName: fullName || 'Not provided',
+                email: email || 'Not provided'
+            };
+            
+            // Submit to Google Sheets
+            submitToGoogleSheets(formData);
+        }
+        
+        function submitNagadPayment() {
+            // Get form values
+            const userNumber = document.getElementById('userNagadNumber').value;
+            const trxId = document.getElementById('nagadTrxId').value;
+            const ingameName = document.getElementById('nagadIngameName').value;
+            const fullName = document.getElementById('nagadFullName').value;
+            const email = document.getElementById('nagadEmail').value;
+            
+            // Validate required fields
+            if (!userNumber || !trxId || !ingameName) {
+                showAlert('Please fill in all required fields', 'warning');
+                return;
+            }
+            
+            // Prepare data for Google Sheets
+            const formData = {
+                timestamp: new Date().toISOString(),
+                rank: selectedRank,
+                price: selectedPrice,
+                paymentMethod: 'Nagad',
+                userNumber: userNumber,
+                trxId: trxId,
+                ingameName: ingameName,
+                fullName: fullName || 'Not provided',
+                email: email || 'Not provided'
+            };
+            
+            // Submit to Google Sheets
+            submitToGoogleSheets(formData);
+        }
+        
+        function submitToGoogleSheets(formData) {
+            // Loading show korun
+            showAlert('🔄 Processing your order...', 'info');
+            
+            console.log('Sending data to Google Sheets:', formData);
+            
+            fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                body: JSON.stringify(formData),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                console.log('Response received:', response);
+                return response.json();
+            })
+            .then(data => {
+                console.log('Google Script response:', data);
+                
+                if (data.result === 'success') {
+                    showAlert('✅ Order submitted successfully! You will receive confirmation email.', 'success');
+                    goToStep3();
+                } else {
+                    showAlert('⚠️ Order submitted but there was an error: ' + data.message, 'warning');
+                    // Fallback: Local storage e save korun
+                    saveOrderToLocalStorage(formData);
+                }
+            })
+            .catch(error => {
+                console.error('Network error:', error);
+                showAlert('⚠️ Network error. Order saved locally. Please contact support.', 'warning');
+                // Fallback: Local storage e save korun
+                saveOrderToLocalStorage(formData);
+                goToStep3();
+            });
+        }
+        
+        function saveOrderToLocalStorage(formData) {
+            // Fallback method to save orders locally
+            let orders = JSON.parse(localStorage.getItem('pendingOrders') || '[]');
+            orders.push({
+                ...formData,
+                localSave: true,
+                localTimestamp: new Date().toLocaleString()
+            });
+            localStorage.setItem('pendingOrders', JSON.stringify(orders));
+            
+            console.log('Order saved locally:', formData);
+        }
+        
+        function resetPaymentForms() {
+            selectedPaymentMethod = '';
+            document.querySelectorAll('.payment-method').forEach(el => {
+                el.classList.remove('selected');
+            });
+            document.getElementById('nextStepBtn').disabled = true;
+            
+            // Clear form fields
+            document.getElementById('userBkashNumber').value = '';
+            document.getElementById('bkashTrxId').value = '';
+            document.getElementById('bkashIngameName').value = '';
+            document.getElementById('bkashFullName').value = '';
+            document.getElementById('bkashEmail').value = '';
+            
+            document.getElementById('userNagadNumber').value = '';
+            document.getElementById('nagadTrxId').value = '';
+            document.getElementById('nagadIngameName').value = '';
+            document.getElementById('nagadFullName').value = '';
+            document.getElementById('nagadEmail').value = '';
+        }
+
+        function goToStep3() {
+            document.getElementById('paymentMethodStep').style.display = 'none';
+            document.getElementById('paymentDetailsStep').style.display = 'none';
+            document.getElementById('completionStep').style.display = 'block';
+            
+            // Update step indicators
+            document.getElementById('step3').classList.add('active');
+            document.getElementById('step3Name').classList.add('active');
         }
 
         // Navbar background on scroll
@@ -874,7 +1476,18 @@
                     this.classList.add('active');
                 });
             });
+
+            // Check for locally saved orders
+            checkLocalOrders();
         });
+
+        function checkLocalOrders() {
+            const pendingOrders = JSON.parse(localStorage.getItem('pendingOrders') || '[]');
+            if (pendingOrders.length > 0) {
+                console.log('Pending local orders:', pendingOrders.length);
+                // Ekhane apni manually process korte paren
+            }
+        }
     </script>
 </body>
 </html>

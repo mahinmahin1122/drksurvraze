@@ -1,0 +1,1947 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drk Survraze SMP - Minecraft Server</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4CAF50;
+            --primary-dark: #388E3C;
+            --secondary: #FF9800;
+            --accent: #2196F3;
+            --discord: #5865F2;
+            --dark: #121212;
+            --darker: #0a0a0a;
+            --light: #f8f9fa;
+            --text: #e0e0e0;
+            --text-muted: #a0a0a0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(rgba(10, 10, 10, 0.85), rgba(10, 10, 10, 0.9)), 
+                        url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
+            background-size: cover;
+            color: var(--text);
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        
+        .minecraft-font {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        
+        .navbar {
+            background: rgba(18, 18, 18, 0.95) !important;
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid var(--primary);
+            padding: 15px 0;
+            transition: all 0.3s ease;
+        }
+        
+        .navbar-brand {
+            font-size: 1.8rem;
+            color: var(--primary) !important;
+        }
+        
+        .nav-link {
+            color: var(--text) !important;
+            font-weight: 500;
+            margin: 0 10px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-link:hover {
+            color: var(--primary) !important;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .hero-section {
+            padding: 180px 0 100px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, rgba(76, 175, 80, 0.1) 0%, transparent 70%);
+            z-index: -1;
+        }
+        
+        .hero-title {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2.5rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .server-card {
+            background: rgba(30, 30, 30, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            border: 1px solid rgba(76, 175, 80, 0.2);
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        
+        .server-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: 0 15px 40px rgba(76, 175, 80, 0.2);
+        }
+        
+        .status-badge {
+            background: linear-gradient(45deg, var(--primary), var(--primary-dark));
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            display: inline-block;
+            animation: pulse 2s infinite;
+        }
+        
+        .status-offline {
+            background: linear-gradient(45deg, #f44336, #d32f2f);
+        }
+        
+        .status-maintenance {
+            background: linear-gradient(45deg, #FF9800, #F57C00);
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .ip-box {
+            background: rgba(0, 0, 0, 0.7);
+            border: 2px solid var(--primary);
+            border-radius: 10px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.2rem;
+            position: relative;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .copy-btn {
+            background: var(--accent);
+            border: none;
+            border-radius: 8px;
+            padding: 8px 15px;
+            color: white;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .copy-btn:hover {
+            background: #0d8aee;
+            transform: scale(1.05);
+        }
+        
+        .btn-primary-custom {
+            background: linear-gradient(45deg, var(--primary), var(--primary-dark));
+            border: none;
+            color: white;
+            font-weight: 600;
+            padding: 12px 30px;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .btn-primary-custom:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(76, 175, 80, 0.4);
+            color: white;
+        }
+        
+        .btn-secondary-custom {
+            background: transparent;
+            border: 2px solid var(--secondary);
+            color: var(--secondary);
+            font-weight: 600;
+            padding: 12px 30px;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .btn-secondary-custom:hover {
+            background: var(--secondary);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255, 152, 0, 0.3);
+        }
+        
+        .btn-discord-custom {
+            background: var(--discord);
+            border: none;
+            color: white;
+            font-weight: 600;
+            padding: 12px 30px;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .btn-discord-custom:hover {
+            background: #4752c4;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(88, 101, 242, 0.4);
+            color: white;
+        }
+        
+        .section-title {
+            font-size: 2.8rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+        
+        .stats-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .vote-site-card {
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(33, 150, 243, 0.1));
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+            height: 100%;
+            border: 1px solid rgba(76, 175, 80, 0.2);
+        }
+        
+        .vote-site-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 30px rgba(76, 175, 80, 0.2);
+            border-color: var(--primary);
+        }
+        
+        .reward-badge {
+            background: linear-gradient(45deg, var(--secondary), #FFB74D);
+            color: black;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9em;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+        
+        .rule-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--primary);
+        }
+        
+        .player-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .player-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-5px);
+        }
+        
+        .discord-widget {
+            background: #5865F2;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            border: none;
+            color: white;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+        
+        .discord-widget:hover {
+            background: #4752c4;
+            transform: translateY(-3px);
+        }
+        
+        .store-item {
+            background: rgba(30, 30, 30, 0.7);
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 152, 0, 0.2);
+            height: 100%;
+        }
+        
+        .store-item:hover {
+            transform: translateY(-10px);
+            border-color: var(--secondary);
+            box-shadow: 0 15px 30px rgba(255, 152, 0, 0.2);
+        }
+        
+        .price-tag {
+            background: linear-gradient(45deg, var(--secondary), #FFB74D);
+            color: black;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 1.2em;
+            display: inline-block;
+            margin: 15px 0;
+        }
+        
+        .offer-badge {
+            background: linear-gradient(45deg, #FF5722, #E64A19);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-weight: bold;
+            font-size: 0.8em;
+            display: inline-block;
+            margin-bottom: 10px;
+            animation: pulse 2s infinite;
+        }
+        
+        .token-badge {
+            background: linear-gradient(45deg, #9C27B0, #7B1FA2);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-weight: bold;
+            font-size: 0.8em;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+        
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        footer {
+            background: rgba(10, 10, 10, 0.9);
+            padding: 50px 0 20px;
+            border-top: 1px solid rgba(76, 175, 80, 0.2);
+        }
+        
+        .social-icon {
+            font-size: 1.5rem;
+            color: var(--text-muted);
+            transition: all 0.3s ease;
+            margin: 0 10px;
+        }
+        
+        .social-icon:hover {
+            color: var(--primary);
+            transform: translateY(-5px);
+        }
+        
+        .discord-preview {
+            background: #36393f;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        .discord-header {
+            background: #5865F2;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .discord-channels {
+            background: #2f3136;
+            padding: 15px;
+            min-height: 200px;
+        }
+        
+        .channel {
+            padding: 8px 15px;
+            margin: 5px 0;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .channel:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .channel.active {
+            background: rgba(88, 101, 242, 0.3);
+        }
+        
+        .channel i {
+            margin-right: 10px;
+            color: #8e9297;
+        }
+        
+        .channel.active i {
+            color: white;
+        }
+        
+        /* Payment Modal Styles */
+        .payment-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 9999;
+            overflow-y: auto;
+        }
+        
+        .payment-content {
+            background: var(--dark);
+            margin: 5% auto;
+            width: 90%;
+            max-width: 600px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
+            border: 2px solid var(--primary);
+        }
+        
+        .payment-header {
+            background: linear-gradient(45deg, var(--primary), var(--primary-dark));
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .payment-body {
+            padding: 30px;
+        }
+        
+        .payment-method {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .payment-method:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .payment-method.selected {
+            border-color: var(--primary);
+            background: rgba(76, 175, 80, 0.1);
+        }
+        
+        .payment-form input, .payment-form select, .payment-form textarea {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+        
+        .payment-form input:focus, .payment-form select:focus, .payment-form textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        
+        .payment-summary {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .payment-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        
+        .payment-step {
+            text-align: center;
+            flex: 1;
+            position: relative;
+        }
+        
+        .payment-step:not(:last-child):after {
+            content: '';
+            position: absolute;
+            top: 15px;
+            right: -50%;
+            width: 100%;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.2);
+            z-index: 1;
+        }
+        
+        .step-number {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .step-number.active {
+            background: var(--primary);
+        }
+        
+        .step-name {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+        
+        .step-name.active {
+            color: var(--primary);
+            font-weight: bold;
+        }
+        
+        .payment-instruction {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .bkash-color {
+            background: linear-gradient(45deg, #E2136E, #D10A5A);
+        }
+        
+        .nagad-color {
+            background: linear-gradient(45deg, #F12C14, #D9230D);
+        }
+        
+        /* Minecraft Launch Section */
+        .minecraft-launch {
+            background: rgba(30, 30, 30, 0.8);
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            margin-top: 20px;
+            border: 2px solid var(--primary);
+        }
+        
+        .minecraft-btn {
+            background: linear-gradient(45deg, #7CB342, #558B2F);
+            border: none;
+            color: white;
+            font-weight: 600;
+            padding: 12px 30px;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 1.1rem;
+        }
+        
+        .minecraft-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(124, 179, 66, 0.4);
+            color: white;
+        }
+        
+        /* InGame Money Form */
+        .ingame-money-form {
+            background: rgba(30, 30, 30, 0.8);
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 20px;
+            border: 2px solid var(--secondary);
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .hero-buttons .btn {
+                margin-bottom: 10px;
+                width: 100%;
+                max-width: 250px;
+            }
+            
+            .payment-content {
+                width: 95%;
+                margin: 10% auto;
+            }
+            
+            .payment-steps {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .payment-step:not(:last-child):after {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand minecraft-font" href="#">
+                <img src="drk.png" alt="Server Logo" style="height: 40px; width: auto; margin-right: 10px;">
+                Drk Survraze SMP
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#store">Store</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#vote">Vote</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#features">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#rules">Rules</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <h1 class="hero-title minecraft-font">DRK SURVRAZE <span style="color: var(--primary);">SMP</span></h1>
+                    <p class="hero-subtitle">Experience the ultimate Minecraft Survival Multiplayer adventure. Join our thriving community today!</p>
+                    
+                    <!-- Server Status -->
+                    <div class="d-flex justify-content-center align-items-center mb-4 flex-wrap">
+                        <span class="status-badge me-3 mb-2">
+                            <i class="fas fa-circle me-2"></i>LIVE SERVER
+                        </span>
+                        <span class="fs-5 mb-2">
+                            <i class="fas fa-users me-2"></i>47/100 Players Online
+                        </span>
+                    </div>
+
+                    <!-- Server IP Box -->
+                    <div class="ip-box mb-4">
+                        <div class="row align-items-center">
+                            <div class="col-md-8 text-start">
+                                <code class="fs-4">play.drksurvraze.top</code>
+                            </div>
+                            <div class="col-md-4 text-end">
+                                <button class="copy-btn" onclick="copyIP()">
+                                    <i class="fas fa-copy me-2"></i>Copy IP
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="d-flex justify-content-center gap-3 flex-wrap hero-buttons">
+                        <button class="btn btn-primary-custom" onclick="scrollToVote()">
+                            <i class="fas fa-vote-yea me-2"></i>Vote Now
+                        </button>
+                        <button class="btn btn-secondary-custom" onclick="scrollToStore()">
+                            <i class="fas fa-store me-2"></i>Visit Store
+                        </button>
+                        <button class="btn btn-discord-custom" onclick="joinDiscord()">
+                            <i class="fab fa-discord me-2"></i>Join Discord
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Store Section -->
+    <section id="store" class="py-5">
+        <div class="container">
+            <h2 class="section-title minecraft-font">SERVER STORE</h2>
+            <p class="text-center text-muted mb-5 fs-5">Upgrade your experience with our premium ranks and packages!</p>
+<h4 class="text-center mb-5 fs-5 minecraft-font text-white">
+    <strong>1 BDT = 12 TOKENS</strong>
+</h4>
+
+            
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="store-item">
+                        <h4 class="minecraft-font mb-3">VIP RANK</h4>
+                         <div class="token-badge">1500 TOKENS = 125 BDT</div>
+                        <div class="offer-badge">SPECIAL OFFER - PURCHASE WITH INGAME MONEY</div>
+                        <ul class="list-unstyled text-start mb-4">
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>VIP Prefix in Chat</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Access to VIP Area</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>3 Homes</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Special Particle Effects</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Colorful Nickname</li>
+                        </ul>
+                        <button class="btn btn-primary-custom w-100" onclick="openPaymentModal('VIP Rank', '1500 Tokens', 'VIP', 0, 1500)">
+                            <i class="fas fa-shopping-cart me-2"></i>Purchase with Token
+                        </button>
+                        <button class="btn btn-secondary-custom w-100 mt-2" onclick="openIngameMoneyModal('VIP Rank', '400K InGame Money', 'VIP', 400000, 0)">
+                            <i class="fas fa-gem me-2"></i>Purchase with InGame Money
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="store-item">
+                        <h4 class="minecraft-font mb-3">MVP RANK</h4>
+                        <div class="token-badge">2500 TOKENS = 210 BDT</div>
+                        <ul class="list-unstyled text-start mb-4">
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>All VIP Features</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>MVP Prefix in Chat</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Access to MVP Area</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>5 Homes</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Exclusive Particle Effects</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Fly Command</li>
+                        </ul>
+                        <button class="btn btn-primary-custom w-100" onclick="openPaymentModal('MVP Rank', '2200 Tokens', 'MVP', 0, 2200)">
+                            <i class="fas fa-shopping-cart me-2"></i>Purchase with Token
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="store-item">
+                        <h4 class="minecraft-font mb-3">ELITE RANK</h4>
+                        <div class="token-badge">3600 TOKENS = 300 BDT</div>
+                        <ul class="list-unstyled text-start mb-4">
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>All MVP Features</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Elite Prefix in Chat</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Access to Elite Area</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>7 Homes</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Elite Particle Effects</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Custom Join Message</li>
+                        </ul>
+                        <button class="btn btn-primary-custom w-100" onclick="openPaymentModal('Elite Rank', '3500 Tokens', 'ELITE', 0, 3500)">
+                            <i class="fas fa-shopping-cart me-2"></i>Purchase with Token
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vote Section -->
+    <section id="vote" class="py-5" style="background: rgba(0,0,0,0.7);">
+        <div class="container">
+            <h2 class="section-title minecraft-font">VOTE & EARN REWARDS</h2>
+            <p class="text-center text-muted mb-5 fs-5">Vote daily and receive exclusive in-game rewards!</p>
+            
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="vote-site-card">
+                        <div class="reward-badge">NO REWARDS</div>
+                        <h4 class="minecraft-font mb-3">Minecraft-MP.com</h4>
+                        <p class="text-muted mb-4">Get amazing rewards for each vote!</p>
+                        <div class="mb-3">
+                            <span class="badge bg-primary">24-hour Cooldown</span>
+                        </div>
+                        <a href="#" class="btn btn-primary-custom w-100">
+                            <i class="fas fa-external-link-alt me-2"></i>Vote Now
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="vote-site-card">
+                        <div class="reward-badge">NO REWARDS</div>
+                        <h4 class="minecraft-font mb-3">TopG.org</h4>
+                        <p class="text-muted mb-4">Get amazing rewards for each vote!</p>
+                        <div class="mb-3">
+                            <span class="badge bg-primary">24-hour Cooldown</span>
+                        </div>
+                        <a href="#" class="btn btn-primary-custom w-100">
+                            <i class="fas fa-external-link-alt me-2"></i>Vote Now
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="vote-site-card">
+                        <div class="reward-badge">NO REWARDS</div>
+                        <h4 class="minecraft-font mb-3">Minecraft-Servers.biz</h4>
+                        <p class="text-muted mb-4">Get amazing rewards for each vote!</p>
+                        <div class="mb-3">
+                            <span class="badge bg-primary">24-hour Cooldown</span>
+                        </div>
+                        <a href="#" class="btn btn-primary-custom w-100">
+                            <i class="fas fa-external-link-alt me-2"></i>Vote Now
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-5">
+        <div class="container">
+            <h2 class="section-title minecraft-font">SERVER FEATURES</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="server-card p-4 text-center h-100">
+                        <i class="fas fa-shield-alt feature-icon"></i>
+                        <h4 class="minecraft-font">Anti-Cheat Protection</h4>
+                        <p class="text-muted">Advanced anti-cheat system for a fair gaming experience</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="server-card p-4 text-center h-100">
+                        <i class="fas fa-bolt feature-icon"></i>
+                        <h4 class="minecraft-font">High Performance</h4>
+                        <p class="text-muted">Premium hardware with 0 lag gaming experience</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="server-card p-4 text-center h-100">
+                        <i class="fas fa-users feature-icon"></i>
+                        <h4 class="minecraft-font">Active Community</h4>
+                        <p class="text-muted">Join one of the most active Minecraft communities</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rules Section -->
+    <section id="rules" class="py-5" style="background: rgba(0,0,0,0.7);">
+        <div class="container">
+            <h2 class="section-title minecraft-font">SERVER RULES</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="rule-item">
+                        <h5><i class="fas fa-ban text-danger me-2"></i>No Hacking/Cheating</h5>
+                        <p class="text-muted mb-0">Any form of unfair advantage is strictly prohibited</p>
+                    </div>
+                    <div class="rule-item">
+                        <h5><i class="fas fa-comment-slash text-danger me-2"></i>No Offensive Language</h5>
+                        <p class="text-muted mb-0">Respect all players in the community</p>
+                    </div>
+                    <div class="rule-item">
+                        <h5><i class="fas fa-gavel text-danger me-2"></i>No Griefing</h5>
+                        <p class="text-muted mb-0">Do not destroy other players' builds or items</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="rule-item">
+                        <h5><i class="fas fa-user-shield text-danger me-2"></i>Respect Staff Members</h5>
+                        <p class="text-muted mb-0">Follow instructions from server staff</p>
+                    </div>
+                    <div class="rule-item">
+                        <h5><i class="fas fa-exclamation-triangle text-danger me-2"></i>No Spamming</h5>
+                        <p class="text-muted mb-0">Do not send repeated messages in chat</p>
+                    </div>
+                    <div class="rule-item">
+                        <h5><i class="fas fa-smile text-success me-2"></i>Have Fun!</h5>
+                        <p class="text-muted mb-0">The most important rule - enjoy your time!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Discord Section -->
+    <section id="contact" class="py-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h3 class="minecraft-font display-4 mb-3">Join Our <span style="color: #5865F2;">Discord</span></h3>
+                    <p class="fs-5 mb-4">Connect with our 2,500+ member community. Get event updates, server news, and special announcements!</p>
+                    <div class="d-flex gap-3 flex-wrap">
+                        <button class="btn discord-widget btn-lg" onclick="joinDiscord()">
+                            <i class="fab fa-discord me-2"></i>Join Discord
+                        </button>
+                    </div>
+                    <div class="mt-4"></div>
+                </div>
+                <div class="col-md-6 text-center">
+                    <div class="server-card p-4 floating">
+                        <div class="discord-preview">
+                            <div class="discord-header">
+                                <h4 class="mb-0"><i class="fab fa-discord me-2"></i>Drk Survraze SMP</h4>
+                                <p class="mb-0 mt-2">2,500+ Members Online</p>
+                            </div>
+                            <div class="discord-channels">
+                                <div class="channel active">
+                                    <i class="fas fa-hashtag"></i>welcome
+                                </div>
+                                <div class="channel">
+                                    <i class="fas fa-hashtag"></i>general
+                                </div>
+                                <div class="channel">
+                                    <i class="fas fa-hashtag"></i>minecraft-chat
+                                </div>
+                                <div class="channel">
+                                    <i class="fas fa-hashtag"></i>announcements
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h4 class="minecraft-font mb-3">Drk Survraze SMP</h4>
+                    <p class="text-muted">The premier Minecraft Survival experience. Start your adventure today!</p>
+                    <div class="ip-box mb-3">
+                        <code>play.drksurvraze.top</code>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <h5 class="minecraft-font mb-3">Quick Links</h5>
+                    <div class="d-flex flex-column">
+                        <a href="#store" class="text-muted mb-2 text-decoration-none">Store</a>
+                        <a href="#vote" class="text-muted mb-2 text-decoration-none">Vote Now</a>
+                        <a href="#rules" class="text-muted mb-2 text-decoration-none">Server Rules</a>
+                        <a href="#contact" class="text-muted mb-2 text-decoration-none">Support</a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <h5 class="minecraft-font mb-3">Stay Connected</h5>
+                    <div class="social-links mb-4">
+                        <a href="https://discord.gg/SjefnHedt" class="social-icon"><i class="fab fa-discord"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                    <p class="text-muted mb-0">&copy; 2023 Drk Survraze SMP. All Rights Reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Payment Modal -->
+    <div id="paymentModal" class="payment-modal">
+        <div class="payment-content">
+            <button class="close-modal" onclick="closePaymentModal()">&times;</button>
+            <div class="payment-header">
+                <h3 class="minecraft-font mb-0">Complete Your Purchase</h3>
+            </div>
+            <div class="payment-body">
+                <div class="payment-steps">
+                    <div class="payment-step">
+                        <div class="step-number active">1</div>
+                        <div class="step-name active">Payment Method</div>
+                    </div>
+                    <div class="payment-step">
+                        <div class="step-number" id="step2">2</div>
+                        <div class="step-name" id="step2Name">Payment Details</div>
+                    </div>
+                    <div class="payment-step">
+                        <div class="step-number" id="step3">3</div>
+                        <div class="step-name" id="step3Name">Complete</div>
+                    </div>
+                </div>
+                
+                <div class="payment-summary">
+                    <h4 id="selectedRank" class="minecraft-font">VIP Rank</h4>
+                    <p class="mb-2">Purchase Type: <span id="selectedRewards" class="price-tag">1500 Tokens</span></p>
+                    <p class="text-muted">Please complete the payment to receive your rank</p>
+                </div>
+                
+                <!-- Step 1: Payment Method Selection -->
+                <div id="paymentMethodStep">
+                    <h5 class="mb-3">Select Payment Method</h5>
+                    <div class="payment-methods mb-4">
+                        <div class="payment-method" onclick="selectPaymentMethod('bkash')">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-mobile-alt fa-2x me-3" style="color: #E2136E;"></i>
+                                <div>
+                                    <h6 class="mb-1">bKash</h6>
+                                    <p class="text-muted mb-0">Pay with bKash Mobile Banking</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="payment-method" onclick="selectPaymentMethod('nagad')">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-wallet fa-2x me-3" style="color: #F12C14;"></i>
+                                <div>
+                                    <h6 class="mb-1">Nagad</h6>
+                                    <p class="text-muted mb-0">Pay with Nagad Mobile Banking</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="payment-method" onclick="selectPaymentMethod('discord')">
+                            <div class="d-flex align-items-center">
+                                <i class="fab fa-discord fa-2x me-3" style="color: #5865F2;"></i>
+                                <div>
+                                    <h6 class="mb-1">Discord Payment</h6>
+                                    <p class="text-muted mb-0">Complete payment via Discord</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-primary-custom w-100" id="nextStepBtn" onclick="goToStep2()" disabled>
+                        Next Step <i class="fas fa-arrow-right ms-2"></i>
+                    </button>
+                </div>
+                
+                <!-- Step 2: Payment Details -->
+                <div id="paymentDetailsStep" style="display: none;">
+                    <!-- bKash Payment Form -->
+                    <div id="bkashForm" class="payment-form" style="display: none;">
+                        <div class="payment-instruction">
+                            <h5><i class="fas fa-info-circle me-2"></i>Payment Instructions</h5>
+                            <p class="mb-2">1. Send payment to our bKash number:</p>
+                            <div class="ip-box mb-3">
+                                <code id="bkashNumber">01980583573</code>
+                                <button class="copy-btn ms-2" onclick="copyText('bkashNumber')">
+                                    <i class="fas fa-copy me-1"></i>Copy
+                                </button>
+                            </div>
+                            <p class="mb-2">2. Fill out the form below with your payment details</p>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Your bKash Number *</label>
+                            <input type="text" id="userBkashNumber" placeholder="01XXXXXXXXX" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Transaction ID (TrxID) *</label>
+                            <input type="text" id="bkashTrxId" placeholder="Enter your bKash TrxID" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Your In-Game Name *</label>
+                            <input type="text" id="bkashIngameName" placeholder="Enter your Minecraft username" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Your Discord ID *</label>
+                            <input type="text" id="bkashDiscordId" placeholder="YourDiscord#1234" required>
+                        </div>
+                        
+                        <button class="btn btn-primary-custom w-100" onclick="submitBkashPayment()">
+                            <i class="fas fa-paper-plane me-2"></i>Submit Order
+                        </button>
+                    </div>
+                    
+                    <!-- Nagad Payment Form -->
+                    <div id="nagadForm" class="payment-form" style="display: none;">
+                        <div class="payment-instruction">
+                            <h5><i class="fas fa-info-circle me-2"></i>Payment Instructions</h5>
+                            <p class="mb-2">1. Send payment to our Nagad number:</p>
+                            <div class="ip-box mb-3">
+                                <code id="nagadNumber">01980583573</code>
+                                <button class="copy-btn ms-2" onclick="copyText('nagadNumber')">
+                                    <i class="fas fa-copy me-1"></i>Copy
+                                </button>
+                            </div>
+                            <p class="mb-2">2. Fill out the form below with your payment details</p>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Your Nagad Number *</label>
+                            <input type="text" id="userNagadNumber" placeholder="01XXXXXXXXX" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Transaction ID (TrxID) *</label>
+                            <input type="text" id="nagadTrxId" placeholder="Enter your Nagad TrxID" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Your In-Game Name *</label>
+                            <input type="text" id="nagadIngameName" placeholder="Enter your Minecraft username" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Your Discord ID *</label>
+                            <input type="text" id="nagadDiscordId" placeholder="YourDiscord#1234" required>
+                        </div>
+                        
+                        <button class="btn btn-primary-custom w-100" onclick="submitNagadPayment()">
+                            <i class="fas fa-paper-plane me-2"></i>Submit Order
+                        </button>
+                    </div>
+                    
+                    <!-- Discord Payment Form -->
+                    <div id="discordForm" class="payment-form" style="display: none;">
+                        <div class="payment-instruction">
+                            <h5><i class="fab fa-discord me-2"></i>Discord Payment Process</h5>
+                            <p class="mb-3">Complete your payment by filling the form below. Our Discord bot will automatically process your order!</p>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Your Discord Username *</label>
+                            <input type="text" id="discordUsername" placeholder="YourDiscord#1234" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Your In-Game Name *</label>
+                            <input type="text" id="discordIngameName" placeholder="Enter your Minecraft username" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Payment Method *</label>
+                            <select id="discordPaymentMethod" class="form-select">
+                                <option value="">Select Payment Method</option>
+                                <option value="PayPal">PayPal</option>
+                                <option value="Stripe">Stripe</option>
+                                <option value="Credit Card">Credit Card</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Additional Notes</label>
+                            <textarea id="discordNotes" class="form-control" rows="3" placeholder="Any additional information about your payment..."></textarea>
+                        </div>
+                        
+                        <button class="btn discord-widget w-100" onclick="submitDiscordPayment()">
+                            <i class="fab fa-discord me-2"></i>Submit Order via Discord
+                        </button>
+                        
+                        <div class="mt-3 text-center">
+                            <p class="text-muted small">After submission, join our Discord server for further instructions</p>
+                            <a href="https://discord.gg/SjefnHedt" target="_blank" class="text-primary">Join Discord Server</a>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-secondary-custom w-100 mt-3" onclick="goToStep1()">
+                        <i class="fas fa-arrow-left me-2"></i>Back
+                    </button>
+                </div>
+                
+                <!-- Step 3: Completion -->
+                <div id="completionStep" style="display: none;">
+                    <div class="text-center py-4">
+                        <i class="fas fa-check-circle fa-5x text-success mb-3"></i>
+                        <h4 class="minecraft-font">Order Submitted Successfully!</h4>
+                        <p class="mb-4" id="completionMessage">Your order has been received and will be processed shortly.</p>
+                        
+                        <div id="discordInstructions" style="display: none;">
+                            <div class="alert alert-info mt-3">
+                                <h6><i class="fab fa-discord me-2"></i>Next Steps:</h6>
+                                <p class="mb-1">1. Join our Discord server</p>
+                                <p class="mb-1">2. Check your DM for payment information</p>
+                                <p class="mb-0">3. If there is any problem, please create a ticket on Discord. </p>
+                            </div>
+                            <a href="https://discord.gg/SjefnHedt" target="_blank" class="btn discord-widget mt-2">
+                                <i class="fab fa-discord me-2"></i>Join Discord Now
+                            </a>
+                        </div>
+                        
+                        <button class="btn btn-primary-custom mt-3" onclick="closePaymentModal()">
+                            <i class="fas fa-check me-2"></i>Done
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="mt-4 text-center">
+                    <p class="text-muted small">By completing this purchase, you agree to our <a href="#" class="text-primary">Terms of Service</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- InGame Money Modal -->
+    <div id="ingameMoneyModal" class="payment-modal">
+        <div class="payment-content">
+            <button class="close-modal" onclick="closeIngameMoneyModal()">&times;</button>
+            <div class="payment-header">
+                <h3 class="minecraft-font mb-0">Complete Your Purchase</h3>
+            </div>
+            <div class="payment-body">
+                <div class="payment-summary">
+                    <h4 id="ingameSelectedRank" class="minecraft-font">VIP Rank</h4>
+                    <p class="mb-2">Purchase Type: <span id="ingameSelectedRewards" class="price-tag">400K InGame Money</span></p>
+                    <p class="text-muted">Please complete the following steps to receive your rank</p>
+                </div>
+                
+                <div class="ingame-money-form">
+                    <h5 class="mb-3"><i class="fas fa-gamepad me-2"></i>Join Our Server</h5>
+                    <p class="mb-3">Copy the server IP below and join our Minecraft server to complete your purchase!</p>
+                    
+                    <div class="ip-box mb-4">
+                        <code class="fs-5">play.drksurvraze.top</code>
+                        <button class="copy-btn ms-2" onclick="copyIP()">
+                            <i class="fas fa-copy me-1"></i>Copy IP
+                        </button>
+                    </div>
+                    
+<div class="minecraft-launch">
+    <h6 class="mb-3">Ready to Play?</h6>
+    <p class="mb-3">Click the button below to open Minecraft and join our server!</p>
+
+    <button class="btn minecraft-btn w-100" onclick="launchMinecraft()">
+        <i class="fas fa-play me-2"></i>Open Minecraft
+    </button>
+</div>
+
+
+
+                </div>
+                
+                <div class="mt-4 text-center">
+                    <p class="text-muted small">By completing this purchase, you agree to our <a href="#" class="text-primary">Terms of Service</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Website Functions
+        function copyIP() {
+            const ip = 'play.drksurvraze.top';
+            navigator.clipboard.writeText(ip).then(() => {
+                showAlert('Server IP copied: ' + ip, 'success');
+            });
+        }
+        
+        function copyText(elementId) {
+            const text = document.getElementById(elementId).textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                showAlert('Copied: ' + text, 'success');
+            });
+        }
+        
+        function scrollToVote() {
+            document.getElementById('vote').scrollIntoView({ 
+                behavior: 'smooth' 
+            });
+        }
+        
+        function scrollToStore() {
+            document.getElementById('store').scrollIntoView({ 
+                behavior: 'smooth' 
+            });
+        }
+        
+        function joinDiscord() {
+            window.open('https://discord.gg/SjefnHedt', '_blank');
+        }
+        
+        function launchMinecraft() {
+    // Minecraft Pocket Edition intent
+    window.location.href = "intent://#Intent;scheme=minecraft;package=com.mojang.minecraftpe;end;";
+    
+    // যদি ২ সেকেন্ডে অ্যাপ ওপেন না হয় → Play Store এ যাবে
+    setTimeout(() => {
+        window.location.href = "https://play.google.com/store/apps/details?id=com.mojang.minecraftpe";
+    }, 2000);
+}
+        
+        function showAlert(message, type) {
+            const alert = document.createElement('div');
+            alert.className = `alert alert-${type} position-fixed top-0 start-50 translate-middle-x mt-5`;
+            alert.style.zIndex = '9999';
+            alert.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'} me-2"></i>
+                ${message}
+            `;
+            document.body.appendChild(alert);
+            
+            setTimeout(() => {
+                alert.remove();
+            }, 3000);
+        }
+
+        // Payment Functions
+        let selectedRank = '';
+        let selectedRewards = '';
+        let selectedRankType = '';
+        let selectedPaymentMethod = '';
+        let currentOrderId = '';
+        let selectedMoney = 0;
+        let selectedTokens = 0;
+        
+        function openPaymentModal(rank, rewards, rankType, money, tokens) {
+            selectedRank = rank;
+            selectedRewards = rewards;
+            selectedRankType = rankType;
+            selectedMoney = money;
+            selectedTokens = tokens;
+            
+            // Generate unique order ID
+            currentOrderId = 'ORD_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+            
+            document.getElementById('selectedRank').textContent = rank;
+            document.getElementById('selectedRewards').textContent = rewards;
+            
+            document.getElementById('paymentModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+            
+            // Reset to step 1
+            goToStep1();
+        }
+        
+        function openIngameMoneyModal(rank, rewards, rankType, money, tokens) {
+            selectedRank = rank;
+            selectedRewards = rewards;
+            selectedRankType = rankType;
+            selectedMoney = money;
+            selectedTokens = tokens;
+            
+            document.getElementById('ingameSelectedRank').textContent = rank;
+            document.getElementById('ingameSelectedRewards').textContent = rewards;
+            
+            document.getElementById('ingameMoneyModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closePaymentModal() {
+            document.getElementById('paymentModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+            resetPaymentForms();
+        }
+        
+        function closeIngameMoneyModal() {
+            document.getElementById('ingameMoneyModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        
+        function selectPaymentMethod(method) {
+            selectedPaymentMethod = method;
+            
+            // Reset all payment methods
+            document.querySelectorAll('.payment-method').forEach(el => {
+                el.classList.remove('selected');
+            });
+            
+            // Select the clicked method
+            event.currentTarget.classList.add('selected');
+            
+            // Enable next button
+            document.getElementById('nextStepBtn').disabled = false;
+        }
+        
+        function goToStep1() {
+            document.getElementById('paymentMethodStep').style.display = 'block';
+            document.getElementById('paymentDetailsStep').style.display = 'none';
+            document.getElementById('completionStep').style.display = 'none';
+            
+            // Update step indicators
+            document.getElementById('step2').classList.remove('active');
+            document.getElementById('step2Name').classList.remove('active');
+            document.getElementById('step3').classList.remove('active');
+            document.getElementById('step3Name').classList.remove('active');
+            
+            // Hide Discord instructions
+            document.getElementById('discordInstructions').style.display = 'none';
+        }
+        
+        function goToStep2() {
+            if (!selectedPaymentMethod) {
+                showAlert('Please select a payment method', 'warning');
+                return;
+            }
+            
+            document.getElementById('paymentMethodStep').style.display = 'none';
+            document.getElementById('paymentDetailsStep').style.display = 'block';
+            document.getElementById('completionStep').style.display = 'none';
+            
+            // Hide all payment forms
+            document.getElementById('bkashForm').style.display = 'none';
+            document.getElementById('nagadForm').style.display = 'none';
+            document.getElementById('discordForm').style.display = 'none';
+            
+            // Show selected payment form
+            if (selectedPaymentMethod === 'bkash') {
+                document.getElementById('bkashForm').style.display = 'block';
+            } else if (selectedPaymentMethod === 'nagad') {
+                document.getElementById('nagadForm').style.display = 'block';
+            } else if (selectedPaymentMethod === 'discord') {
+                document.getElementById('discordForm').style.display = 'block';
+            }
+            
+            // Update step indicators
+            document.getElementById('step2').classList.add('active');
+            document.getElementById('step2Name').classList.add('active');
+        }
+        
+        function goToStep3() {
+            document.getElementById('paymentMethodStep').style.display = 'none';
+            document.getElementById('paymentDetailsStep').style.display = 'none';
+            document.getElementById('completionStep').style.display = 'block';
+            
+            // Update step indicators
+            document.getElementById('step3').classList.add('active');
+            document.getElementById('step3Name').classList.add('active');
+            
+            // Show Discord instructions for token purchases
+            document.getElementById('discordInstructions').style.display = 'block';
+        }
+
+        // Discord Payment Submission
+        async function submitDiscordPayment() {
+            const discordUsername = document.getElementById('discordUsername').value;
+            const ingameName = document.getElementById('discordIngameName').value;
+            const paymentMethod = document.getElementById('discordPaymentMethod').value;
+            const notes = document.getElementById('discordNotes').value;
+
+            // Validation
+            if (!discordUsername || !ingameName || !paymentMethod) {
+                showAlert('Please fill in all required fields', 'warning');
+                return;
+            }
+
+            // Prepare order data
+            const orderData = {
+                orderId: currentOrderId,
+                timestamp: new Date().toISOString(),
+                rank: selectedRank,
+                rewards: selectedRewards,
+                rankType: selectedRankType,
+                discordUsername: discordUsername,
+                ingameName: ingameName,
+                paymentMethod: paymentMethod,
+                paymentType: 'discord_form',
+                notes: notes,
+                status: 'pending_discord',
+                money: selectedMoney,
+                tokens: selectedTokens
+            };
+
+            try {
+                // Send to Discord Webhook
+                await sendToDiscordWebhook(orderData);
+                
+                // Save locally as backup
+                saveOrderLocally(orderData);
+                
+                // Move to completion step
+                goToStep3();
+                
+                showAlert('Order submitted successfully!', 'success');
+                
+            } catch (error) {
+                console.error('Error submitting Discord order:', error);
+                showAlert('Order submitted locally. Please contact support if you dont receive confirmation.', 'info');
+                saveOrderLocally(orderData);
+                goToStep3();
+            }
+        }
+
+        // Discord Webhook Function with Proper Format
+        async function sendToDiscordWebhook(orderData) {
+            const webhookURL = 'https://discord.com/api/webhooks/1442562327735042084/CpNjUYeKf3fWkC-2c-qcVgc4fECIqBskGVx0B6MVCy1GvzWNgF4TStTA_KBueZhAKJxi';
+            
+            let embed, content;
+
+            if (orderData.paymentType === 'discord_form') {
+                // Discord Form Payment Embed
+                embed = {
+                    title: "🎮 নতুন অর্ডার এসেছে!",
+                    color: 0x5865F2,
+                    fields: [
+                        {
+                            name: "🆔 Order ID",
+                            value: "`" + orderData.orderId + "`",
+                            inline: false
+                        },
+                        {
+                            name: "👤 Discord Username",
+                            value: orderData.discordUsername || "প্রদান করা হয়নি",
+                            inline: true
+                        },
+                        {
+                            name: "🎮 In-Game Name",
+                            value: orderData.ingameName,
+                            inline: true
+                        },
+                        {
+                            name: "⭐ Rank",
+                            value: orderData.rank,
+                            inline: true
+                        },
+                        {
+                            name: "🎁 Purchase Type",
+                            value: orderData.rewards,
+                            inline: true
+                        },
+                        {
+                            name: "💳 Payment Method",
+                            value: orderData.paymentMethod || "প্রদান করা হয়নি",
+                            inline: true
+                        },
+                        {
+                            name: "🕐 Order Time",
+                            value: new Date(orderData.timestamp).toLocaleString(),
+                            inline: true
+                        }
+                    ],
+                    footer: {
+                        text: "Drk Survraze SMP - Order System"
+                    },
+                    timestamp: orderData.timestamp
+                };
+
+                if (orderData.notes) {
+                    embed.fields.push({
+                        name: "📝 Additional Notes",
+                        value: orderData.notes,
+                        inline: false
+                    });
+                }
+
+                content = "📬 **নতুন Discord অর্ডার Received!** @everyone";
+
+            } else if (orderData.paymentMethod === 'bKash') {
+                // bKash Payment Embed
+                embed = {
+                    title: "💰 নতুন bKash পেমেন্ট Received",
+                    color: 0xE2136E,
+                    fields: [
+                        {
+                            name: "🆔 Order ID",
+                            value: "`" + orderData.orderId + "`",
+                            inline: false
+                        },
+                        {
+                            name: "🎮 In-Game Name",
+                            value: orderData.ingameName,
+                            inline: true
+                        },
+                        {
+                            name: "⭐ Rank",
+                            value: orderData.rank,
+                            inline: true
+                        },
+                        {
+                            name: "🎁 Purchase Type",
+                            value: orderData.rewards,
+                            inline: true
+                        },
+                        {
+                            name: "📱 bKash Number",
+                            value: orderData.userNumber,
+                            inline: true
+                        },
+                        {
+                            name: "🔢 Transaction ID",
+                            value: orderData.trxId,
+                            inline: true
+                        },
+                        {
+                            name: "👤 Discord ID",
+                            value: orderData.discordId || "প্রদান করা হয়নি",
+                            inline: true
+                        }
+                    ],
+                    footer: {
+                        text: "Drk Survraze SMP - bKash Payment"
+                    },
+                    timestamp: orderData.timestamp
+                };
+
+                content = "💸 **নতুন bKash পেমেন্ট!** @everyone";
+
+            } else if (orderData.paymentMethod === 'Nagad') {
+                // Nagad Payment Embed
+                embed = {
+                    title: "💰 নতুন Nagad পেমেন্ট Received",
+                    color: 0xF12C14,
+                    fields: [
+                        {
+                            name: "🆔 Order ID",
+                            value: "`" + orderData.orderId + "`",
+                            inline: false
+                        },
+                        {
+                            name: "🎮 In-Game Name",
+                            value: orderData.ingameName,
+                            inline: true
+                        },
+                        {
+                            name: "⭐ Rank",
+                            value: orderData.rank,
+                            inline: true
+                        },
+                        {
+                            name: "🎁 Purchase Type",
+                            value: orderData.rewards,
+                            inline: true
+                        },
+                        {
+                            name: "📱 Nagad Number",
+                            value: orderData.userNumber,
+                            inline: true
+                        },
+                        {
+                            name: "🔢 Transaction ID",
+                            value: orderData.trxId,
+                            inline: true
+                        },
+                        {
+                            name: "👤 Discord ID",
+                            value: orderData.discordId || "প্রদান করা হয়নি",
+                            inline: true
+                        }
+                    ],
+                    footer: {
+                        text: "Drk Survraze SMP - Nagad Payment"
+                    },
+                    timestamp: orderData.timestamp
+                };
+
+                content = "💸 **নতুন Nagad পেমেন্ট!** @everyone";
+
+            } else {
+                // Fallback for any other payment methods
+                embed = {
+                    title: "🛒 নতুন অর্ডার Received",
+                    color: 0x00ff00,
+                    fields: [
+                        {
+                            name: "🆔 Order ID",
+                            value: "`" + orderData.orderId + "`",
+                            inline: false
+                        },
+                        {
+                            name: "🎮 In-Game Name",
+                            value: orderData.ingameName || "প্রদান করা হয়নি",
+                            inline: true
+                        },
+                        {
+                            name: "⭐ Rank",
+                            value: orderData.rank,
+                            inline: true
+                        },
+                        {
+                            name: "🎁 Purchase Type",
+                            value: orderData.rewards,
+                            inline: true
+                        },
+                        {
+                            name: "💳 Payment Method",
+                            value: orderData.paymentMethod || "Unknown",
+                            inline: true
+                        },
+                        {
+                            name: "🕐 Order Time",
+                            value: new Date(orderData.timestamp).toLocaleString(),
+                            inline: true
+                        }
+                    ],
+                    footer: {
+                        text: "Drk Survraze SMP - Order System"
+                    },
+                    timestamp: orderData.timestamp
+                };
+
+                content = "📬 **নতুন অর্ডার Received!** @everyone";
+            }
+
+            // Create proper Discord buttons
+            const components = [
+                {
+                    type: 1, // ACTION_ROW
+                    components: [
+                        {
+                            type: 2, // BUTTON
+                            style: 3, // SUCCESS (Green)
+                            label: "✅ Approve Order",
+                            custom_id: `approve_${orderData.orderId}`
+                        },
+                        {
+                            type: 2, // BUTTON
+                            style: 4, // DANGER (Red)
+                            label: "❌ Reject Order", 
+                            custom_id: `reject_${orderData.orderId}`
+                        }
+                    ]
+                }
+            ];
+
+            const payload = {
+                content: content,
+                embeds: [embed],
+                components: components,
+                allowed_mentions: {
+                    parse: ["everyone"]
+                }
+            };
+
+            try {
+                const response = await fetch(webhookURL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Webhook request failed: ${response.status}`);
+                }
+
+                return await response.json();
+            } catch (error) {
+                console.error('Error sending to Discord:', error);
+                throw error;
+            }
+        }
+
+        // bKash Payment Submission
+        async function submitBkashPayment() {
+            const userNumber = document.getElementById('userBkashNumber').value;
+            const trxId = document.getElementById('bkashTrxId').value;
+            const ingameName = document.getElementById('bkashIngameName').value;
+            const discordId = document.getElementById('bkashDiscordId').value;
+
+            if (!userNumber || !trxId || !ingameName || !discordId) {
+                showAlert('Please fill in all required fields', 'warning');
+                return;
+            }
+
+            const orderData = {
+                orderId: currentOrderId,
+                timestamp: new Date().toISOString(),
+                rank: selectedRank,
+                rewards: selectedRewards,
+                paymentMethod: 'bKash',
+                userNumber: userNumber,
+                trxId: trxId,
+                ingameName: ingameName,
+                discordId: discordId,
+                status: 'pending',
+                money: selectedMoney,
+                tokens: selectedTokens
+            };
+
+            try {
+                // Send to Discord Webhook
+                await sendToDiscordWebhook(orderData);
+                saveOrderLocally(orderData);
+                goToStep3();
+                showAlert('bKash order submitted successfully! Staff will review your payment.', 'success');
+            } catch (error) {
+                console.error('Error:', error);
+                saveOrderLocally(orderData);
+                goToStep3();
+                showAlert('Order submitted! Please wait for confirmation.', 'info');
+            }
+        }
+
+        // Nagad Payment Submission
+        async function submitNagadPayment() {
+            const userNumber = document.getElementById('userNagadNumber').value;
+            const trxId = document.getElementById('nagadTrxId').value;
+            const ingameName = document.getElementById('nagadIngameName').value;
+            const discordId = document.getElementById('nagadDiscordId').value;
+
+            if (!userNumber || !trxId || !ingameName || !discordId) {
+                showAlert('Please fill in all required fields', 'warning');
+                return;
+            }
+
+            const orderData = {
+                orderId: currentOrderId,
+                timestamp: new Date().toISOString(),
+                rank: selectedRank,
+                rewards: selectedRewards,
+                paymentMethod: 'Nagad',
+                userNumber: userNumber,
+                trxId: trxId,
+                ingameName: ingameName,
+                discordId: discordId,
+                status: 'pending',
+                money: selectedMoney,
+                tokens: selectedTokens
+            };
+
+            try {
+                // Send to Discord Webhook
+                await sendToDiscordWebhook(orderData);
+                saveOrderLocally(orderData);
+                goToStep3();
+                showAlert('Nagad order submitted successfully! Staff will review your payment.', 'success');
+            } catch (error) {
+                console.error('Error:', error);
+                saveOrderLocally(orderData);
+                goToStep3();
+                showAlert('Order submitted! Please wait for confirmation.', 'info');
+            }
+        }
+
+        function saveOrderLocally(orderData) {
+            const orders = JSON.parse(localStorage.getItem('pendingOrders') || '[]');
+            orders.push(orderData);
+            localStorage.setItem('pendingOrders', JSON.stringify(orders));
+            console.log('Order saved locally:', orderData);
+        }
+
+        function resetPaymentForms() {
+            selectedPaymentMethod = '';
+            document.querySelectorAll('.payment-method').forEach(el => {
+                el.classList.remove('selected');
+            });
+            document.getElementById('nextStepBtn').disabled = true;
+            
+            // Clear all form fields
+            document.querySelectorAll('.payment-form input, .payment-form select, .payment-form textarea').forEach(field => {
+                field.value = '';
+            });
+        }
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.background = 'rgba(10, 10, 10, 0.95)';
+            } else {
+                navbar.style.background = 'rgba(18, 18, 18, 0.95)';
+            }
+        });
+        
+        // Initialize animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            });
+            
+            document.querySelectorAll('.server-card, .vote-site-card, .store-item').forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(50px)';
+                card.style.transition = 'all 0.6s ease';
+                observer.observe(card);
+            });
+            
+            // Discord channel hover effects
+            const channels = document.querySelectorAll('.channel');
+            channels.forEach(channel => {
+                channel.addEventListener('click', function() {
+                    channels.forEach(c => c.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+        });
+
+        // Close modal when clicking outside
+        window.addEventListener('click', function(event) {
+            const modal = document.getElementById('paymentModal');
+            if (event.target === modal) {
+                closePaymentModal();
+            }
+            
+            const ingameModal = document.getElementById('ingameMoneyModal');
+            if (event.target === ingameModal) {
+                closeIngameMoneyModal();
+            }
+        });
+    </script>
+</body>
+</html>

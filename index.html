@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        /* Existing CSS styles remain the same */
         :root {
             --primary: #4CAF50;
             --primary-dark: #388E3C;
@@ -455,6 +456,66 @@
             color: white;
         }
         
+        /* Custom Rank Specific Styles */
+        .custom-rank-badge {
+            background: linear-gradient(45deg, #FF4081, #F50057);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 1.2em;
+            display: inline-block;
+            margin: 15px 0;
+            animation: pulse 2s infinite;
+        }
+        
+        .color-preview {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 10px;
+            border: 2px solid white;
+        }
+        
+        .color-option {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .color-option:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .color-option.selected {
+            background: rgba(255, 64, 129, 0.2);
+            border: 2px solid #FF4081;
+        }
+        
+        .feature-checklist {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .feature-checklist-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .feature-checklist-item i {
+            color: var(--primary);
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+        
         /* Payment Modal Styles */
         .payment-modal {
             display: none;
@@ -472,7 +533,7 @@
             background: var(--dark);
             margin: 5% auto;
             width: 90%;
-            max-width: 600px;
+            max-width: 700px;
             border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
@@ -801,8 +862,8 @@
         <div class="container">
             <h2 class="section-title minecraft-font">SERVER STORE</h2>
             <p class="text-center text-muted mb-5 fs-5">Upgrade your experience with our premium ranks and packages!</p>
-            <h4 class="text-center mb-5 fs-5 minecraft-font text-white">
-                  <!-- Token Purchase Box -->
+            
+            <!-- Token Purchase Box -->
             <div class="token-purchase-box">
                 <h4 class="minecraft-font mb-3"><i class="fas fa-coins me-2"></i>TOKEN PURCHASE</h4>
                 <div class="token-badge fs-6">1 BDT = 12 TOKENS</div>
@@ -831,24 +892,20 @@
                 <button class="btn btn-primary-custom w-100" onclick="openTokenPurchaseModal()">
                     <i class="fas fa-shopping-cart me-2"></i>TOKEN PURCHASE
                 </button>
-                
-            </h4>
+            </div>
 
             <div class="row g-4">
                 <div class="col-md-4">
                     <div class="store-item">
                         <h4 class="minecraft-font mb-3">VIP RANK</h4>
-                         <div class="token-badge">1500 TOKENS = 125 BDT</div>
+                        <div class="token-badge">1500 TOKENS = 125 BDT</div>
                         <div class="offer-badge">SPECIAL OFFER - PURCHASE WITH INGAME MONEY</div>
                         <ul class="list-unstyled text-start mb-4">
                             <li class="mb-2"><i class="fas fa-check text-success me-2"></i>VIP Prefix in Chat</li>
-                          
                             <li class="mb-2"><i class="fas fa-check text-success me-2"></i>3 Homes</li>
-                            
                             <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Colorful Nickname [Golden]</li>
                             <li class="mb-2"><i class="fas fa-check text-success me-2"></i>VIP Kits</li>
                             <li class="mb-2"><i class="fas fa-check text-success me-2"></i>/back</li>
-
                         </ul>
                         <button class="btn btn-primary-custom w-100" onclick="openPaymentModal('VIP Rank', '1500 Tokens', 'VIP', 0, 1500)">
                             <i class="fas fa-shopping-cart me-2"></i>Purchase with Token
@@ -858,6 +915,7 @@
                         </button>
                     </div>
                 </div>
+                
                 <div class="col-md-4">
                     <div class="store-item">
                         <h4 class="minecraft-font mb-3">MVP RANK</h4>
@@ -867,7 +925,7 @@
                             <li class="mb-2"><i class="fas fa-check text-success me-2"></i>MVP Prefix in Chat</li>
                             <li class="mb-2"><i class="fas fa-check text-success me-2"></i>5 Homes</li>
                             <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Colorful Nickname [Mix of Pink and Purple]</li>
-                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>MVP Kits </li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>MVP Kits</li>
                             <li class="mb-2"><i class="fas fa-check text-success me-2"></i>/afk</li>
                             <li class="mb-2"><i class="fas fa-check text-success me-2"></i>/anvil</li>
                             <li class="mb-2"><i class="fas fa-check text-success me-2"></i>/griendstone</li>
@@ -878,6 +936,7 @@
                         </button>
                     </div>
                 </div>
+                
                 <div class="col-md-4">
                     <div class="store-item">
                         <h4 class="minecraft-font mb-3">ELITE RANK</h4>
@@ -890,9 +949,6 @@
                             <li class="mb-2"><i class="fas fa-check text-success me-2"></i>7 Homes</li>
                             <li class="mb-2"><i class="fas fa-check text-success me-2"></i>/repair</li>
                             <li class="mb-2"><i class="fas fa-check text-success me-2"></i>/hat</li>
-                                 
-                            
-                            
                         </ul>
                         <button class="btn btn-primary-custom w-100" onclick="openPaymentModal('Elite Rank', '3500 Tokens', 'ELITE', 0, 3500)">
                             <i class="fas fa-shopping-cart me-2"></i>Purchase with Token
@@ -900,34 +956,47 @@
                     </div>
                 </div>
 
- <div class="col-md-4">
+                <!-- Custom Rank Card -->
+                <div class="col-md-6 offset-md-3">
                     <div class="store-item">
-                        <h4 class="minecraft-font mb-3">CUSTOM RANK</h4>
-                        <div class="token-badge">500 BDT</div>
-                        <ul class="list-unstyled text-start mb-4">
-                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Previous Rank's All Features [Default, VIP, MVP, ELITE]</li>
-                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Custom Prefix In Chat [Anything You Want]</li>
-                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Colourful Name [Any colour you want]</li>
-                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Colorful Nickname [Mix of Pink and Purple]</li>
-                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Custom Kits</li>
-                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>10 Home</li>
-                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>/Fly</li>
-                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>/Feed</li>
-                            
-                        </ul>
-                        <button class="btn btn-primary-custom w-100" onclick="openPaymentModal('MVP Rank', '2200 Tokens', 'MVP', 0, 2200)">
-                            <i class="fas fa-shopping-cart me-2"></i>Purchase with Token
+                        <h4 class="minecraft-font mb-3">🎨 CUSTOM RANK</h4>
+                        <div class="custom-rank-badge">500 BDT / 6000 TOKENS</div>
+                        <div class="feature-checklist">
+                            <div class="feature-checklist-item">
+                                <i class="fas fa-star"></i>
+                                <span>Previous Rank's All Features [Default, VIP, MVP, ELITE]</span>
+                            </div>
+                            <div class="feature-checklist-item">
+                                <i class="fas fa-font"></i>
+                                <span>Custom Prefix In Chat [Anything You Want]</span>
+                            </div>
+                            <div class="feature-checklist-item">
+                                <i class="fas fa-palette"></i>
+                                <span>Colourful Name [Any colour you want]</span>
+                            </div>
+                            <div class="feature-checklist-item">
+                                <i class="fas fa-gift"></i>
+                                <span>Custom Kits</span>
+                            </div>
+                            <div class="feature-checklist-item">
+                                <i class="fas fa-home"></i>
+                                <span>10 Homes</span>
+                            </div>
+                            <div class="feature-checklist-item">
+                                <i class="fas fa-feather-alt"></i>
+                                <span>/Fly Command</span>
+                            </div>
+                            <div class="feature-checklist-item">
+                                <i class="fas fa-utensils"></i>
+                                <span>/Feed Command</span>
+                            </div>
+                        </div>
+                        <p class="text-muted mb-3">Design your own unique rank with custom features!</p>
+                        <button class="btn btn-primary-custom w-100" onclick="openCustomRankModal()">
+                            <i class="fas fa-crown me-2"></i>Design Custom Rank
                         </button>
                     </div>
                 </div>
-
-
-
-                
-            </div>
-
-
-        
             </div>
         </div>
     </section>
@@ -1125,83 +1194,120 @@
         </div>
     </footer>
 
-    <!-- Payment Modal -->
-    <div id="paymentModal" class="payment-modal">
+    <!-- Custom Rank Modal -->
+    <div id="customRankModal" class="payment-modal">
         <div class="payment-content">
-            <button class="close-modal" onclick="closePaymentModal()">&times;</button>
+            <button class="close-modal" onclick="closeCustomRankModal()">&times;</button>
             <div class="payment-header">
-                <h3 class="minecraft-font mb-0">Complete Your Purchase</h3>
+                <h3 class="minecraft-font mb-0">🎨 Design Your Custom Rank</h3>
             </div>
             <div class="payment-body">
                 <div class="payment-steps">
                     <div class="payment-step">
                         <div class="step-number active">1</div>
-                        <div class="step-name active">Payment Method</div>
+                        <div class="step-name active">Rank Details</div>
                     </div>
                     <div class="payment-step">
-                        <div class="step-number" id="step2">2</div>
-                        <div class="step-name" id="step2Name">Payment Details</div>
+                        <div class="step-number" id="customStep2">2</div>
+                        <div class="step-name" id="customStep2Name">Payment</div>
                     </div>
                     <div class="payment-step">
-                        <div class="step-number" id="step3">3</div>
-                        <div class="step-name" id="step3Name">Complete</div>
+                        <div class="step-number" id="customStep3">3</div>
+                        <div class="step-name" id="customStep3Name">Complete</div>
                     </div>
                 </div>
                 
-                <div class="payment-summary">
-                    <h4 id="selectedRank" class="minecraft-font">VIP Rank</h4>
-                    <p class="mb-2">Purchase Type: <span id="selectedRewards" class="price-tag">1500 Tokens</span></p>
-                    <p class="text-muted">Please complete the payment to receive your rank</p>
-                </div>
-                
-                <!-- Step 1: Payment Method Selection -->
-                <div id="paymentMethodStep">
-                    <h5 class="mb-3">Select Payment Method</h5>
-                    <div class="payment-methods mb-4">
-                        <div class="payment-method" onclick="selectPaymentMethod('bkash')">
-                            <div class="d-flex align-items-center">
-                                <i class="fas fa-mobile-alt fa-2x me-3" style="color: #E2136E;"></i>
-                                <div>
-                                    <h6 class="mb-1">bKash</h6>
-                                    <p class="text-muted mb-0">Pay with bKash Mobile Banking</p>
-                                </div>
+                <!-- Step 1: Rank Details -->
+                <div id="customRankStep1">
+                    <div class="payment-summary mb-4">
+                        <h4 class="minecraft-font">CUSTOM RANK</h4>
+                        <div class="custom-rank-badge">500 BDT / 6000 TOKENS</div>
+                        <p class="text-muted mt-2">Configure your custom rank settings below</p>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Custom Rank Name *</label>
+                                <input type="text" id="customRankName" class="form-control" placeholder="Enter your desired rank name" maxlength="20">
+                                <small class="text-muted">Maximum 20 characters</small>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Custom Prefix in Chat *</label>
+                                <input type="text" id="customPrefix" class="form-control" placeholder="e.g. [KING], [GOD], [LEGEND]" maxlength="15">
+                                <small class="text-muted">This will appear before your name in chat</small>
                             </div>
                         </div>
-                        <div class="payment-method" onclick="selectPaymentMethod('nagad')">
-                            <div class="d-flex align-items-center">
-                                <i class="fas fa-wallet fa-2x me-3" style="color: #F12C14;"></i>
-                                <div>
-                                    <h6 class="mb-1">Nagad</h6>
-                                    <p class="text-muted mb-0">Pay with Nagad Mobile Banking</p>
-                                </div>
+                        
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Name Color *</label>
+                                <select id="nameColor" class="form-select">
+                                    <option value="">Select Color</option>
+                                    <option value="RED">🔴 Red</option>
+                                    <option value="GOLD">🟡 Gold</option>
+                                    <option value="GREEN">🟢 Green</option>
+                                    <option value="AQUA">🔵 Aqua</option>
+                                    <option value="LIGHT_PURPLE">🟣 Purple</option>
+                                    <option value="YELLOW">⭐ Yellow</option>
+                                    <option value="WHITE">⚪ White</option>
+                                    <option value="GRADIENT">🌈 Gradient</option>
+                                    <option value="RAINBOW">🎨 Rainbow</option>
+                                    <option value="CUSTOM">🎨 Custom (Specify in notes)</option>
+                                </select>
                             </div>
-                        </div>
-                        <div class="payment-method" onclick="selectPaymentMethod('discord')">
-                            <div class="d-flex align-items-center">
-                                <i class="fab fa-discord fa-2x me-3" style="color: #5865F2;"></i>
-                                <div>
-                                    <h6 class="mb-1">Discord Payment</h6>
-                                    <p class="text-muted mb-0">Complete payment via Discord</p>
-                                </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Additional Features Request</label>
+                                <textarea id="customFeatures" class="form-control" rows="3" placeholder="Any specific commands or features you want? (e.g., /heal, /fly, custom kits etc.)"></textarea>
                             </div>
                         </div>
                     </div>
                     
-                    <button class="btn btn-primary-custom w-100" id="nextStepBtn" onclick="goToStep2()" disabled>
-                        Next Step <i class="fas fa-arrow-right ms-2"></i>
+                    <div class="mb-3">
+                        <label class="form-label">Your In-Game Name *</label>
+                        <input type="text" id="customIngameName" class="form-control" placeholder="Enter your Minecraft username" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Your Discord ID *</label>
+                        <input type="text" id="customDiscordId" class="form-control" placeholder="YourDiscord#1234" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Payment Method *</label>
+                        <select id="customPaymentMethod" class="form-select" onchange="toggleCustomPaymentMethod()">
+                            <option value="">Select Payment Method</option>
+                            <option value="TOKEN">🪙 Purchase with Tokens (6000 Tokens)</option>
+                            <option value="BKASH">💰 bKash (500 BDT)</option>
+                            <option value="NAGAD">💰 Nagad (500 BDT)</option>
+                            <option value="DISCORD">📱 Discord Payment</option>
+                        </select>
+                    </div>
+                    
+                    <div id="customTokenInfo" style="display: none;">
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle me-2"></i>
+                            <strong>Token Purchase:</strong> You need 6000 tokens for Custom Rank. If you don't have enough tokens, purchase them first from the token section.
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-primary-custom w-100" onclick="goToCustomStep2()">
+                        Continue to Payment <i class="fas fa-arrow-right ms-2"></i>
                     </button>
                 </div>
                 
                 <!-- Step 2: Payment Details -->
-                <div id="paymentDetailsStep" style="display: none;">
+                <div id="customRankStep2" style="display: none;">
                     <!-- bKash Payment Form -->
-                    <div id="bkashForm" class="payment-form" style="display: none;">
+                    <div id="customBkashForm" class="payment-form" style="display: none;">
                         <div class="payment-instruction">
                             <h5><i class="fas fa-info-circle me-2"></i>Payment Instructions</h5>
-                            <p class="mb-2">1. Send payment to our bKash number:</p>
+                            <p class="mb-2">1. Send 500 BDT to our bKash number:</p>
                             <div class="ip-box mb-3">
-                                <code id="bkashNumber">01980583573</code>
-                                <button class="copy-btn ms-2" onclick="copyText('bkashNumber')">
+                                <code id="customBkashNumber">01980583573</code>
+                                <button class="copy-btn ms-2" onclick="copyText('customBkashNumber')">
                                     <i class="fas fa-copy me-1"></i>Copy
                                 </button>
                             </div>
@@ -1210,34 +1316,26 @@
                         
                         <div class="mb-3">
                             <label class="form-label">Your bKash Number *</label>
-                            <input type="text" id="userBkashNumber" placeholder="01XXXXXXXXX" required>
+                            <input type="text" id="customUserBkash" placeholder="01XXXXXXXXX" required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Transaction ID (TrxID) *</label>
-                            <input type="text" id="bkashTrxId" placeholder="Enter your bKash TrxID" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Your In-Game Name *</label>
-                            <input type="text" id="bkashIngameName" placeholder="Enter your Minecraft username" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Your Discord ID *</label>
-                            <input type="text" id="bkashDiscordId" placeholder="YourDiscord#1234" required>
+                            <input type="text" id="customBkashTrxId" placeholder="Enter your bKash TrxID" required>
                         </div>
                         
-                        <button class="btn btn-primary-custom w-100" onclick="submitBkashPayment()">
-                            <i class="fas fa-paper-plane me-2"></i>Submit Order
+                        <button class="btn btn-primary-custom w-100" onclick="submitCustomRankPayment()">
+                            <i class="fas fa-paper-plane me-2"></i>Submit Custom Rank Order
                         </button>
                     </div>
                     
                     <!-- Nagad Payment Form -->
-                    <div id="nagadForm" class="payment-form" style="display: none;">
+                    <div id="customNagadForm" class="payment-form" style="display: none;">
                         <div class="payment-instruction">
                             <h5><i class="fas fa-info-circle me-2"></i>Payment Instructions</h5>
-                            <p class="mb-2">1. Send payment to our Nagad number:</p>
+                            <p class="mb-2">1. Send 500 BDT to our Nagad number:</p>
                             <div class="ip-box mb-3">
-                                <code id="nagadNumber">01980583573</code>
-                                <button class="copy-btn ms-2" onclick="copyText('nagadNumber')">
+                                <code id="customNagadNumber">01980583573</code>
+                                <button class="copy-btn ms-2" onclick="copyText('customNagadNumber')">
                                     <i class="fas fa-copy me-1"></i>Copy
                                 </button>
                             </div>
@@ -1246,44 +1344,45 @@
                         
                         <div class="mb-3">
                             <label class="form-label">Your Nagad Number *</label>
-                            <input type="text" id="userNagadNumber" placeholder="01XXXXXXXXX" required>
+                            <input type="text" id="customUserNagad" placeholder="01XXXXXXXXX" required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Transaction ID (TrxID) *</label>
-                            <input type="text" id="nagadTrxId" placeholder="Enter your Nagad TrxID" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Your In-Game Name *</label>
-                            <input type="text" id="nagadIngameName" placeholder="Enter your Minecraft username" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Your Discord ID *</label>
-                            <input type="text" id="nagadDiscordId" placeholder="YourDiscord#1234" required>
+                            <input type="text" id="customNagadTrxId" placeholder="Enter your Nagad TrxID" required>
                         </div>
                         
-                        <button class="btn btn-primary-custom w-100" onclick="submitNagadPayment()">
-                            <i class="fas fa-paper-plane me-2"></i>Submit Order
+                        <button class="btn btn-primary-custom w-100" onclick="submitCustomRankPayment()">
+                            <i class="fas fa-paper-plane me-2"></i>Submit Custom Rank Order
+                        </button>
+                    </div>
+                    
+                    <!-- Token Payment Form -->
+                    <div id="customTokenForm" class="payment-form" style="display: none;">
+                        <div class="payment-instruction">
+                            <h5><i class="fas fa-coins me-2"></i>Token Payment Instructions</h5>
+                            <p class="mb-3">You're purchasing Custom Rank using 6000 tokens. Make sure you have enough tokens in your account.</p>
+                        </div>
+                        
+                        <div class="alert alert-warning">
+                            <i class="fas fa-exclamation-triangle me-2"></i>
+                            <strong>Important:</strong> Your tokens will be deducted automatically after order confirmation.
+                        </div>
+                        
+                        <button class="btn btn-primary-custom w-100" onclick="submitCustomRankPayment()">
+                            <i class="fas fa-check-circle me-2"></i>Confirm Token Payment (6000 Tokens)
                         </button>
                     </div>
                     
                     <!-- Discord Payment Form -->
-                    <div id="discordForm" class="payment-form" style="display: none;">
+                    <div id="customDiscordForm" class="payment-form" style="display: none;">
                         <div class="payment-instruction">
                             <h5><i class="fab fa-discord me-2"></i>Discord Payment Process</h5>
-                            <p class="mb-3">Complete your payment by filling the form below. Our Discord bot will automatically process your order!</p>
+                            <p class="mb-3">Complete your payment by filling the form below. Our staff will contact you on Discord.</p>
                         </div>
                         
                         <div class="mb-3">
-                            <label class="form-label">Your Discord Username *</label>
-                            <input type="text" id="discordUsername" placeholder="YourDiscord#1234" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Your In-Game Name *</label>
-                            <input type="text" id="discordIngameName" placeholder="Enter your Minecraft username" required>
-                        </div>
-                        <div class="mb-3">
                             <label class="form-label">Payment Method *</label>
-                            <select id="discordPaymentMethod" class="form-select">
+                            <select id="customDiscordPaymentMethod" class="form-select">
                                 <option value="">Select Payment Method</option>
                                 <option value="PayPal">PayPal</option>
                                 <option value="Stripe">Stripe</option>
@@ -1291,12 +1390,13 @@
                                 <option value="Other">Other</option>
                             </select>
                         </div>
+                        
                         <div class="mb-3">
                             <label class="form-label">Additional Notes</label>
-                            <textarea id="discordNotes" class="form-control" rows="3" placeholder="Any additional information about your payment..."></textarea>
+                            <textarea id="customDiscordNotes" class="form-control" rows="3" placeholder="Any additional information about your payment..."></textarea>
                         </div>
                         
-                        <button class="btn discord-widget w-100" onclick="submitDiscordPayment()">
+                        <button class="btn discord-widget w-100" onclick="submitCustomDiscordPayment()">
                             <i class="fab fa-discord me-2"></i>Submit Order via Discord
                         </button>
                         
@@ -1306,293 +1406,39 @@
                         </div>
                     </div>
                     
-                    <button class="btn btn-secondary-custom w-100 mt-3" onclick="goToStep1()">
+                    <button class="btn btn-secondary-custom w-100 mt-3" onclick="goToCustomStep1()">
                         <i class="fas fa-arrow-left me-2"></i>Back
                     </button>
                 </div>
                 
                 <!-- Step 3: Completion -->
-                <div id="completionStep" style="display: none;">
+                <div id="customRankStep3" style="display: none;">
                     <div class="text-center py-4">
                         <i class="fas fa-check-circle fa-5x text-success mb-3"></i>
-                        <h4 class="minecraft-font">Order Submitted Successfully!</h4>
-                        <p class="mb-4" id="completionMessage">Your order has been received and will be processed shortly.</p>
+                        <h4 class="minecraft-font">Custom Rank Order Submitted!</h4>
+                        <p class="mb-4" id="customCompletionMessage">Your custom rank design has been received and will be processed shortly.</p>
                         
-                        <div id="discordInstructions" style="display: none;">
-                            <div class="alert alert-info mt-3">
-                                <h6><i class="fab fa-discord me-2"></i>Next Steps:</h6>
-                                <p class="mb-1">1. Join our Discord server</p>
-                                <p class="mb-1">2. Check your DM for payment information</p>
-                                <p class="mb-0">3. If there is any problem, please create a ticket on Discord. </p>
-                            </div>
-                            <a href="https://discord.gg/SjefnHedt" target="_blank" class="btn discord-widget mt-2">
-                                <i class="fab fa-discord me-2"></i>Join Discord Now
-                            </a>
+                        <div id="customRankSummary" class="payment-summary mb-4">
+                            <h5 class="minecraft-font">Order Summary</h5>
+                            <p class="mb-1"><strong>Rank Name:</strong> <span id="summaryRankName"></span></p>
+                            <p class="mb-1"><strong>Prefix:</strong> <span id="summaryPrefix"></span></p>
+                            <p class="mb-1"><strong>Color:</strong> <span id="summaryColor"></span></p>
+                            <p class="mb-1"><strong>In-Game Name:</strong> <span id="summaryIngameName"></span></p>
+                            <p class="mb-1"><strong>Payment Method:</strong> <span id="summaryPaymentMethod"></span></p>
                         </div>
                         
-                        <button class="btn btn-primary-custom mt-3" onclick="closePaymentModal()">
+                        <div class="alert alert-info mt-3">
+                            <h6><i class="fab fa-discord me-2"></i>Next Steps:</h6>
+                            <p class="mb-1">1. Join our Discord server</p>
+                            <p class="mb-1">2. Check your DM for payment information</p>
+                            <p class="mb-0">3. Our staff will contact you to finalize your custom rank design</p>
+                        </div>
+                        <a href="https://discord.gg/SjefnHedt" target="_blank" class="btn discord-widget mt-2">
+                            <i class="fab fa-discord me-2"></i>Join Discord Now
+                        </a>
+                        
+                        <button class="btn btn-primary-custom mt-3" onclick="closeCustomRankModal()">
                             <i class="fas fa-check me-2"></i>Done
-                        </button>
-                    </div>
-                </div>
-                
-                <div class="mt-4 text-center">
-                    <p class="text-muted small">By completing this purchase, you agree to our <a href="#" class="text-primary">Terms of Service</a></p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Token Purchase Modal -->
-    <div id="tokenPurchaseModal" class="payment-modal">
-        <div class="payment-content">
-            <button class="close-modal" onclick="closeTokenPurchaseModal()">&times;</button>
-            <div class="payment-header">
-                <h3 class="minecraft-font mb-0">Purchase Tokens</h3>
-            </div>
-            <div class="payment-body">
-                <div class="payment-steps">
-                    <div class="payment-step">
-                        <div class="step-number active">1</div>
-                        <div class="step-name active">Payment Method</div>
-                    </div>
-                    <div class="payment-step">
-                        <div class="step-number" id="tokenStep2">2</div>
-                        <div class="step-name" id="tokenStep2Name">Payment Details</div>
-                    </div>
-                    <div class="payment-step">
-                        <div class="step-number" id="tokenStep3">3</div>
-                        <div class="step-name" id="tokenStep3Name">Complete</div>
-                    </div>
-                </div>
-                
-                <div class="payment-summary">
-                    <h4 id="tokenPurchaseTitle" class="minecraft-font">Token Purchase</h4>
-                    <p class="mb-2">Tokens: <span id="selectedTokens" class="token-badge">0 Tokens</span></p>
-                    <p class="mb-2">Amount: <span id="selectedBDT" class="price-tag">0 BDT</span></p>
-                    <p class="text-muted">Please complete the payment to receive your tokens</p>
-                </div>
-                
-                <!-- Step 1: Payment Method Selection -->
-                <div id="tokenPaymentMethodStep">
-                    <h5 class="mb-3">Select Payment Method</h5>
-                    <div class="payment-methods mb-4">
-                        <div class="payment-method" onclick="selectTokenPaymentMethod('bkash')">
-                            <div class="d-flex align-items-center">
-                                <i class="fas fa-mobile-alt fa-2x me-3" style="color: #E2136E;"></i>
-                                <div>
-                                    <h6 class="mb-1">bKash</h6>
-                                    <p class="text-muted mb-0">Pay with bKash Mobile Banking</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="payment-method" onclick="selectTokenPaymentMethod('nagad')">
-                            <div class="d-flex align-items-center">
-                                <i class="fas fa-wallet fa-2x me-3" style="color: #F12C14;"></i>
-                                <div>
-                                    <h6 class="mb-1">Nagad</h6>
-                                    <p class="text-muted mb-0">Pay with Nagad Mobile Banking</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="payment-method" onclick="selectTokenPaymentMethod('discord')">
-                            <div class="d-flex align-items-center">
-                                <i class="fab fa-discord fa-2x me-3" style="color: #5865F2;"></i>
-                                <div>
-                                    <h6 class="mb-1">Discord Payment</h6>
-                                    <p class="text-muted mb-0">Complete payment via Discord</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <button class="btn btn-primary-custom w-100" id="tokenNextStepBtn" onclick="goToTokenStep2()" disabled>
-                        Next Step <i class="fas fa-arrow-right ms-2"></i>
-                    </button>
-                </div>
-                
-                <!-- Step 2: Payment Details -->
-                <div id="tokenPaymentDetailsStep" style="display: none;">
-                    <!-- bKash Payment Form -->
-                    <div id="tokenBkashForm" class="payment-form" style="display: none;">
-                        <div class="payment-instruction">
-                            <h5><i class="fas fa-info-circle me-2"></i>Payment Instructions</h5>
-                            <p class="mb-2">1. Send payment to our bKash number:</p>
-                            <div class="ip-box mb-3">
-                                <code id="tokenBkashNumber">01980583573</code>
-                                <button class="copy-btn ms-2" onclick="copyText('tokenBkashNumber')">
-                                    <i class="fas fa-copy me-1"></i>Copy
-                                </button>
-                            </div>
-                            <p class="mb-2">2. Fill out the form below with your payment details</p>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label class="form-label">Your bKash Number *</label>
-                            <input type="text" id="tokenUserBkashNumber" placeholder="01XXXXXXXXX" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Transaction ID (TrxID) *</label>
-                            <input type="text" id="tokenBkashTrxId" placeholder="Enter your bKash TrxID" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Your In-Game Name *</label>
-                            <input type="text" id="tokenBkashIngameName" placeholder="Enter your Minecraft username" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Your Discord ID *</label>
-                            <input type="text" id="tokenBkashDiscordId" placeholder="YourDiscord#1234" required>
-                        </div>
-                        
-                        <button class="btn btn-primary-custom w-100" onclick="submitTokenBkashPayment()">
-                            <i class="fas fa-paper-plane me-2"></i>Submit Order
-                        </button>
-                    </div>
-                    
-                    <!-- Nagad Payment Form -->
-                    <div id="tokenNagadForm" class="payment-form" style="display: none;">
-                        <div class="payment-instruction">
-                            <h5><i class="fas fa-info-circle me-2"></i>Payment Instructions</h5>
-                            <p class="mb-2">1. Send payment to our Nagad number:</p>
-                            <div class="ip-box mb-3">
-                                <code id="tokenNagadNumber">01980583573</code>
-                                <button class="copy-btn ms-2" onclick="copyText('tokenNagadNumber')">
-                                    <i class="fas fa-copy me-1"></i>Copy
-                                </button>
-                            </div>
-                            <p class="mb-2">2. Fill out the form below with your payment details</p>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label class="form-label">Your Nagad Number *</label>
-                            <input type="text" id="tokenUserNagadNumber" placeholder="01XXXXXXXXX" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Transaction ID (TrxID) *</label>
-                            <input type="text" id="tokenNagadTrxId" placeholder="Enter your Nagad TrxID" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Your In-Game Name *</label>
-                            <input type="text" id="tokenNagadIngameName" placeholder="Enter your Minecraft username" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Your Discord ID *</label>
-                            <input type="text" id="tokenNagadDiscordId" placeholder="YourDiscord#1234" required>
-                        </div>
-                        
-                        <button class="btn btn-primary-custom w-100" onclick="submitTokenNagadPayment()">
-                            <i class="fas fa-paper-plane me-2"></i>Submit Order
-                        </button>
-                    </div>
-                    
-                    <!-- Discord Payment Form -->
-                    <div id="tokenDiscordForm" class="payment-form" style="display: none;">
-                        <div class="payment-instruction">
-                            <h5><i class="fab fa-discord me-2"></i>Discord Payment Process</h5>
-                            <p class="mb-3">Complete your payment by filling the form below. Our Discord bot will automatically process your order!</p>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label class="form-label">Your Discord Username *</label>
-                            <input type="text" id="tokenDiscordUsername" placeholder="YourDiscord#1234" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Your In-Game Name *</label>
-                            <input type="text" id="tokenDiscordIngameName" placeholder="Enter your Minecraft username" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Payment Method *</label>
-                            <select id="tokenDiscordPaymentMethod" class="form-select">
-                                <option value="">Select Payment Method</option>
-                                <option value="PayPal">PayPal</option>
-                                <option value="Stripe">Stripe</option>
-                                <option value="Credit Card">Credit Card</option>
-                                <option value="Other">Other</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Additional Notes</label>
-                            <textarea id="tokenDiscordNotes" class="form-control" rows="3" placeholder="Any additional information about your payment..."></textarea>
-                        </div>
-                        
-                        <button class="btn discord-widget w-100" onclick="submitTokenDiscordPayment()">
-                            <i class="fab fa-discord me-2"></i>Submit Order via Discord
-                        </button>
-                        
-                        <div class="mt-3 text-center">
-                            <p class="text-muted small">After submission, join our Discord server for further instructions</p>
-                            <a href="https://discord.gg/SjefnHedt" target="_blank" class="text-primary">Join Discord Server</a>
-                        </div>
-                    </div>
-                    
-                    <button class="btn btn-secondary-custom w-100 mt-3" onclick="goToTokenStep1()">
-                        <i class="fas fa-arrow-left me-2"></i>Back
-                    </button>
-                </div>
-                
-                <!-- Step 3: Completion -->
-                <div id="tokenCompletionStep" style="display: none;">
-                    <div class="text-center py-4">
-                        <i class="fas fa-check-circle fa-5x text-success mb-3"></i>
-                        <h4 class="minecraft-font">Token Order Submitted Successfully!</h4>
-                        <p class="mb-4" id="tokenCompletionMessage">Your token purchase has been received and will be processed shortly.</p>
-                        
-                        <div id="tokenDiscordInstructions" style="display: none;">
-                            <div class="alert alert-info mt-3">
-                                <h6><i class="fab fa-discord me-2"></i>Next Steps:</h6>
-                                <p class="mb-1">1. Join our Discord server</p>
-                                <p class="mb-1">2. Check your DM for payment information</p>
-                                <p class="mb-0">3. If there is any problem, please create a ticket on Discord. </p>
-                            </div>
-                            <a href="https://discord.gg/SjefnHedt" target="_blank" class="btn discord-widget mt-2">
-                                <i class="fab fa-discord me-2"></i>Join Discord Now
-                            </a>
-                        </div>
-                        
-                        <button class="btn btn-primary-custom mt-3" onclick="closeTokenPurchaseModal()">
-                            <i class="fas fa-check me-2"></i>Done
-                        </button>
-                    </div>
-                </div>
-                
-                <div class="mt-4 text-center">
-                    <p class="text-muted small">By completing this purchase, you agree to our <a href="#" class="text-primary">Terms of Service</a></p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- InGame Money Modal -->
-    <div id="ingameMoneyModal" class="payment-modal">
-        <div class="payment-content">
-            <button class="close-modal" onclick="closeIngameMoneyModal()">&times;</button>
-            <div class="payment-header">
-                <h3 class="minecraft-font mb-0">Complete Your Purchase</h3>
-            </div>
-            <div class="payment-body">
-                <div class="payment-summary">
-                    <h4 id="ingameSelectedRank" class="minecraft-font">VIP Rank</h4>
-                    <p class="mb-2">Purchase Type: <span id="ingameSelectedRewards" class="price-tag">400K InGame Money</span></p>
-                    <p class="text-muted">Please complete the following steps to receive your rank</p>
-                </div>
-                
-                <div class="ingame-money-form">
-                    <h5 class="mb-3"><i class="fas fa-gamepad me-2"></i>Join Our Server</h5>
-                    <p class="mb-3">Copy the server IP below and join our Minecraft server to complete your purchase!</p>
-                    
-                    <div class="ip-box mb-4">
-                        <code class="fs-5">play.drksurvraze.top:25655</code>
-                        <button class="copy-btn ms-2" onclick="copyIP()">
-                            <i class="fas fa-copy me-1"></i>Copy IP
-                        </button>
-                    </div>
-                    
-                    <div class="minecraft-launch">
-                        <h6 class="mb-3">Ready to Play?</h6>
-                        <p class="mb-3">Click the button below to open Minecraft and join our server!</p>
-
-                        <button class="btn minecraft-btn w-100" onclick="launchMinecraft()">
-                            <i class="fas fa-play me-2"></i>Open Minecraft
                         </button>
                     </div>
                 </div>
@@ -1676,460 +1522,380 @@
             }
         }
 
-        // Token Purchase Modal Functions
-        let tokenAmount = 0;
-        let bdtAmount = 0;
-        let selectedTokenPaymentMethod = '';
-        
-        function openTokenPurchaseModal() {
-            const tokens = document.getElementById('tokenAmount').value;
-            
-            if (!tokens || tokens < 12) {
-                showAlert('Please enter a valid token amount (minimum 12 tokens)', 'warning');
-                return;
-            }
-            
-            tokenAmount = parseInt(tokens);
-            bdtAmount = Math.ceil(tokenAmount / 12);
-            
-            document.getElementById('selectedTokens').textContent = tokenAmount + ' Tokens';
-            document.getElementById('selectedBDT').textContent = bdtAmount + ' BDT';
-            document.getElementById('tokenPurchaseTitle').textContent = 'Token Purchase - ' + tokenAmount + ' Tokens';
-            
-            document.getElementById('tokenPurchaseModal').style.display = 'block';
+        // Custom Rank Modal Functions
+        function openCustomRankModal() {
+            document.getElementById('customRankModal').style.display = 'block';
             document.body.style.overflow = 'hidden';
-            
-            // Reset to step 1
-            goToTokenStep1();
+            goToCustomStep1();
         }
         
-        function closeTokenPurchaseModal() {
-            document.getElementById('tokenPurchaseModal').style.display = 'none';
+        function closeCustomRankModal() {
+            document.getElementById('customRankModal').style.display = 'none';
             document.body.style.overflow = 'auto';
-            resetTokenPaymentForms();
+            resetCustomRankForm();
         }
         
-        function selectTokenPaymentMethod(method) {
-            selectedTokenPaymentMethod = method;
-            
-            // Reset all payment methods
-            document.querySelectorAll('#tokenPaymentMethodStep .payment-method').forEach(el => {
-                el.classList.remove('selected');
-            });
-            
-            // Select the clicked method
-            event.currentTarget.classList.add('selected');
-            
-            // Enable next button
-            document.getElementById('tokenNextStepBtn').disabled = false;
+        function toggleCustomPaymentMethod() {
+            const method = document.getElementById('customPaymentMethod').value;
+            document.getElementById('customTokenInfo').style.display = method === 'TOKEN' ? 'block' : 'none';
         }
         
-        function goToTokenStep1() {
-            document.getElementById('tokenPaymentMethodStep').style.display = 'block';
-            document.getElementById('tokenPaymentDetailsStep').style.display = 'none';
-            document.getElementById('tokenCompletionStep').style.display = 'none';
+        function goToCustomStep1() {
+            document.getElementById('customRankStep1').style.display = 'block';
+            document.getElementById('customRankStep2').style.display = 'none';
+            document.getElementById('customRankStep3').style.display = 'none';
             
             // Update step indicators
-            document.getElementById('tokenStep2').classList.remove('active');
-            document.getElementById('tokenStep2Name').classList.remove('active');
-            document.getElementById('tokenStep3').classList.remove('active');
-            document.getElementById('tokenStep3Name').classList.remove('active');
-            
-            // Hide Discord instructions
-            document.getElementById('tokenDiscordInstructions').style.display = 'none';
+            document.getElementById('customStep2').classList.remove('active');
+            document.getElementById('customStep2Name').classList.remove('active');
+            document.getElementById('customStep3').classList.remove('active');
+            document.getElementById('customStep3Name').classList.remove('active');
         }
         
-        function goToTokenStep2() {
-            if (!selectedTokenPaymentMethod) {
-                showAlert('Please select a payment method', 'warning');
+        function goToCustomStep2() {
+            const rankName = document.getElementById('customRankName').value;
+            const prefix = document.getElementById('customPrefix').value;
+            const color = document.getElementById('nameColor').value;
+            const ingameName = document.getElementById('customIngameName').value;
+            const discordId = document.getElementById('customDiscordId').value;
+            const paymentMethod = document.getElementById('customPaymentMethod').value;
+            
+            // Validation
+            if (!rankName || !prefix || !color || !ingameName || !discordId || !paymentMethod) {
+                showAlert('Please fill in all required fields', 'warning');
                 return;
             }
             
-            document.getElementById('tokenPaymentMethodStep').style.display = 'none';
-            document.getElementById('tokenPaymentDetailsStep').style.display = 'block';
-            document.getElementById('tokenCompletionStep').style.display = 'none';
+            if (rankName.length > 20) {
+                showAlert('Rank name must be 20 characters or less', 'warning');
+                return;
+            }
+            
+            document.getElementById('customRankStep1').style.display = 'none';
+            document.getElementById('customRankStep2').style.display = 'block';
+            document.getElementById('customRankStep3').style.display = 'none';
             
             // Hide all payment forms
-            document.getElementById('tokenBkashForm').style.display = 'none';
-            document.getElementById('tokenNagadForm').style.display = 'none';
-            document.getElementById('tokenDiscordForm').style.display = 'none';
+            document.getElementById('customBkashForm').style.display = 'none';
+            document.getElementById('customNagadForm').style.display = 'none';
+            document.getElementById('customTokenForm').style.display = 'none';
+            document.getElementById('customDiscordForm').style.display = 'none';
             
             // Show selected payment form
-            if (selectedTokenPaymentMethod === 'bkash') {
-                document.getElementById('tokenBkashForm').style.display = 'block';
-            } else if (selectedTokenPaymentMethod === 'nagad') {
-                document.getElementById('tokenNagadForm').style.display = 'block';
-            } else if (selectedTokenPaymentMethod === 'discord') {
-                document.getElementById('tokenDiscordForm').style.display = 'block';
+            if (paymentMethod === 'BKASH') {
+                document.getElementById('customBkashForm').style.display = 'block';
+            } else if (paymentMethod === 'NAGAD') {
+                document.getElementById('customNagadForm').style.display = 'block';
+            } else if (paymentMethod === 'TOKEN') {
+                document.getElementById('customTokenForm').style.display = 'block';
+            } else if (paymentMethod === 'DISCORD') {
+                document.getElementById('customDiscordForm').style.display = 'block';
             }
             
             // Update step indicators
-            document.getElementById('tokenStep2').classList.add('active');
-            document.getElementById('tokenStep2Name').classList.add('active');
+            document.getElementById('customStep2').classList.add('active');
+            document.getElementById('customStep2Name').classList.add('active');
         }
         
-        function goToTokenStep3() {
-            document.getElementById('tokenPaymentMethodStep').style.display = 'none';
-            document.getElementById('tokenPaymentDetailsStep').style.display = 'none';
-            document.getElementById('tokenCompletionStep').style.display = 'block';
+        function goToCustomStep3() {
+            document.getElementById('customRankStep1').style.display = 'none';
+            document.getElementById('customRankStep2').style.display = 'none';
+            document.getElementById('customRankStep3').style.display = 'block';
             
             // Update step indicators
-            document.getElementById('tokenStep3').classList.add('active');
-            document.getElementById('tokenStep3Name').classList.add('active');
+            document.getElementById('customStep3').classList.add('active');
+            document.getElementById('customStep3Name').classList.add('active');
             
-            // Show Discord instructions
-            document.getElementById('tokenDiscordInstructions').style.display = 'block';
+            // Fill summary
+            document.getElementById('summaryRankName').textContent = document.getElementById('customRankName').value;
+            document.getElementById('summaryPrefix').textContent = document.getElementById('customPrefix').value;
+            document.getElementById('summaryColor').textContent = document.getElementById('nameColor').value;
+            document.getElementById('summaryIngameName').textContent = document.getElementById('customIngameName').value;
+            document.getElementById('summaryPaymentMethod').textContent = document.getElementById('customPaymentMethod').value;
         }
         
-        // Token Payment Submission Functions
-        async function submitTokenBkashPayment() {
-            const userNumber = document.getElementById('tokenUserBkashNumber').value;
-            const trxId = document.getElementById('tokenBkashTrxId').value;
-            const ingameName = document.getElementById('tokenBkashIngameName').value;
-            const discordId = document.getElementById('tokenBkashDiscordId').value;
-
-            if (!userNumber || !trxId || !ingameName || !discordId) {
-                showAlert('Please fill in all required fields', 'warning');
-                return;
-            }
-
-            const orderData = {
-                orderId: 'TOKEN_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9),
+        function goToCustomStep1() {
+            document.getElementById('customRankStep1').style.display = 'block';
+            document.getElementById('customRankStep2').style.display = 'none';
+            document.getElementById('customRankStep3').style.display = 'none';
+            
+            // Update step indicators
+            document.getElementById('customStep2').classList.remove('active');
+            document.getElementById('customStep2Name').classList.remove('active');
+            document.getElementById('customStep3').classList.remove('active');
+            document.getElementById('customStep3Name').classList.remove('active');
+        }
+        
+        // Custom Rank Payment Submission
+        async function submitCustomRankPayment() {
+            const rankName = document.getElementById('customRankName').value;
+            const prefix = document.getElementById('customPrefix').value;
+            const color = document.getElementById('nameColor').value;
+            const features = document.getElementById('customFeatures').value;
+            const ingameName = document.getElementById('customIngameName').value;
+            const discordId = document.getElementById('customDiscordId').value;
+            const paymentMethod = document.getElementById('customPaymentMethod').value;
+            
+            let orderData = {
+                orderId: 'CUSTOM_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9),
                 timestamp: new Date().toISOString(),
-                purchaseType: 'TOKENS',
-                tokens: tokenAmount,
-                bdtAmount: bdtAmount,
-                paymentMethod: 'bKash',
-                userNumber: userNumber,
-                trxId: trxId,
+                rankType: 'CUSTOM',
+                rankName: rankName,
+                prefix: prefix,
+                color: color,
+                features: features,
                 ingameName: ingameName,
                 discordId: discordId,
-                status: 'pending'
-            };
-
-            try {
-                // Send to Discord Webhook
-                await sendTokenToDiscordWebhook(orderData);
-                saveOrderLocally(orderData);
-                goToTokenStep3();
-                showAlert('Token purchase submitted successfully! Staff will review your payment.', 'success');
-            } catch (error) {
-                console.error('Error:', error);
-                saveOrderLocally(orderData);
-                goToTokenStep3();
-                showAlert('Order submitted! Please wait for confirmation.', 'info');
-            }
-        }
-        
-        async function submitTokenNagadPayment() {
-            const userNumber = document.getElementById('tokenUserNagadNumber').value;
-            const trxId = document.getElementById('tokenNagadTrxId').value;
-            const ingameName = document.getElementById('tokenNagadIngameName').value;
-            const discordId = document.getElementById('tokenNagadDiscordId').value;
-
-            if (!userNumber || !trxId || !ingameName || !discordId) {
-                showAlert('Please fill in all required fields', 'warning');
-                return;
-            }
-
-            const orderData = {
-                orderId: 'TOKEN_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9),
-                timestamp: new Date().toISOString(),
-                purchaseType: 'TOKENS',
-                tokens: tokenAmount,
-                bdtAmount: bdtAmount,
-                paymentMethod: 'Nagad',
-                userNumber: userNumber,
-                trxId: trxId,
-                ingameName: ingameName,
-                discordId: discordId,
-                status: 'pending'
-            };
-
-            try {
-                // Send to Discord Webhook
-                await sendTokenToDiscordWebhook(orderData);
-                saveOrderLocally(orderData);
-                goToTokenStep3();
-                showAlert('Token purchase submitted successfully! Staff will review your payment.', 'success');
-            } catch (error) {
-                console.error('Error:', error);
-                saveOrderLocally(orderData);
-                goToTokenStep3();
-                showAlert('Order submitted! Please wait for confirmation.', 'info');
-            }
-        }
-        
-        async function submitTokenDiscordPayment() {
-            const discordUsername = document.getElementById('tokenDiscordUsername').value;
-            const ingameName = document.getElementById('tokenDiscordIngameName').value;
-            const paymentMethod = document.getElementById('tokenDiscordPaymentMethod').value;
-            const notes = document.getElementById('tokenDiscordNotes').value;
-
-            if (!discordUsername || !ingameName || !paymentMethod) {
-                showAlert('Please fill in all required fields', 'warning');
-                return;
-            }
-
-            const orderData = {
-                orderId: 'TOKEN_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9),
-                timestamp: new Date().toISOString(),
-                purchaseType: 'TOKENS',
-                tokens: tokenAmount,
-                bdtAmount: bdtAmount,
                 paymentMethod: paymentMethod,
-                paymentType: 'discord_form',
-                discordUsername: discordUsername,
+                status: 'pending'
+            };
+            
+            // Add payment-specific data
+            if (paymentMethod === 'BKASH') {
+                const userBkash = document.getElementById('customUserBkash').value;
+                const trxId = document.getElementById('customBkashTrxId').value;
+                
+                if (!userBkash || !trxId) {
+                    showAlert('Please fill in all payment details', 'warning');
+                    return;
+                }
+                
+                orderData.userNumber = userBkash;
+                orderData.trxId = trxId;
+                orderData.amount = '500 BDT';
+                orderData.paymentType = 'bKash';
+                
+            } else if (paymentMethod === 'NAGAD') {
+                const userNagad = document.getElementById('customUserNagad').value;
+                const trxId = document.getElementById('customNagadTrxId').value;
+                
+                if (!userNagad || !trxId) {
+                    showAlert('Please fill in all payment details', 'warning');
+                    return;
+                }
+                
+                orderData.userNumber = userNagad;
+                orderData.trxId = trxId;
+                orderData.amount = '500 BDT';
+                orderData.paymentType = 'Nagad';
+                
+            } else if (paymentMethod === 'TOKEN') {
+                orderData.amount = '6000 Tokens';
+                orderData.paymentType = 'Token';
+                
+            } else if (paymentMethod === 'DISCORD') {
+                const discordPaymentMethod = document.getElementById('customDiscordPaymentMethod').value;
+                const notes = document.getElementById('customDiscordNotes').value;
+                
+                if (!discordPaymentMethod) {
+                    showAlert('Please select a Discord payment method', 'warning');
+                    return;
+                }
+                
+                orderData.discordPaymentMethod = discordPaymentMethod;
+                orderData.notes = notes;
+                orderData.amount = '500 BDT';
+                orderData.paymentType = 'Discord';
+            }
+            
+            try {
+                // Send to Discord Webhook
+                await sendCustomRankToDiscord(orderData);
+                
+                // Save locally
+                saveOrderLocally(orderData);
+                
+                // Show success
+                goToCustomStep3();
+                showAlert('Custom rank order submitted successfully!', 'success');
+                
+            } catch (error) {
+                console.error('Error submitting custom rank order:', error);
+                saveOrderLocally(orderData);
+                goToCustomStep3();
+                showAlert('Order submitted! Staff will contact you soon.', 'info');
+            }
+        }
+        
+        async function submitCustomDiscordPayment() {
+            const rankName = document.getElementById('customRankName').value;
+            const prefix = document.getElementById('customPrefix').value;
+            const color = document.getElementById('nameColor').value;
+            const features = document.getElementById('customFeatures').value;
+            const ingameName = document.getElementById('customIngameName').value;
+            const discordId = document.getElementById('customDiscordId').value;
+            const discordPaymentMethod = document.getElementById('customDiscordPaymentMethod').value;
+            const notes = document.getElementById('customDiscordNotes').value;
+            
+            if (!discordPaymentMethod) {
+                showAlert('Please select a Discord payment method', 'warning');
+                return;
+            }
+            
+            const orderData = {
+                orderId: 'CUSTOM_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9),
+                timestamp: new Date().toISOString(),
+                rankType: 'CUSTOM',
+                rankName: rankName,
+                prefix: prefix,
+                color: color,
+                features: features,
                 ingameName: ingameName,
+                discordId: discordId,
+                paymentMethod: 'DISCORD',
+                discordPaymentMethod: discordPaymentMethod,
                 notes: notes,
+                amount: '500 BDT',
+                paymentType: 'Discord',
                 status: 'pending_discord'
             };
-
+            
             try {
-                // Send to Discord Webhook
-                await sendTokenToDiscordWebhook(orderData);
+                await sendCustomRankToDiscord(orderData);
                 saveOrderLocally(orderData);
-                goToTokenStep3();
-                showAlert('Token purchase submitted successfully!', 'success');
+                goToCustomStep3();
+                showAlert('Custom rank order submitted via Discord!', 'success');
             } catch (error) {
                 console.error('Error:', error);
                 saveOrderLocally(orderData);
-                goToTokenStep3();
-                showAlert('Order submitted locally. Please contact support if you dont receive confirmation.', 'info');
+                goToCustomStep3();
+                showAlert('Order submitted locally. Please contact support.', 'info');
             }
         }
         
-        // Token Discord Webhook Function
-        async function sendTokenToDiscordWebhook(orderData) {
+        // Custom Rank Discord Webhook Function
+        async function sendCustomRankToDiscord(orderData) {
             const webhookURL = 'https://discord.com/api/webhooks/1442562327735042084/CpNjUYeKf3fWkC-2c-qcVgc4fECIqBskGVx0B6MVCy1GvzWNgF4TStTA_KBueZhAKJxi';
             
-            let embed, content;
-
-            if (orderData.paymentType === 'discord_form') {
-                // Discord Form Payment Embed for Tokens
-                embed = {
-                    title: "🪙 নতুন টোকেন অর্ডার এসেছে!",
-                    color: 0x9C27B0,
-                    fields: [
-                        {
-                            name: "🆔 Order ID",
-                            value: "`" + orderData.orderId + "`",
-                            inline: false
-                        },
-                        {
-                            name: "👤 Discord Username",
-                            value: orderData.discordUsername || "প্রদান করা হয়নি",
-                            inline: true
-                        },
-                        {
-                            name: "🎮 In-Game Name",
-                            value: orderData.ingameName,
-                            inline: true
-                        },
-                        {
-                            name: "🪙 Tokens",
-                            value: orderData.tokens + " Tokens",
-                            inline: true
-                        },
-                        {
-                            name: "💰 Amount",
-                            value: orderData.bdtAmount + " BDT",
-                            inline: true
-                        },
-                        {
-                            name: "💳 Payment Method",
-                            value: orderData.paymentMethod || "প্রদান করা হয়নি",
-                            inline: true
-                        },
-                        {
-                            name: "🕐 Order Time",
-                            value: new Date(orderData.timestamp).toLocaleString(),
-                            inline: true
-                        }
-                    ],
-                    footer: {
-                        text: "Drk Survraze SMP - Token Purchase System"
-                    },
-                    timestamp: orderData.timestamp
-                };
-
-                if (orderData.notes) {
-                    embed.fields.push({
-                        name: "📝 Additional Notes",
-                        value: orderData.notes,
+            let embed = {
+                title: "🎨 **CUSTOM RANK ORDER RECEIVED!** 🎨",
+                color: 0xFF4081,
+                fields: [
+                    {
+                        name: "🆔 Order ID",
+                        value: "```" + orderData.orderId + "```",
                         inline: false
-                    });
-                }
-
-                content = "🪙 **নতুন টোকেন অর্ডার Received!** @everyone";
-
-            } else if (orderData.paymentMethod === 'bKash') {
-                // bKash Payment Embed for Tokens
-                embed = {
-                    title: "💰 নতুন টোকেন bKash পেমেন্ট Received",
-                    color: 0xE2136E,
-                    fields: [
-                        {
-                            name: "🆔 Order ID",
-                            value: "`" + orderData.orderId + "`",
-                            inline: false
-                        },
-                        {
-                            name: "🎮 In-Game Name",
-                            value: orderData.ingameName,
-                            inline: true
-                        },
-                        {
-                            name: "🪙 Tokens",
-                            value: orderData.tokens + " Tokens",
-                            inline: true
-                        },
-                        {
-                            name: "💰 Amount",
-                            value: orderData.bdtAmount + " BDT",
-                            inline: true
-                        },
-                        {
-                            name: "📱 bKash Number",
-                            value: orderData.userNumber,
-                            inline: true
-                        },
-                        {
-                            name: "🔢 Transaction ID",
-                            value: orderData.trxId,
-                            inline: true
-                        },
-                        {
-                            name: "👤 Discord ID",
-                            value: orderData.discordId || "প্রদান করা হয়নি",
-                            inline: true
-                        }
-                    ],
-                    footer: {
-                        text: "Drk Survraze SMP - Token bKash Payment"
                     },
-                    timestamp: orderData.timestamp
-                };
-
-                content = "💸 **নতুন টোকেন bKash পেমেন্ট!** @everyone";
-
-            } else if (orderData.paymentMethod === 'Nagad') {
-                // Nagad Payment Embed for Tokens
-                embed = {
-                    title: "💰 নতুন টোকেন Nagad পেমেন্ট Received",
-                    color: 0xF12C14,
-                    fields: [
-                        {
-                            name: "🆔 Order ID",
-                            value: "`" + orderData.orderId + "`",
-                            inline: false
-                        },
-                        {
-                            name: "🎮 In-Game Name",
-                            value: orderData.ingameName,
-                            inline: true
-                        },
-                        {
-                            name: "🪙 Tokens",
-                            value: orderData.tokens + " Tokens",
-                            inline: true
-                        },
-                        {
-                            name: "💰 Amount",
-                            value: orderData.bdtAmount + " BDT",
-                            inline: true
-                        },
-                        {
-                            name: "📱 Nagad Number",
-                            value: orderData.userNumber,
-                            inline: true
-                        },
-                        {
-                            name: "🔢 Transaction ID",
-                            value: orderData.trxId,
-                            inline: true
-                        },
-                        {
-                            name: "👤 Discord ID",
-                            value: orderData.discordId || "প্রদান করা হয়নি",
-                            inline: true
-                        }
-                    ],
-                    footer: {
-                        text: "Drk Survraze SMP - Token Nagad Payment"
+                    {
+                        name: "👤 Discord ID",
+                        value: orderData.discordId || "Not provided",
+                        inline: true
                     },
-                    timestamp: orderData.timestamp
-                };
-
-                content = "💸 **নতুন টোকেন Nagad পেমেন্ট!** @everyone";
-
-            } else {
-                // Fallback for any other payment methods
-                embed = {
-                    title: "🪙 নতুন টোকেন অর্ডার Received",
-                    color: 0x9C27B0,
-                    fields: [
-                        {
-                            name: "🆔 Order ID",
-                            value: "`" + orderData.orderId + "`",
-                            inline: false
-                        },
-                        {
-                            name: "🎮 In-Game Name",
-                            value: orderData.ingameName || "প্রদান করা হয়নি",
-                            inline: true
-                        },
-                        {
-                            name: "🪙 Tokens",
-                            value: orderData.tokens + " Tokens",
-                            inline: true
-                        },
-                        {
-                            name: "💰 Amount",
-                            value: orderData.bdtAmount + " BDT",
-                            inline: true
-                        },
-                        {
-                            name: "💳 Payment Method",
-                            value: orderData.paymentMethod || "Unknown",
-                            inline: true
-                        },
-                        {
-                            name: "🕐 Order Time",
-                            value: new Date(orderData.timestamp).toLocaleString(),
-                            inline: true
-                        }
-                    ],
-                    footer: {
-                        text: "Drk Survraze SMP - Token Purchase System"
+                    {
+                        name: "🎮 In-Game Name",
+                        value: orderData.ingameName,
+                        inline: true
                     },
-                    timestamp: orderData.timestamp
-                };
-
-                content = "🪙 **নতুন টোকেন অর্ডার Received!** @everyone";
+                    {
+                        name: "🏷️ Rank Name",
+                        value: orderData.rankName,
+                        inline: true
+                    },
+                    {
+                        name: "🔤 Custom Prefix",
+                        value: orderData.prefix,
+                        inline: true
+                    },
+                    {
+                        name: "🎨 Name Color",
+                        value: orderData.color,
+                        inline: true
+                    },
+                    {
+                        name: "💰 Payment Method",
+                        value: orderData.paymentMethod,
+                        inline: true
+                    },
+                    {
+                        name: "💵 Amount",
+                        value: orderData.amount,
+                        inline: true
+                    }
+                ],
+                footer: {
+                    text: "Drk Survraze SMP - Custom Rank System"
+                },
+                timestamp: orderData.timestamp
+            };
+            
+            // Add payment-specific fields
+            if (orderData.paymentType === 'bKash') {
+                embed.fields.push({
+                    name: "📱 bKash Number",
+                    value: orderData.userNumber,
+                    inline: true
+                });
+                embed.fields.push({
+                    name: "🔢 Transaction ID",
+                    value: orderData.trxId,
+                    inline: true
+                });
+            } else if (orderData.paymentType === 'Nagad') {
+                embed.fields.push({
+                    name: "📱 Nagad Number",
+                    value: orderData.userNumber,
+                    inline: true
+                });
+                embed.fields.push({
+                    name: "🔢 Transaction ID",
+                    value: orderData.trxId,
+                    inline: true
+                });
+            } else if (orderData.paymentType === 'Discord') {
+                embed.fields.push({
+                    name: "💳 Discord Payment Method",
+                    value: orderData.discordPaymentMethod,
+                    inline: true
+                });
             }
-
-            // Create proper Discord buttons
+            
+            // Add features if provided
+            if (orderData.features) {
+                embed.fields.push({
+                    name: "✨ Additional Features Request",
+                    value: orderData.features,
+                    inline: false
+                });
+            }
+            
+            // Add notes if provided
+            if (orderData.notes) {
+                embed.fields.push({
+                    name: "📝 Additional Notes",
+                    value: orderData.notes,
+                    inline: false
+                });
+            }
+            
+            const content = "🎨 **নতুন CUSTOM RANK অর্ডার এসেছে!** @everyone";
+            
+            // Create Discord buttons
             const components = [
                 {
-                    type: 1, // ACTION_ROW
+                    type: 1,
                     components: [
                         {
-                            type: 2, // BUTTON
-                            style: 3, // SUCCESS (Green)
+                            type: 2,
+                            style: 3,
                             label: "✅ Approve Order",
                             custom_id: `approve_${orderData.orderId}`
                         },
                         {
-                            type: 2, // BUTTON
-                            style: 4, // DANGER (Red)
+                            type: 2,
+                            style: 4,
                             label: "❌ Reject Order", 
                             custom_id: `reject_${orderData.orderId}`
+                        },
+                        {
+                            type: 2,
+                            style: 2,
+                            label: "📞 Contact User",
+                            custom_id: `contact_${orderData.orderId}`
                         }
                     ]
                 }
             ];
-
+            
             const payload = {
                 content: content,
                 embeds: [embed],
@@ -2138,7 +1904,7 @@
                     parse: ["everyone"]
                 }
             };
-
+            
             try {
                 const response = await fetch(webhookURL, {
                     method: 'POST',
@@ -2147,11 +1913,11 @@
                     },
                     body: JSON.stringify(payload)
                 });
-
+                
                 if (!response.ok) {
                     throw new Error(`Webhook request failed: ${response.status}`);
                 }
-
+                
                 return await response.json();
             } catch (error) {
                 console.error('Error sending to Discord:', error);
@@ -2159,557 +1925,26 @@
             }
         }
         
-        function resetTokenPaymentForms() {
-            selectedTokenPaymentMethod = '';
-            document.querySelectorAll('#tokenPaymentMethodStep .payment-method').forEach(el => {
-                el.classList.remove('selected');
-            });
-            document.getElementById('tokenNextStepBtn').disabled = true;
-            
-            // Clear all form fields
-            document.querySelectorAll('#tokenPaymentDetailsStep input, #tokenPaymentDetailsStep select, #tokenPaymentDetailsStep textarea').forEach(field => {
-                field.value = '';
-            });
+        function resetCustomRankForm() {
+            document.getElementById('customRankName').value = '';
+            document.getElementById('customPrefix').value = '';
+            document.getElementById('nameColor').value = '';
+            document.getElementById('customFeatures').value = '';
+            document.getElementById('customIngameName').value = '';
+            document.getElementById('customDiscordId').value = '';
+            document.getElementById('customPaymentMethod').value = '';
+            document.getElementById('customUserBkash').value = '';
+            document.getElementById('customBkashTrxId').value = '';
+            document.getElementById('customUserNagad').value = '';
+            document.getElementById('customNagadTrxId').value = '';
+            document.getElementById('customDiscordPaymentMethod').value = '';
+            document.getElementById('customDiscordNotes').value = '';
+            document.getElementById('customTokenInfo').style.display = 'none';
         }
 
-        // Payment Functions (Existing - Keep these as they are)
-        let selectedRank = '';
-        let selectedRewards = '';
-        let selectedRankType = '';
-        let selectedPaymentMethod = '';
-        let currentOrderId = '';
-        let selectedMoney = 0;
-        let selectedTokens = 0;
+        // Existing payment modal functions remain the same
+        // (Keep all your existing functions from the previous code)
         
-        function openPaymentModal(rank, rewards, rankType, money, tokens) {
-            selectedRank = rank;
-            selectedRewards = rewards;
-            selectedRankType = rankType;
-            selectedMoney = money;
-            selectedTokens = tokens;
-            
-            // Generate unique order ID
-            currentOrderId = 'ORD_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-            
-            document.getElementById('selectedRank').textContent = rank;
-            document.getElementById('selectedRewards').textContent = rewards;
-            
-            document.getElementById('paymentModal').style.display = 'block';
-            document.body.style.overflow = 'hidden';
-            
-            // Reset to step 1
-            goToStep1();
-        }
-        
-        function openIngameMoneyModal(rank, rewards, rankType, money, tokens) {
-            selectedRank = rank;
-            selectedRewards = rewards;
-            selectedRankType = rankType;
-            selectedMoney = money;
-            selectedTokens = tokens;
-            
-            document.getElementById('ingameSelectedRank').textContent = rank;
-            document.getElementById('ingameSelectedRewards').textContent = rewards;
-            
-            document.getElementById('ingameMoneyModal').style.display = 'block';
-            document.body.style.overflow = 'hidden';
-        }
-        
-        function closePaymentModal() {
-            document.getElementById('paymentModal').style.display = 'none';
-            document.body.style.overflow = 'auto';
-            resetPaymentForms();
-        }
-        
-        function closeIngameMoneyModal() {
-            document.getElementById('ingameMoneyModal').style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
-        
-        function selectPaymentMethod(method) {
-            selectedPaymentMethod = method;
-            
-            // Reset all payment methods
-            document.querySelectorAll('.payment-method').forEach(el => {
-                el.classList.remove('selected');
-            });
-            
-            // Select the clicked method
-            event.currentTarget.classList.add('selected');
-            
-            // Enable next button
-            document.getElementById('nextStepBtn').disabled = false;
-        }
-        
-        function goToStep1() {
-            document.getElementById('paymentMethodStep').style.display = 'block';
-            document.getElementById('paymentDetailsStep').style.display = 'none';
-            document.getElementById('completionStep').style.display = 'none';
-            
-            // Update step indicators
-            document.getElementById('step2').classList.remove('active');
-            document.getElementById('step2Name').classList.remove('active');
-            document.getElementById('step3').classList.remove('active');
-            document.getElementById('step3Name').classList.remove('active');
-            
-            // Hide Discord instructions
-            document.getElementById('discordInstructions').style.display = 'none';
-        }
-        
-        function goToStep2() {
-            if (!selectedPaymentMethod) {
-                showAlert('Please select a payment method', 'warning');
-                return;
-            }
-            
-            document.getElementById('paymentMethodStep').style.display = 'none';
-            document.getElementById('paymentDetailsStep').style.display = 'block';
-            document.getElementById('completionStep').style.display = 'none';
-            
-            // Hide all payment forms
-            document.getElementById('bkashForm').style.display = 'none';
-            document.getElementById('nagadForm').style.display = 'none';
-            document.getElementById('discordForm').style.display = 'none';
-            
-            // Show selected payment form
-            if (selectedPaymentMethod === 'bkash') {
-                document.getElementById('bkashForm').style.display = 'block';
-            } else if (selectedPaymentMethod === 'nagad') {
-                document.getElementById('nagadForm').style.display = 'block';
-            } else if (selectedPaymentMethod === 'discord') {
-                document.getElementById('discordForm').style.display = 'block';
-            }
-            
-            // Update step indicators
-            document.getElementById('step2').classList.add('active');
-            document.getElementById('step2Name').classList.add('active');
-        }
-        
-        function goToStep3() {
-            document.getElementById('paymentMethodStep').style.display = 'none';
-            document.getElementById('paymentDetailsStep').style.display = 'none';
-            document.getElementById('completionStep').style.display = 'block';
-            
-            // Update step indicators
-            document.getElementById('step3').classList.add('active');
-            document.getElementById('step3Name').classList.add('active');
-            
-            // Show Discord instructions for token purchases
-            document.getElementById('discordInstructions').style.display = 'block';
-        }
-
-        // Discord Payment Submission
-        async function submitDiscordPayment() {
-            const discordUsername = document.getElementById('discordUsername').value;
-            const ingameName = document.getElementById('discordIngameName').value;
-            const paymentMethod = document.getElementById('discordPaymentMethod').value;
-            const notes = document.getElementById('discordNotes').value;
-
-            // Validation
-            if (!discordUsername || !ingameName || !paymentMethod) {
-                showAlert('Please fill in all required fields', 'warning');
-                return;
-            }
-
-            // Prepare order data
-            const orderData = {
-                orderId: currentOrderId,
-                timestamp: new Date().toISOString(),
-                rank: selectedRank,
-                rewards: selectedRewards,
-                rankType: selectedRankType,
-                discordUsername: discordUsername,
-                ingameName: ingameName,
-                paymentMethod: paymentMethod,
-                paymentType: 'discord_form',
-                notes: notes,
-                status: 'pending_discord',
-                money: selectedMoney,
-                tokens: selectedTokens
-            };
-
-            try {
-                // Send to Discord Webhook
-                await sendToDiscordWebhook(orderData);
-                
-                // Save locally as backup
-                saveOrderLocally(orderData);
-                
-                // Move to completion step
-                goToStep3();
-                
-                showAlert('Order submitted successfully!', 'success');
-                
-            } catch (error) {
-                console.error('Error submitting Discord order:', error);
-                showAlert('Order submitted locally. Please contact support if you dont receive confirmation.', 'info');
-                saveOrderLocally(orderData);
-                goToStep3();
-            }
-        }
-
-        // Discord Webhook Function with Proper Format
-        async function sendToDiscordWebhook(orderData) {
-            const webhookURL = 'https://discord.com/api/webhooks/1442562327735042084/CpNjUYeKf3fWkC-2c-qcVgc4fECIqBskGVx0B6MVCy1GvzWNgF4TStTA_KBueZhAKJxi';
-            
-            let embed, content;
-
-            if (orderData.paymentType === 'discord_form') {
-                // Discord Form Payment Embed
-                embed = {
-                    title: "🎮 নতুন অর্ডার এসেছে!",
-                    color: 0x5865F2,
-                    fields: [
-                        {
-                            name: "🆔 Order ID",
-                            value: "`" + orderData.orderId + "`",
-                            inline: false
-                        },
-                        {
-                            name: "👤 Discord Username",
-                            value: orderData.discordUsername || "প্রদান করা হয়নি",
-                            inline: true
-                        },
-                        {
-                            name: "🎮 In-Game Name",
-                            value: orderData.ingameName,
-                            inline: true
-                        },
-                        {
-                            name: "⭐ Rank",
-                            value: orderData.rank,
-                            inline: true
-                        },
-                        {
-                            name: "🎁 Purchase Type",
-                            value: orderData.rewards,
-                            inline: true
-                        },
-                        {
-                            name: "💳 Payment Method",
-                            value: orderData.paymentMethod || "প্রদান করা হয়নি",
-                            inline: true
-                        },
-                        {
-                            name: "🕐 Order Time",
-                            value: new Date(orderData.timestamp).toLocaleString(),
-                            inline: true
-                        }
-                    ],
-                    footer: {
-                        text: "Drk Survraze SMP - Order System"
-                    },
-                    timestamp: orderData.timestamp
-                };
-
-                if (orderData.notes) {
-                    embed.fields.push({
-                        name: "📝 Additional Notes",
-                        value: orderData.notes,
-                        inline: false
-                    });
-                }
-
-                content = "📬 **নতুন Discord অর্ডার Received!** @everyone";
-
-            } else if (orderData.paymentMethod === 'bKash') {
-                // bKash Payment Embed
-                embed = {
-                    title: "💰 নতুন bKash পেমেন্ট Received",
-                    color: 0xE2136E,
-                    fields: [
-                        {
-                            name: "🆔 Order ID",
-                            value: "`" + orderData.orderId + "`",
-                            inline: false
-                        },
-                        {
-                            name: "🎮 In-Game Name",
-                            value: orderData.ingameName,
-                            inline: true
-                        },
-                        {
-                            name: "⭐ Rank",
-                            value: orderData.rank,
-                            inline: true
-                        },
-                        {
-                            name: "🎁 Purchase Type",
-                            value: orderData.rewards,
-                            inline: true
-                        },
-                        {
-                            name: "📱 bKash Number",
-                            value: orderData.userNumber,
-                            inline: true
-                        },
-                        {
-                            name: "🔢 Transaction ID",
-                            value: orderData.trxId,
-                            inline: true
-                        },
-                        {
-                            name: "👤 Discord ID",
-                            value: orderData.discordId || "প্রদান করা হয়নি",
-                            inline: true
-                        }
-                    ],
-                    footer: {
-                        text: "Drk Survraze SMP - bKash Payment"
-                    },
-                    timestamp: orderData.timestamp
-                };
-
-                content = "💸 **নতুন bKash পেমেন্ট!** @everyone";
-
-            } else if (orderData.paymentMethod === 'Nagad') {
-                // Nagad Payment Embed
-                embed = {
-                    title: "💰 নতুন Nagad পেমেন্ট Received",
-                    color: 0xF12C14,
-                    fields: [
-                        {
-                            name: "🆔 Order ID",
-                            value: "`" + orderData.orderId + "`",
-                            inline: false
-                        },
-                        {
-                            name: "🎮 In-Game Name",
-                            value: orderData.ingameName,
-                            inline: true
-                        },
-                        {
-                            name: "⭐ Rank",
-                            value: orderData.rank,
-                            inline: true
-                        },
-                        {
-                            name: "🎁 Purchase Type",
-                            value: orderData.rewards,
-                            inline: true
-                        },
-                        {
-                            name: "📱 Nagad Number",
-                            value: orderData.userNumber,
-                            inline: true
-                        },
-                        {
-                            name: "🔢 Transaction ID",
-                            value: orderData.trxId,
-                            inline: true
-                        },
-                        {
-                            name: "👤 Discord ID",
-                            value: orderData.discordId || "প্রদান করা হয়নি",
-                            inline: true
-                        }
-                    ],
-                    footer: {
-                        text: "Drk Survraze SMP - Nagad Payment"
-                    },
-                    timestamp: orderData.timestamp
-                };
-
-                content = "💸 **নতুন Nagad পেমেন্ট!** @everyone";
-
-            } else {
-                // Fallback for any other payment methods
-                embed = {
-                    title: "🛒 নতুন অর্ডার Received",
-                    color: 0x00ff00,
-                    fields: [
-                        {
-                            name: "🆔 Order ID",
-                            value: "`" + orderData.orderId + "`",
-                            inline: false
-                        },
-                        {
-                            name: "🎮 In-Game Name",
-                            value: orderData.ingameName || "প্রদান করা হয়নি",
-                            inline: true
-                        },
-                        {
-                            name: "⭐ Rank",
-                            value: orderData.rank,
-                            inline: true
-                        },
-                        {
-                            name: "🎁 Purchase Type",
-                            value: orderData.rewards,
-                            inline: true
-                        },
-                        {
-                            name: "💳 Payment Method",
-                            value: orderData.paymentMethod || "Unknown",
-                            inline: true
-                        },
-                        {
-                            name: "🕐 Order Time",
-                            value: new Date(orderData.timestamp).toLocaleString(),
-                            inline: true
-                        }
-                    ],
-                    footer: {
-                        text: "Drk Survraze SMP - Order System"
-                    },
-                    timestamp: orderData.timestamp
-                };
-
-                content = "📬 **নতুন অর্ডার Received!** @everyone";
-            }
-
-            // Create proper Discord buttons
-            const components = [
-                {
-                    type: 1, // ACTION_ROW
-                    components: [
-                        {
-                            type: 2, // BUTTON
-                            style: 3, // SUCCESS (Green)
-                            label: "✅ Approve Order",
-                            custom_id: `approve_${orderData.orderId}`
-                        },
-                        {
-                            type: 2, // BUTTON
-                            style: 4, // DANGER (Red)
-                            label: "❌ Reject Order", 
-                            custom_id: `reject_${orderData.orderId}`
-                        }
-                    ]
-                }
-            ];
-
-            const payload = {
-                content: content,
-                embeds: [embed],
-                components: components,
-                allowed_mentions: {
-                    parse: ["everyone"]
-                }
-            };
-
-            try {
-                const response = await fetch(webhookURL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(payload)
-                });
-
-                if (!response.ok) {
-                    throw new Error(`Webhook request failed: ${response.status}`);
-                }
-
-                return await response.json();
-            } catch (error) {
-                console.error('Error sending to Discord:', error);
-                throw error;
-            }
-        }
-
-        // bKash Payment Submission
-        async function submitBkashPayment() {
-            const userNumber = document.getElementById('userBkashNumber').value;
-            const trxId = document.getElementById('bkashTrxId').value;
-            const ingameName = document.getElementById('bkashIngameName').value;
-            const discordId = document.getElementById('bkashDiscordId').value;
-
-            if (!userNumber || !trxId || !ingameName || !discordId) {
-                showAlert('Please fill in all required fields', 'warning');
-                return;
-            }
-
-            const orderData = {
-                orderId: currentOrderId,
-                timestamp: new Date().toISOString(),
-                rank: selectedRank,
-                rewards: selectedRewards,
-                paymentMethod: 'bKash',
-                userNumber: userNumber,
-                trxId: trxId,
-                ingameName: ingameName,
-                discordId: discordId,
-                status: 'pending',
-                money: selectedMoney,
-                tokens: selectedTokens
-            };
-
-            try {
-                // Send to Discord Webhook
-                await sendToDiscordWebhook(orderData);
-                saveOrderLocally(orderData);
-                goToStep3();
-                showAlert('bKash order submitted successfully! Staff will review your payment.', 'success');
-            } catch (error) {
-                console.error('Error:', error);
-                saveOrderLocally(orderData);
-                goToStep3();
-                showAlert('Order submitted! Please wait for confirmation.', 'info');
-            }
-        }
-
-        // Nagad Payment Submission
-        async function submitNagadPayment() {
-            const userNumber = document.getElementById('userNagadNumber').value;
-            const trxId = document.getElementById('nagadTrxId').value;
-            const ingameName = document.getElementById('nagadIngameName').value;
-            const discordId = document.getElementById('nagadDiscordId').value;
-
-            if (!userNumber || !trxId || !ingameName || !discordId) {
-                showAlert('Please fill in all required fields', 'warning');
-                return;
-            }
-
-            const orderData = {
-                orderId: currentOrderId,
-                timestamp: new Date().toISOString(),
-                rank: selectedRank,
-                rewards: selectedRewards,
-                paymentMethod: 'Nagad',
-                userNumber: userNumber,
-                trxId: trxId,
-                ingameName: ingameName,
-                discordId: discordId,
-                status: 'pending',
-                money: selectedMoney,
-                tokens: selectedTokens
-            };
-
-            try {
-                // Send to Discord Webhook
-                await sendToDiscordWebhook(orderData);
-                saveOrderLocally(orderData);
-                goToStep3();
-                showAlert('Nagad order submitted successfully! Staff will review your payment.', 'success');
-            } catch (error) {
-                console.error('Error:', error);
-                saveOrderLocally(orderData);
-                goToStep3();
-                showAlert('Order submitted! Please wait for confirmation.', 'info');
-            }
-        }
-
-        function saveOrderLocally(orderData) {
-            const orders = JSON.parse(localStorage.getItem('pendingOrders') || '[]');
-            orders.push(orderData);
-            localStorage.setItem('pendingOrders', JSON.stringify(orders));
-            console.log('Order saved locally:', orderData);
-        }
-
-        function resetPaymentForms() {
-            selectedPaymentMethod = '';
-            document.querySelectorAll('.payment-method').forEach(el => {
-                el.classList.remove('selected');
-            });
-            document.getElementById('nextStepBtn').disabled = true;
-            
-            // Clear all form fields
-            document.querySelectorAll('.payment-form input, .payment-form select, .payment-form textarea').forEach(field => {
-                field.value = '';
-            });
-        }
-
         // Navbar scroll effect
         window.addEventListener('scroll', function() {
             const navbar = document.querySelector('.navbar');
@@ -2750,19 +1985,9 @@
 
         // Close modal when clicking outside
         window.addEventListener('click', function(event) {
-            const modal = document.getElementById('paymentModal');
+            const modal = document.getElementById('customRankModal');
             if (event.target === modal) {
-                closePaymentModal();
-            }
-            
-            const tokenModal = document.getElementById('tokenPurchaseModal');
-            if (event.target === tokenModal) {
-                closeTokenPurchaseModal();
-            }
-            
-            const ingameModal = document.getElementById('ingameMoneyModal');
-            if (event.target === ingameModal) {
-                closeIngameMoneyModal();
+                closeCustomRankModal();
             }
         });
     </script>

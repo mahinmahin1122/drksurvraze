@@ -606,10 +606,7 @@ function copyToClipboard(text, type) {
             button.innerHTML = originalText;
             button.style.background = 'var(--accent)';
         }, 2000);
-    }).catch(err => {
-        console.error('Failed to copy: ', err);
-        showCopyNotification('Failed to copy! Please try again.', 'error');
-    });
+    })
 }
 
 // Show copy notification

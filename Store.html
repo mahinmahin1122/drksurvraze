@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Server Store - Drk Survraze SMP</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4CAF50;
+            --primary-dark: #388E3C;
+            --secondary: #FF9800;
+            --accent: #2196F3;
+            --discord: #5865F2;
+            --dark: #121212;
+            --darker: #0a0a0a;
+            --light: #f8f9fa;
+            --text: #e0e0e0;
+            --text-muted: #a0a0a0;
+        }
+        
+        body {
+            background: linear-gradient(rgba(10, 10, 10, 0.85), rgba(10, 10, 10, 0.9)), 
+                        url('https://cdn.discordapp.com/attachments/1434450443597119629/1450427581068214282/wp6922715-minecraft-diamond-sword-wallpapers.jpg?ex=69427f72&is=69412df2&hm=7b7cc636cffe58a06670bb7d460b740e4212ea6bb8a3e892400e892943b76a19&') no-repeat center center fixed;
+            background-size: cover;
+            color: var(--text);
+            font-family: 'Montserrat', sans-serif;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .store-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px;
+        }
+        
+        .minecraft-font {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        
+        .store-header {
+            background: rgba(30, 30, 30, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 40px;
+            border: 2px solid var(--primary);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        
+        .store-item {
+            background: rgba(30, 30, 30, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            height: 100%;
+            border: 1px solid rgba(255, 152, 0, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .store-item:hover {
+            transform: translateY(-10px);
+            border-color: var(--secondary);
+            box-shadow: 0 15px 40px rgba(255, 152, 0, 0.2);
+        }
+        
+        .btn-primary-custom {
+            background: linear-gradient(45deg, var(--primary), var(--primary-dark));
+            border: none;
+            color: white;
+            font-weight: 600;
+            padding: 12px 30px;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .btn-primary-custom:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(76, 175, 80, 0.4);
+            color: white;
+        }
+        
+        .back-btn {
+            background: transparent;
+            border: 2px solid var(--accent);
+            color: var(--accent);
+            padding: 10px 20px;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+        
+        .back-btn:hover {
+            background: var(--accent);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .section-title {
+            font-size: 2.8rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+        
+        .price-tag {
+            background: linear-gradient(45deg, var(--secondary), #FFB74D);
+            color: black;
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 1.3em;
+            display: inline-block;
+            margin: 15px 0;
+        }
+        
+        .token-badge {
+            background: linear-gradient(45deg, #9C27B0, #7B1FA2);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 15px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+        
+        .offer-badge {
+            background: linear-gradient(45deg, #FF5722, #E64A19);
+            color: white;
+            padding: 6px 15px;
+            border-radius: 15px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+        
+        .token-purchase-box {
+            background: rgba(30, 30, 30, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            border: 2px solid #9C27B0;
+            max-width: 500px;
+            margin: 40px auto;
+        }
+        
+        .token-calculator {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .calculation-result {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        @media (max-width: 768px) {
+            .store-container {
+                padding: 15px;
+            }
+            
+            .store-header {
+                padding: 20px;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="store-container">
+        <!-- Back Button -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <button class="back-btn" onclick="goBackToHome()">
+                <i class="fas fa-arrow-left me-2"></i>Back to Home
+            </button>
+            <img src="drk.png" alt="Server Logo" style="height: 40px;">
+        </div>
+        
+        <!-- Store Header -->
+        <div class="store-header">
+            <h1 class="minecraft-font display-4 mb-3">SERVER <span style="color: var(--secondary);">STORE</span></h1>
+            <p class="fs-5 mb-4">Upgrade your experience with our premium ranks and packages! Support our server and get amazing benefits.</p>
+        </div>
+        
+        <!-- Token Purchase Section -->
+        <div class="token-purchase-box">
+            <h3 class="minecraft-font mb-3"><i class="fas fa-coins me-2"></i>TOKEN PURCHASE</h3>
+            <div class="token-badge fs-5">1 BDT = 12 TOKENS</div>
+            
+            <div class="token-calculator">
+                <div class="form-group mb-3">
+                    <label class="form-label text-white mb-2 fs-5">Enter Token Amount</label>
+                    <input type="number" id="tokenAmount" class="form-control form-control-lg" placeholder="Enter tokens" min="12" step="12" oninput="calculateBDT()">
+                    <small class="text-muted">Minimum 12 tokens</small>
+                </div>
+                
+                <div class="calculation-result">
+                    <div class="row text-center">
+                        <div class="col-6">
+                            <div class="token-badge fs-6">TOKENS</div>
+                            <h3 id="calculatedTokens" class="minecraft-font text-white">0</h3>
+                        </div>
+                        <div class="col-6">
+                            <div class="price-tag">BDT</div>
+                            <h3 id="calculatedBDT" class="minecraft-font text-white">0</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="btn btn-primary-custom w-100" onclick="openTokenPurchase()">
+                <i class="fas fa-shopping-cart me-2"></i>PURCHASE TOKENS
+            </button>
+        </div>
+        
+        <!-- Ranks Section -->
+        <h2 class="section-title minecraft-font">PREMIUM RANKS</h2>
+        <p class="text-center text-muted mb-5 fs-5">Choose from our premium ranks and unlock amazing features!</p>
+        
+        <div class="row g-4">
+            <!-- VIP Rank -->
+            <div class="col-md-4">
+                <div class="store-item">
+                    <h3 class="minecraft-font mb-3">VIP RANK</h3>
+                    <div class="token-badge">1500 TOKENS = 125 BDT</div>
+                    
+                    <ul class="list-unstyled text-start mb-4">
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>VIP Prefix in Chat</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>3 Homes</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Colorful Nickname [Golden]</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>VIP Kits</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>/back command</li>
+                    </ul>
+                    
+                    <button class="btn btn-primary-custom w-100" onclick="openPaymentForm('VIP Rank', '1500 Tokens', 'token', '1500', '0', '125', 'VIP')">
+                        <i class="fas fa-shopping-cart me-2"></i>Purchase Now
+                    </button>
+                </div>
+            </div>
+            
+            <!-- MVP Rank -->
+            <div class="col-md-4">
+                <div class="store-item">
+                    <h3 class="minecraft-font mb-3">MVP RANK</h4>
+                    <div class="token-badge">2500 TOKENS = 210 BDT</div>
+                    
+                    <ul class="list-unstyled text-start mb-4">
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>All VIP Features [vip, Default]</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>MVP Prefix in Chat</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>5 Homes</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Colorful Nickname [Mix of Pink and Purple]</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>MVP Kits</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>/afk</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>/anvil</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>/griendstone</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>/workbench</li>
+                    </ul>
+                    
+                    <button class="btn btn-primary-custom w-100" onclick="openPaymentForm('MVP Rank', '2500 Tokens', 'token', '2500', '0', '210', 'MVP')">
+                        <i class="fas fa-shopping-cart me-2"></i>Purchase Now
+                    </button>
+                </div>
+            </div>
+            
+            <!-- ELITE Rank -->
+            <div class="col-md-4">
+                <div class="store-item">
+                    <h3 class="minecraft-font mb-3">ELITE RANK</h3>
+                    <div class="token-badge">3600 TOKENS = 300 BDT</div>
+                    
+                    <ul class="list-unstyled text-start mb-4">
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Previous Ranks Features [Default, VIP, MVP]</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Elite Prefix in Chat</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Colorful Nickname [Light Blue & Blue Mix]</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Elite kits</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>7 Homes</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>/repair</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>/hat</li>
+                    </ul>
+                    
+                    <button class="btn btn-primary-custom w-100" onclick="openPaymentForm('Elite Rank', '3600 Tokens', 'token', '3600', '0', '300', 'ELITE')">
+                        <i class="fas fa-shopping-cart me-2"></i>Purchase Now
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Custom Rank -->
+            <div class="col-md-4">
+                <div class="store-item">
+                    <h3 class="minecraft-font mb-3">CUSTOM RANK</h3>
+                    <div class="price-tag">500 BDT</div>
+                    
+                    <ul class="list-unstyled text-start mb-4">
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Previous Rank's All Features [Default, VIP, MVP, ELITE]</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Custom Prefix In Chat [Anything You Want]</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Colourful Name [Any colour you want]</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Custom Kits</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>10 Home</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>/Fly</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>/Feed</li>
+                    </ul>
+                    
+                    <button class="btn btn-primary-custom w-100" onclick="openCustomRank()">
+                        <i class="fas fa-shopping-cart me-2"></i>Purchase Custom Rank
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <footer class="mt-5 pt-4 border-top border-secondary">
+            <div class="text-center">
+                <p class="text-muted mb-0">&copy; 2023 Drk Survraze SMP. All Rights Reserved.</p>
+                <a href="index.html" class="btn btn-primary-custom mt-3">
+                    <i class="fas fa-home me-2"></i>Back to Home
+                </a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        function goBackToHome() {
+            window.location.href = 'index.html';
+        }
+        
+        function calculateBDT() {
+            const tokenAmount = document.getElementById('tokenAmount').value;
+            if (tokenAmount >= 12) {
+                const bdtAmount = Math.ceil(tokenAmount / 12);
+                document.getElementById('calculatedTokens').textContent = tokenAmount;
+                document.getElementById('calculatedBDT').textContent = bdtAmount;
+            } else {
+                document.getElementById('calculatedTokens').textContent = '0';
+                document.getElementById('calculatedBDT').textContent = '0';
+            }
+        }
+        
+        function openPaymentForm(item, purchaseType, type, amount, money, price, rankType) {
+            const params = new URLSearchParams({
+                type: type,
+                item: item,
+                purchaseType: purchaseType,
+                amount: amount,
+                money: money,
+                price: price,
+                rankType: rankType
+            }).toString();
+            
+            window.location.href = `payment-form.html?${params}`;
+        }
+        
+        function openTokenPurchase() {
+            const tokenAmount = document.getElementById('tokenAmount').value;
+            if (!tokenAmount || tokenAmount < 12) {
+                alert('Please enter a valid token amount (minimum 12 tokens)');
+                return;
+            }
+            
+            const bdtAmount = Math.ceil(tokenAmount / 12);
+            
+            const params = new URLSearchParams({
+                type: 'tokens',
+                item: 'Token Purchase',
+                purchaseType: `${tokenAmount} Tokens`,
+                amount: tokenAmount,
+                money: '0',
+                price: `${bdtAmount} BDT`,
+                rankType: 'TOKENS'
+            }).toString();
+            
+            window.location.href = `payment-form.html?${params}`;
+        }
+        
+        function openCustomRank() {
+            window.location.href = 'payment-form.html?type=custom&item=Custom%20Rank&purchaseType=Custom%20Rank&amount=0&money=0&price=500%20BDT&rankType=CUSTOM';
+        }
+        
+        // Initialize animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            });
+            
+            document.querySelectorAll('.store-item').forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(50px)';
+                card.style.transition = 'all 0.6s ease';
+                observer.observe(card);
+            });
+        });
+    </script>
+</body>
+</html>

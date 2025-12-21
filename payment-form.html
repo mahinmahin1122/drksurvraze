@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payment Form - Drk Survraze SMP</title>
+    <title>Custom Rank Design - Drk Survraze SMP</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -343,11 +343,36 @@
                 transform: rotate(360deg);
             }
         }
+        
+        /* Custom Rank Form Styles */
+        .custom-rank-form {
+            background: rgba(30, 30, 30, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            border: 2px solid var(--secondary);
+            box-shadow: 0 10px 30px rgba(255, 152, 0, 0.3);
+        }
+        
+        /* Payment Page Styles */
+        .payment-page-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(30, 30, 30, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            border: 2px solid var(--primary);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            display: none;
+        }
     </style>
 </head>
 <body>
+    <!-- Custom Rank Design Page (Shows First for Custom Rank only) -->
     <div class="container">
-        <div class="payment-container">
+        <div class="payment-container" id="customRankPage">
             <!-- Header with Back Button -->
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <button class="back-btn" onclick="goBackToStore()">
@@ -356,10 +381,60 @@
                 <img src="drk.png" alt="Server Logo" style="height: 40px;">
             </div>
             
+            <!-- Custom Rank Header -->
+            <div class="payment-header" style="background: linear-gradient(45deg, var(--secondary), #FFB74D);">
+                <h3 class="minecraft-font mb-0">Design Your Custom Rank</h3>
+                <p class="mb-0 mt-2">Create your unique Minecraft rank</p>
+            </div>
+            
+            <!-- Simple Custom Rank Form -->
+            <div class="custom-rank-form">
+                <!-- Rank Name -->
+                <div class="mb-4">
+                    <label class="form-label fw-bold">Enter Your Rank Name *</label>
+                    <input type="text" id="rankName" class="form-control" placeholder="e.g., DragonLord, NightKing, ShadowWalker" maxlength="20" style="font-size: 1.1em; padding: 15px;">
+                    <small class="text-muted">Choose a unique name for your rank (max 20 characters)</small>
+                </div>
+                
+                <!-- Color Text Option (Below Rank Name) -->
+                <div class="mb-4">
+                    <label class="form-label fw-bold">Rank Color Preferences</label>
+                    <p class="text-muted mb-2">What color would you like for your rank? Describe below:</p>
+                    <textarea id="colorText" class="form-control" rows="3" placeholder="e.g., I want a golden color with glow effect
+e.g., Red color with black outline
+e.g., Blue gradient with sparkles
+e.g., Purple with neon glow"></textarea>
+                    <small class="text-muted">Describe the color and effects you want for your rank. Our design team will create it accordingly.</small>
+                </div>
+                
+                <!-- Navigation Buttons -->
+                <div class="d-flex gap-2 mt-4">
+                    <button class="btn btn-secondary w-50" onclick="goBackToStore()" style="padding: 12px; border-radius: 50px;">
+                        <i class="fas fa-times me-2"></i>Cancel
+                    </button>
+                    <button class="btn btn-primary-custom w-50" onclick="proceedToPayment()" style="background: linear-gradient(45deg, var(--secondary), #FFB74D); padding: 12px;">
+                        <i class="fas fa-arrow-right me-2"></i>Proceed to Payment
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Payment Page (Hidden Initially, shows for Custom Rank) -->
+    <div class="container">
+        <div class="payment-page-container" id="paymentPage">
+            <!-- Header with Back Button -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <button class="back-btn" onclick="backToCustomRank()">
+                    <i class="fas fa-arrow-left me-2"></i>Back to Design
+                </button>
+                <img src="drk.png" alt="Server Logo" style="height: 40px;">
+            </div>
+            
             <!-- Payment Header -->
             <div class="payment-header">
                 <h3 class="minecraft-font mb-0">Complete Your Purchase</h3>
-                <p class="mb-0 mt-2" id="purchaseType">Loading...</p>
+                <p class="mb-0 mt-2" id="purchaseType">Custom Rank</p>
             </div>
             
             <!-- Order Summary -->
@@ -367,15 +442,23 @@
                 <h5><i class="fas fa-receipt me-2"></i>Order Summary</h5>
                 <div class="d-flex justify-content-between mb-2">
                     <span>Item:</span>
-                    <strong id="orderItem">Loading...</strong>
+                    <strong id="orderItem">Custom Rank</strong>
                 </div>
                 <div class="d-flex justify-content-between mb-2">
                     <span>Type:</span>
-                    <strong id="orderType">Loading...</strong>
+                    <strong id="orderType">Custom Rank Design</strong>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Rank Name:</span>
+                    <strong id="orderRankName">-</strong>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Color Preference:</span>
+                    <strong id="orderColor">-</strong>
                 </div>
                 <div class="d-flex justify-content-between">
                     <span>Amount:</span>
-                    <strong id="orderAmount">Loading...</strong>
+                    <strong id="orderAmount">- BDT</strong>
                 </div>
             </div>
             
@@ -535,11 +618,208 @@
         </div>
     </div>
 
+    <!-- NORMAL PAYMENT PAGE (For non-custom ranks) -->
+    <div class="container">
+        <div class="payment-container" id="normalPaymentPage" style="display: none;">
+            <!-- Header with Back Button -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <button class="back-btn" onclick="goBackToStore()">
+                    <i class="fas fa-arrow-left me-2"></i>Back to Store
+                </button>
+                <img src="drk.png" alt="Server Logo" style="height: 40px;">
+            </div>
+            
+            <!-- Payment Header -->
+            <div class="payment-header">
+                <h3 class="minecraft-font mb-0">Complete Your Purchase</h3>
+                <p class="mb-0 mt-2" id="normalPurchaseType">Loading...</p>
+            </div>
+            
+            <!-- Order Summary -->
+            <div class="order-summary-box">
+                <h5><i class="fas fa-receipt me-2"></i>Order Summary</h5>
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Item:</span>
+                    <strong id="normalOrderItem">Loading...</strong>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Type:</span>
+                    <strong id="normalOrderType">Loading...</strong>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <span>Amount:</span>
+                    <strong id="normalOrderAmount">Loading...</strong>
+                </div>
+            </div>
+            
+            <!-- Payment Method Selection -->
+            <div id="normalPaymentSelection">
+                <h5 class="mb-3">Select Payment Method</h5>
+                
+                <div class="payment-method" onclick="selectNormalPaymentMethod('bkash')">
+                    <div class="d-flex align-items-center">
+                        <i class="fas fa-mobile-alt fa-2x me-3" style="color: #E2136E;"></i>
+                        <div>
+                            <h6 class="mb-1">bKash</h6>
+                            <p class="text-muted mb-0">Pay with bKash Mobile Banking</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="payment-method" onclick="selectNormalPaymentMethod('nagad')">
+                    <div class="d-flex align-items-center">
+                        <i class="fas fa-wallet fa-2x me-3" style="color: #F12C14;"></i>
+                        <div>
+                            <h6 class="mb-1">Nagad</h6>
+                            <p class="text-muted mb-0">Pay with Nagad Mobile Banking</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="payment-method" onclick="selectNormalPaymentMethod('discord')">
+                    <div class="d-flex align-items-center">
+                        <i class="fab fa-discord fa-2x me-3" style="color: #5865F2;"></i>
+                        <div>
+                            <h6 class="mb-1">Discord Payment</h6>
+                            <p class="text-muted mb-0">Complete payment via Discord</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="btn btn-primary-custom w-100 mt-4" id="normalContinueBtn" onclick="showNormalPaymentForm()" disabled>
+                    Continue <i class="fas fa-arrow-right ms-2"></i>
+                </button>
+            </div>
+            
+            <!-- Normal bKash Payment Form -->
+            <div id="normalBkashForm" class="payment-form" style="display: none;">
+                <div class="payment-instruction-box">
+                    <h5><i class="fas fa-info-circle me-2"></i>Payment Instructions</h5>
+                    <p class="mb-2">1. Send payment to our bKash number:</p>
+                    
+                    <!-- bKash Number with Copy Button -->
+                    <div class="payment-number-box">
+                        <h6><i class="fas fa-mobile-alt me-2"></i>bKash Number</h6>
+                        <div class="d-flex justify-content-center align-items-center">
+                            <span class="number-display">01980583573</span>
+                            <button class="copy-btn-small" onclick="copyToClipboard('01980583573', 'bKash Number')">
+                                <i class="fas fa-copy me-1"></i>Copy
+                            </button>
+                        </div>
+                        <small class="text-muted">Click the copy button to copy the number</small>
+                    </div>
+                    
+                    <p class="mb-2">2. Fill the form below with your details</p>
+                </div>
+                
+                <input type="text" id="normalBkashNumber" placeholder="Your bKash Number *" required>
+                <input type="text" id="normalBkashTrxId" placeholder="Transaction ID (TrxID) *" required>
+                <input type="text" id="normalBkashIngameName" placeholder="Your In-Game Name *" required>
+                <input type="text" id="normalBkashDiscordId" placeholder="Your Discord ID *" required>
+                
+                <div class="d-flex gap-2">
+                    <button class="btn btn-secondary w-50" onclick="backToNormalPaymentSelection()" style="background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.2);">
+                        <i class="fas fa-arrow-left me-2"></i>Back
+                    </button>
+                    <button class="btn btn-primary-custom w-50" id="normalBkashSubmitBtn" onclick="submitNormalBkashPayment()">
+                        <i class="fas fa-paper-plane me-2"></i>Submit
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Normal Nagad Payment Form -->
+            <div id="normalNagadForm" class="payment-form" style="display: none;">
+                <div class="payment-instruction-box">
+                    <h5><i class="fas fa-info-circle me-2"></i>Payment Instructions</h5>
+                    <p class="mb-2">1. Send payment to our Nagad number:</p>
+                    
+                    <!-- Nagad Number with Copy Button -->
+                    <div class="payment-number-box">
+                        <h6><i class="fas fa-wallet me-2"></i>Nagad Number</h6>
+                        <div class="d-flex justify-content-center align-items-center">
+                            <span class="number-display">01980583573</span>
+                            <button class="copy-btn-small" onclick="copyToClipboard('01980583573', 'Nagad Number')">
+                                <i class="fas fa-copy me-1"></i>Copy
+                            </button>
+                        </div>
+                        <small class="text-muted">Click the copy button to copy the number</small>
+                    </div>
+                    
+                    <p class="mb-2">2. Fill the form below with your details</p>
+                </div>
+                
+                <input type="text" id="normalNagadNumber" placeholder="Your Nagad Number *" required>
+                <input type="text" id="normalNagadTrxId" placeholder="Transaction ID (TrxID) *" required>
+                <input type="text" id="normalNagadIngameName" placeholder="Your In-Game Name *" required>
+                <input type="text" id="normalNagadDiscordId" placeholder="Your Discord ID *" required>
+                
+                <div class="d-flex gap-2">
+                    <button class="btn btn-secondary w-50" onclick="backToNormalPaymentSelection()" style="background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.2);">
+                        <i class="fas fa-arrow-left me-2"></i>Back
+                    </button>
+                    <button class="btn btn-primary-custom w-50" id="normalNagadSubmitBtn" onclick="submitNormalNagadPayment()">
+                        <i class="fas fa-paper-plane me-2"></i>Submit
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Normal Discord Payment Form -->
+            <div id="normalDiscordForm" class="payment-form" style="display: none;">
+                <div class="discord-instruction-box">
+                    <h5><i class="fab fa-discord me-2"></i>Discord Payment Process</h5>
+                    <p>Complete payment via Discord - our bot will process your order!</p>
+                </div>
+                
+                <input type="text" id="normalDiscordUsername" placeholder="Your Discord Username *" required>
+                <input type="text" id="normalDiscordIngameName" placeholder="Your In-Game Name *" required>
+                <select id="normalDiscordPaymentMethod">
+                    <option value="">Select Payment Method *</option>
+                    <option value="PayPal">PayPal</option>
+                    <option value="Stripe">Stripe</option>
+                    <option value="Credit Card">Credit Card</option>
+                    <option value="Other">Other</option>
+                </select>
+                <textarea id="normalDiscordNotes" placeholder="Additional Notes" rows="3"></textarea>
+                
+                <div class="d-flex gap-2">
+                    <button class="btn btn-secondary w-50" onclick="backToNormalPaymentSelection()" style="background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.2);">
+                        <i class="fas fa-arrow-left me-2"></i>Back
+                    </button>
+                    <button class="btn btn-primary-custom w-50" id="normalDiscordSubmitBtn" style="background: var(--discord);" onclick="submitNormalDiscordPayment()">
+                        <i class="fab fa-discord me-2"></i>Submit
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Normal Success Message -->
+            <div id="normalSuccessMessage" class="success-box" style="display: none;">
+                <div class="text-center">
+                    <i class="fas fa-check-circle fa-3x text-success mb-3"></i>
+                    <h4>Order Submitted!</h4>
+                    <p id="normalSuccessText" class="mb-3">Your order has been received and will be processed shortly.</p>
+                    <div id="normalDiscordInstructions" style="display: none;">
+                        <p>Please join our Discord server for further instructions:</p>
+                        <a href="https://discord.gg/SjefnHedt" target="_blank" class="btn btn-primary-custom">
+                            <i class="fab fa-discord me-2"></i>Join Discord
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         // URL থেকে প্যারামিটার পড়া
         const urlParams = new URLSearchParams(window.location.search);
         let orderData = {};
         let isSubmitting = false; // Flag to prevent multiple submissions
+        let selectedNormalPaymentMethod = '';
+        
+        // Custom rank data
+        let customRankData = {
+            rankName: '',
+            colorText: ''
+        };
         
         // Initialize order data from URL parameters
         function initializeOrder() {
@@ -554,18 +834,87 @@
                 rankType: urlParams.get('rankType') || 'VIP'
             };
             
-            // Update UI with order details
-            document.getElementById('purchaseType').textContent = `${orderData.item} - ${orderData.purchaseType}`;
-            document.getElementById('orderItem').textContent = orderData.item;
-            document.getElementById('orderType').textContent = orderData.purchaseType;
-            document.getElementById('orderAmount').textContent = orderData.purchaseType.includes('Token') ? 
+            // Check if this is a custom rank purchase
+            const isCustomRank = orderData.item.includes('Custom') || 
+                               orderData.item.includes('custom') || 
+                               orderData.rankType === 'Custom' ||
+                               orderData.rankType === 'custom' ||
+                               orderData.price === '3000 BDT'; // Custom rank price
+            
+            if (isCustomRank) {
+                // Show custom rank page first
+                document.getElementById('customRankPage').style.display = 'block';
+                document.getElementById('paymentPage').style.display = 'none';
+                document.getElementById('normalPaymentPage').style.display = 'none';
+                
+                // Update title for custom rank
+                document.title = `Custom Rank Design - Drk Survraze SMP`;
+            } else {
+                // Show normal payment page
+                document.getElementById('customRankPage').style.display = 'none';
+                document.getElementById('paymentPage').style.display = 'none';
+                document.getElementById('normalPaymentPage').style.display = 'block';
+                
+                // Update normal payment page details
+                updateNormalPaymentPage();
+            }
+        }
+        
+        function updateNormalPaymentPage() {
+            document.getElementById('normalPurchaseType').textContent = `${orderData.item} - ${orderData.purchaseType}`;
+            document.getElementById('normalOrderItem').textContent = orderData.item;
+            document.getElementById('normalOrderType').textContent = orderData.purchaseType;
+            document.getElementById('normalOrderAmount').textContent = orderData.purchaseType.includes('Token') ? 
                 `${orderData.amount} Tokens` : 
                 (orderData.purchaseType.includes('Money') ? `${orderData.money} InGame Money` : orderData.price);
             
-            // Update title
             document.title = `${orderData.item} - Drk Survraze SMP`;
         }
         
+        function proceedToPayment() {
+            const rankName = document.getElementById('rankName').value.trim();
+            const colorText = document.getElementById('colorText').value.trim();
+            
+            if (!rankName) {
+                showCopyNotification('Please enter a rank name', 'error');
+                return;
+            }
+            
+            // Save custom rank data
+            customRankData = {
+                rankName: rankName,
+                colorText: colorText
+            };
+            
+            // Update order data for custom rank
+            orderData.item = `Custom Rank: ${rankName}`;
+            orderData.purchaseType = 'Custom Rank Design';
+            
+            // Switch to payment page
+            document.getElementById('customRankPage').style.display = 'none';
+            document.getElementById('paymentPage').style.display = 'block';
+            document.getElementById('normalPaymentPage').style.display = 'none';
+            
+            // Update payment page details
+            document.getElementById('purchaseType').textContent = `Custom Rank: ${rankName}`;
+            document.getElementById('orderItem').textContent = `Custom Rank: ${rankName}`;
+            document.getElementById('orderType').textContent = 'Custom Rank Design';
+            document.getElementById('orderRankName').textContent = rankName;
+            document.getElementById('orderColor').textContent = colorText || 'Not specified';
+            document.getElementById('orderAmount').textContent = orderData.price;
+            
+            // Update page title
+            document.title = `Payment - Custom Rank: ${rankName}`;
+        }
+        
+        function backToCustomRank() {
+            // Switch back to custom rank page
+            document.getElementById('paymentPage').style.display = 'none';
+            document.getElementById('normalPaymentPage').style.display = 'none';
+            document.getElementById('customRankPage').style.display = 'block';
+        }
+        
+        // ========== CUSTOM RANK PAYMENT FUNCTIONS ==========
         let selectedPaymentMethod = '';
         
         function selectPaymentMethod(method) {
@@ -585,7 +934,7 @@
         
         function showPaymentForm() {
             if (!selectedPaymentMethod) {
-                alert('Please select a payment method');
+                showCopyNotification('Please select a payment method', 'error');
                 return;
             }
             
@@ -611,6 +960,52 @@
             
             // Show selection
             document.getElementById('paymentSelection').style.display = 'block';
+        }
+        
+        // ========== NORMAL PAYMENT FUNCTIONS ==========
+        function selectNormalPaymentMethod(method) {
+            selectedNormalPaymentMethod = method;
+            
+            // Reset all selections
+            document.querySelectorAll('.payment-method').forEach(el => {
+                el.classList.remove('selected');
+            });
+            
+            // Select clicked method
+            event.currentTarget.classList.add('selected');
+            
+            // Enable continue button
+            document.getElementById('normalContinueBtn').disabled = false;
+        }
+        
+        function showNormalPaymentForm() {
+            if (!selectedNormalPaymentMethod) {
+                showCopyNotification('Please select a payment method', 'error');
+                return;
+            }
+            
+            // Hide selection
+            document.getElementById('normalPaymentSelection').style.display = 'none';
+            
+            // Show selected form
+            if (selectedNormalPaymentMethod === 'bkash') {
+                document.getElementById('normalBkashForm').style.display = 'block';
+            } else if (selectedNormalPaymentMethod === 'nagad') {
+                document.getElementById('normalNagadForm').style.display = 'block';
+            } else if (selectedNormalPaymentMethod === 'discord') {
+                document.getElementById('normalDiscordForm').style.display = 'block';
+            }
+        }
+        
+        function backToNormalPaymentSelection() {
+            // Hide all forms
+            document.getElementById('normalBkashForm').style.display = 'none';
+            document.getElementById('normalNagadForm').style.display = 'none';
+            document.getElementById('normalDiscordForm').style.display = 'none';
+            document.getElementById('normalSuccessMessage').style.display = 'none';
+            
+            // Show selection
+            document.getElementById('normalPaymentSelection').style.display = 'block';
         }
         
         function goBackToStore() {
@@ -675,8 +1070,8 @@
             }, 3000);
         }
         
+        // ========== CUSTOM RANK PAYMENT SUBMISSION ==========
         async function submitBkashPayment() {
-            // Prevent multiple submissions
             if (isSubmitting) return;
             
             const userNumber = document.getElementById('bkashNumber').value;
@@ -689,9 +1084,154 @@
                 return;
             }
             
-            // Set submitting flag and show loading
             isSubmitting = true;
             showLoading('bkashSubmitBtn');
+            
+            const orderId = 'CUSTOM_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+            
+            const paymentData = {
+                orderId: orderId,
+                timestamp: new Date().toISOString(),
+                ...orderData,
+                customRank: customRankData,
+                paymentMethod: 'bKash',
+                userNumber: userNumber,
+                trxId: trxId,
+                ingameName: ingameName,
+                discordId: discordId,
+                status: 'pending'
+            };
+            
+            try {
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                await sendToDiscordWebhook(paymentData, true);
+                showCustomSuccessMessage('Custom rank payment submitted successfully! Staff will contact you for design details.');
+                document.getElementById('discordInstructions').style.display = 'block';
+            } catch (error) {
+                console.error('Error:', error);
+                showCustomSuccessMessage('Order submitted! Please wait for confirmation.');
+            } finally {
+                isSubmitting = false;
+                hideLoading('bkashSubmitBtn');
+            }
+        }
+        
+        async function submitNagadPayment() {
+            if (isSubmitting) return;
+            
+            const userNumber = document.getElementById('nagadNumber').value;
+            const trxId = document.getElementById('nagadTrxId').value;
+            const ingameName = document.getElementById('nagadIngameName').value;
+            const discordId = document.getElementById('nagadDiscordId').value;
+            
+            if (!userNumber || !trxId || !ingameName || !discordId) {
+                showCopyNotification('Please fill in all required fields', 'error');
+                return;
+            }
+            
+            isSubmitting = true;
+            showLoading('nagadSubmitBtn');
+            
+            const orderId = 'CUSTOM_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+            
+            const paymentData = {
+                orderId: orderId,
+                timestamp: new Date().toISOString(),
+                ...orderData,
+                customRank: customRankData,
+                paymentMethod: 'Nagad',
+                userNumber: userNumber,
+                trxId: trxId,
+                ingameName: ingameName,
+                discordId: discordId,
+                status: 'pending'
+            };
+            
+            try {
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                await sendToDiscordWebhook(paymentData, true);
+                showCustomSuccessMessage('Custom rank payment submitted successfully! Staff will contact you for design details.');
+                document.getElementById('discordInstructions').style.display = 'block';
+            } catch (error) {
+                console.error('Error:', error);
+                showCustomSuccessMessage('Order submitted! Please wait for confirmation.');
+            } finally {
+                isSubmitting = false;
+                hideLoading('nagashSubmitBtn');
+            }
+        }
+        
+        async function submitDiscordPayment() {
+            if (isSubmitting) return;
+            
+            const discordUsername = document.getElementById('discordUsername').value;
+            const ingameName = document.getElementById('discordIngameName').value;
+            const paymentMethod = document.getElementById('discordPaymentMethod').value;
+            const notes = document.getElementById('discordNotes').value;
+            
+            if (!discordUsername || !ingameName || !paymentMethod) {
+                showCopyNotification('Please fill in all required fields', 'error');
+                return;
+            }
+            
+            isSubmitting = true;
+            showLoading('discordSubmitBtn');
+            
+            const orderId = 'CUSTOM_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+            
+            const paymentData = {
+                orderId: orderId,
+                timestamp: new Date().toISOString(),
+                ...orderData,
+                customRank: customRankData,
+                paymentMethod: paymentMethod,
+                paymentType: 'discord_form',
+                discordUsername: discordUsername,
+                ingameName: ingameName,
+                notes: notes,
+                status: 'pending_discord'
+            };
+            
+            try {
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                await sendToDiscordWebhook(paymentData, true);
+                showCustomSuccessMessage('Discord payment submitted successfully!');
+                document.getElementById('discordInstructions').style.display = 'block';
+            } catch (error) {
+                console.error('Error:', error);
+                showCustomSuccessMessage('Order submitted! Please contact support if needed.');
+            } finally {
+                isSubmitting = false;
+                hideLoading('discordSubmitBtn');
+            }
+        }
+        
+        function showCustomSuccessMessage(message) {
+            document.getElementById('bkashForm').style.display = 'none';
+            document.getElementById('nagadForm').style.display = 'none';
+            document.getElementById('discordForm').style.display = 'none';
+            document.getElementById('paymentSelection').style.display = 'none';
+            
+            document.getElementById('successText').textContent = message;
+            document.getElementById('successMessage').style.display = 'block';
+        }
+        
+        // ========== NORMAL PAYMENT SUBMISSION ==========
+        async function submitNormalBkashPayment() {
+            if (isSubmitting) return;
+            
+            const userNumber = document.getElementById('normalBkashNumber').value;
+            const trxId = document.getElementById('normalBkashTrxId').value;
+            const ingameName = document.getElementById('normalBkashIngameName').value;
+            const discordId = document.getElementById('normalBkashDiscordId').value;
+            
+            if (!userNumber || !trxId || !ingameName || !discordId) {
+                showCopyNotification('Please fill in all required fields', 'error');
+                return;
+            }
+            
+            isSubmitting = true;
+            showLoading('normalBkashSubmitBtn');
             
             const orderId = 'ORDER_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
             
@@ -708,39 +1248,34 @@
             };
             
             try {
-                // Simulate API delay for better UX
                 await new Promise(resolve => setTimeout(resolve, 1000));
-                
-                await sendToDiscordWebhook(paymentData);
-                showSuccessMessage('bKash payment submitted successfully! Staff will review your payment.');
-                document.getElementById('discordInstructions').style.display = 'block';
+                await sendToDiscordWebhook(paymentData, false);
+                showNormalSuccessMessage('bKash payment submitted successfully! Staff will review your payment.');
+                document.getElementById('normalDiscordInstructions').style.display = 'block';
             } catch (error) {
                 console.error('Error:', error);
-                showSuccessMessage('Order submitted! Please wait for confirmation.');
+                showNormalSuccessMessage('Order submitted! Please wait for confirmation.');
             } finally {
-                // Reset submitting flag
                 isSubmitting = false;
-                hideLoading('bkashSubmitBtn');
+                hideLoading('normalBkashSubmitBtn');
             }
         }
         
-        async function submitNagadPayment() {
-            // Prevent multiple submissions
+        async function submitNormalNagadPayment() {
             if (isSubmitting) return;
             
-            const userNumber = document.getElementById('nagadNumber').value;
-            const trxId = document.getElementById('nagadTrxId').value;
-            const ingameName = document.getElementById('nagadIngameName').value;
-            const discordId = document.getElementById('nagadDiscordId').value;
+            const userNumber = document.getElementById('normalNagadNumber').value;
+            const trxId = document.getElementById('normalNagadTrxId').value;
+            const ingameName = document.getElementById('normalNagadIngameName').value;
+            const discordId = document.getElementById('normalNagadDiscordId').value;
             
             if (!userNumber || !trxId || !ingameName || !discordId) {
                 showCopyNotification('Please fill in all required fields', 'error');
                 return;
             }
             
-            // Set submitting flag and show loading
             isSubmitting = true;
-            showLoading('nagadSubmitBtn');
+            showLoading('normalNagadSubmitBtn');
             
             const orderId = 'ORDER_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
             
@@ -757,39 +1292,34 @@
             };
             
             try {
-                // Simulate API delay for better UX
                 await new Promise(resolve => setTimeout(resolve, 1000));
-                
-                await sendToDiscordWebhook(paymentData);
-                showSuccessMessage('Nagad payment submitted successfully! Staff will review your payment.');
-                document.getElementById('discordInstructions').style.display = 'block';
+                await sendToDiscordWebhook(paymentData, false);
+                showNormalSuccessMessage('Nagad payment submitted successfully! Staff will review your payment.');
+                document.getElementById('normalDiscordInstructions').style.display = 'block';
             } catch (error) {
                 console.error('Error:', error);
-                showSuccessMessage('Order submitted! Please wait for confirmation.');
+                showNormalSuccessMessage('Order submitted! Please wait for confirmation.');
             } finally {
-                // Reset submitting flag
                 isSubmitting = false;
-                hideLoading('nagadSubmitBtn');
+                hideLoading('normalNagadSubmitBtn');
             }
         }
         
-        async function submitDiscordPayment() {
-            // Prevent multiple submissions
+        async function submitNormalDiscordPayment() {
             if (isSubmitting) return;
             
-            const discordUsername = document.getElementById('discordUsername').value;
-            const ingameName = document.getElementById('discordIngameName').value;
-            const paymentMethod = document.getElementById('discordPaymentMethod').value;
-            const notes = document.getElementById('discordNotes').value;
+            const discordUsername = document.getElementById('normalDiscordUsername').value;
+            const ingameName = document.getElementById('normalDiscordIngameName').value;
+            const paymentMethod = document.getElementById('normalDiscordPaymentMethod').value;
+            const notes = document.getElementById('normalDiscordNotes').value;
             
             if (!discordUsername || !ingameName || !paymentMethod) {
                 showCopyNotification('Please fill in all required fields', 'error');
                 return;
             }
             
-            // Set submitting flag and show loading
             isSubmitting = true;
-            showLoading('discordSubmitBtn');
+            showLoading('normalDiscordSubmitBtn');
             
             const orderId = 'ORDER_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
             
@@ -806,43 +1336,39 @@
             };
             
             try {
-                // Simulate API delay for better UX
                 await new Promise(resolve => setTimeout(resolve, 1000));
-                
-                await sendToDiscordWebhook(paymentData);
-                showSuccessMessage('Discord payment submitted successfully!');
-                document.getElementById('discordInstructions').style.display = 'block';
+                await sendToDiscordWebhook(paymentData, false);
+                showNormalSuccessMessage('Discord payment submitted successfully!');
+                document.getElementById('normalDiscordInstructions').style.display = 'block';
             } catch (error) {
                 console.error('Error:', error);
-                showSuccessMessage('Order submitted! Please contact support if needed.');
+                showNormalSuccessMessage('Order submitted! Please contact support if needed.');
             } finally {
-                // Reset submitting flag
                 isSubmitting = false;
-                hideLoading('discordSubmitBtn');
+                hideLoading('normalDiscordSubmitBtn');
             }
         }
         
-        function showSuccessMessage(message) {
-            // Hide all forms
-            document.getElementById('bkashForm').style.display = 'none';
-            document.getElementById('nagadForm').style.display = 'none';
-            document.getElementById('discordForm').style.display = 'none';
-            document.getElementById('paymentSelection').style.display = 'none';
+        function showNormalSuccessMessage(message) {
+            document.getElementById('normalBkashForm').style.display = 'none';
+            document.getElementById('normalNagadForm').style.display = 'none';
+            document.getElementById('normalDiscordForm').style.display = 'none';
+            document.getElementById('normalPaymentSelection').style.display = 'none';
             
-            // Show success message
-            document.getElementById('successText').textContent = message;
-            document.getElementById('successMessage').style.display = 'block';
+            document.getElementById('normalSuccessText').textContent = message;
+            document.getElementById('normalSuccessMessage').style.display = 'block';
         }
         
-        // Discord Webhook Function (same as before)
-        async function sendToDiscordWebhook(orderData) {
+        // Discord Webhook Function
+        async function sendToDiscordWebhook(orderData, isCustomRank = false) {
             const webhookURL = 'https://discord.com/api/webhooks/1442562327735042084/CpNjUYeKf3fWkC-2c-qcVgc4fECIqBskGVx0B6MVCy1GvzWNgF4TStTA_KBueZhAKJxi';
             
             let embed, content;
+            const customRank = orderData.customRank || {};
             
             if (orderData.paymentType === 'discord_form') {
                 embed = {
-                    title: "🎮 নতুন অর্ডার এসেছে!",
+                    title: isCustomRank ? "🎮 নতুন Custom Rank অর্ডার এসেছে!" : "🎮 নতুন অর্ডার এসেছে!",
                     color: 0x5865F2,
                     fields: [
                         {
@@ -864,30 +1390,48 @@
                             name: "⭐ Item",
                             value: orderData.item,
                             inline: true
-                        },
-                        {
-                            name: "🎁 Purchase Type",
-                            value: orderData.purchaseType,
-                            inline: true
-                        },
-                        {
-                            name: "💳 Payment Method",
-                            value: orderData.paymentMethod,
-                            inline: true
-                        },
-                        {
-                            name: "🕐 Order Time",
-                            value: new Date(orderData.timestamp).toLocaleString(),
-                            inline: true
                         }
                     ]
                 };
                 
-                content = "📬 **নতুন Discord অর্ডার Received!** @everyone";
+                if (isCustomRank) {
+                    embed.fields.push(
+                        {
+                            name: "🎨 Rank Name",
+                            value: customRank.rankName || "Not specified",
+                            inline: true
+                        },
+                        {
+                            name: "🌈 Color Preference",
+                            value: customRank.colorText || "Not specified",
+                            inline: true
+                        }
+                    );
+                }
+                
+                embed.fields.push(
+                    {
+                        name: "💳 Payment Method",
+                        value: orderData.paymentMethod,
+                        inline: true
+                    },
+                    {
+                        name: "💰 Amount",
+                        value: orderData.price || "N/A",
+                        inline: true
+                    },
+                    {
+                        name: "🕐 Order Time",
+                        value: new Date(orderData.timestamp).toLocaleString(),
+                        inline: true
+                    }
+                );
+                
+                content = isCustomRank ? "🎨 **নতুন Custom Rank অর্ডার Received!** @everyone" : "📬 **নতুন অর্ডার Received!** @everyone";
                 
             } else if (orderData.paymentMethod === 'bKash') {
                 embed = {
-                    title: "💰 নতুন bKash পেমেন্ট Received",
+                    title: isCustomRank ? "💰 নতুন Custom Rank bKash পেমেন্ট Received" : "💰 নতুন bKash পেমেন্ট Received",
                     color: 0xE2136E,
                     fields: [
                         {
@@ -904,35 +1448,53 @@
                             name: "⭐ Item",
                             value: orderData.item,
                             inline: true
-                        },
-                        {
-                            name: "🎁 Purchase Type",
-                            value: orderData.purchaseType,
-                            inline: true
-                        },
-                        {
-                            name: "📱 bKash Number",
-                            value: orderData.userNumber,
-                            inline: true
-                        },
-                        {
-                            name: "🔢 Transaction ID",
-                            value: orderData.trxId,
-                            inline: true
-                        },
-                        {
-                            name: "👤 Discord ID",
-                            value: orderData.discordId,
-                            inline: true
                         }
                     ]
                 };
                 
-                content = "💸 **নতুন bKash পেমেন্ট!** @everyone";
+                if (isCustomRank) {
+                    embed.fields.push(
+                        {
+                            name: "🎨 Rank Name",
+                            value: customRank.rankName || "Not specified",
+                            inline: true
+                        },
+                        {
+                            name: "🌈 Color Preference",
+                            value: customRank.colorText || "Not specified",
+                            inline: true
+                        }
+                    );
+                }
+                
+                embed.fields.push(
+                    {
+                        name: "📱 bKash Number",
+                        value: orderData.userNumber,
+                        inline: true
+                    },
+                    {
+                        name: "🔢 Transaction ID",
+                        value: orderData.trxId,
+                        inline: true
+                    },
+                    {
+                        name: "👤 Discord ID",
+                        value: orderData.discordId,
+                        inline: true
+                    },
+                    {
+                        name: "💰 Amount",
+                        value: orderData.price || "N/A",
+                        inline: true
+                    }
+                );
+                
+                content = isCustomRank ? "💸 **নতুন Custom Rank bKash পেমেন্ট!** @everyone" : "💸 **নতুন bKash পেমেন্ট!** @everyone";
                 
             } else if (orderData.paymentMethod === 'Nagad') {
                 embed = {
-                    title: "💰 নতুন Nagad পেমেন্ট Received",
+                    title: isCustomRank ? "💰 নতুন Custom Rank Nagad পেমেন্ট Received" : "💰 নতুন Nagad পেমেন্ট Received",
                     color: 0xF12C14,
                     fields: [
                         {
@@ -949,31 +1511,49 @@
                             name: "⭐ Item",
                             value: orderData.item,
                             inline: true
-                        },
-                        {
-                            name: "🎁 Purchase Type",
-                            value: orderData.purchaseType,
-                            inline: true
-                        },
-                        {
-                            name: "📱 Nagad Number",
-                            value: orderData.userNumber,
-                            inline: true
-                        },
-                        {
-                            name: "🔢 Transaction ID",
-                            value: orderData.trxId,
-                            inline: true
-                        },
-                        {
-                            name: "👤 Discord ID",
-                            value: orderData.discordId,
-                            inline: true
                         }
                     ]
                 };
                 
-                content = "💸 **নতুন Nagad পেমেন্ট!** @everyone";
+                if (isCustomRank) {
+                    embed.fields.push(
+                        {
+                            name: "🎨 Rank Name",
+                            value: customRank.rankName || "Not specified",
+                            inline: true
+                        },
+                        {
+                            name: "🌈 Color Preference",
+                            value: customRank.colorText || "Not specified",
+                            inline: true
+                        }
+                    );
+                }
+                
+                embed.fields.push(
+                    {
+                        name: "📱 Nagad Number",
+                        value: orderData.userNumber,
+                        inline: true
+                    },
+                    {
+                        name: "🔢 Transaction ID",
+                        value: orderData.trxId,
+                        inline: true
+                    },
+                    {
+                        name: "👤 Discord ID",
+                        value: orderData.discordId,
+                        inline: true
+                    },
+                    {
+                        name: "💰 Amount",
+                        value: orderData.price || "N/A",
+                        inline: true
+                    }
+                );
+                
+                content = isCustomRank ? "💸 **নতুন Custom Rank Nagad পেমেন্ট!** @everyone" : "💸 **নতুন Nagad পেমেন্ট!** @everyone";
             }
             
             const payload = {

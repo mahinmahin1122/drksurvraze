@@ -316,6 +316,33 @@
                 opacity: 1;
             }
         }
+        
+        /* Loading state for buttons */
+        .btn-loading {
+            position: relative;
+            color: transparent !important;
+            pointer-events: none;
+        }
+        
+        .btn-loading::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 20px;
+            height: 20px;
+            margin: -10px 0 0 -10px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
     </style>
 </head>
 <body>
@@ -421,7 +448,7 @@
                     <button class="btn btn-secondary w-50" onclick="backToPaymentSelection()" style="background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.2);">
                         <i class="fas fa-arrow-left me-2"></i>Back
                     </button>
-                    <button class="btn btn-primary-custom w-50" onclick="submitBkashPayment()">
+                    <button class="btn btn-primary-custom w-50" id="bkashSubmitBtn" onclick="submitBkashPayment()">
                         <i class="fas fa-paper-plane me-2"></i>Submit
                     </button>
                 </div>
@@ -457,7 +484,7 @@
                     <button class="btn btn-secondary w-50" onclick="backToPaymentSelection()" style="background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.2);">
                         <i class="fas fa-arrow-left me-2"></i>Back
                     </button>
-                    <button class="btn btn-primary-custom w-50" onclick="submitNagadPayment()">
+                    <button class="btn btn-primary-custom w-50" id="nagadSubmitBtn" onclick="submitNagadPayment()">
                         <i class="fas fa-paper-plane me-2"></i>Submit
                     </button>
                 </div>
@@ -485,7 +512,7 @@
                     <button class="btn btn-secondary w-50" onclick="backToPaymentSelection()" style="background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.2);">
                         <i class="fas fa-arrow-left me-2"></i>Back
                     </button>
-                    <button class="btn btn-primary-custom w-50" style="background: var(--discord);" onclick="submitDiscordPayment()">
+                    <button class="btn btn-primary-custom w-50" id="discordSubmitBtn" style="background: var(--discord);" onclick="submitDiscordPayment()">
                         <i class="fab fa-discord me-2"></i>Submit
                     </button>
                 </div>
@@ -512,6 +539,7 @@
         // URL থেকে প্যারামিটার পড়া
         const urlParams = new URLSearchParams(window.location.search);
         let orderData = {};
+        let isSubmitting = false; // Flag to prevent multiple submissions
         
         // Initialize order data from URL parameters
         function initializeOrder() {
@@ -590,46 +618,67 @@
             window.location.href = 'Store.html';
         }
         
+        // Show loading state on button
+        function showLoading(buttonId) {
+            const button = document.getElementById(buttonId);
+            if (button) {
+                button.classList.add('btn-loading');
+                button.disabled = true;
+            }
+        }
+        
+        // Hide loading state on button
+        function hideLoading(buttonId) {
+            const button = document.getElementById(buttonId);
+            if (button) {
+                button.classList.remove('btn-loading');
+                button.disabled = false;
+            }
+        }
+        
         // Copy to clipboard function
-function copyToClipboard(text, type) {
-    navigator.clipboard.writeText(text).then(() => {
-        // Show success notification
-        showCopyNotification(`${type} copied: ${text}`, 'success');
+        function copyToClipboard(text, type) {
+            navigator.clipboard.writeText(text).then(() => {
+                // Show success notification
+                showCopyNotification(`${type} copied: ${text}`, 'success');
+                
+                // Change button text temporarily
+                const button = event.target.tagName === 'BUTTON' ? event.target : event.target.closest('button');
+                const originalText = button.innerHTML;
+                button.innerHTML = '<i class="fas fa-check me-1"></i>Copied!';
+                button.style.background = 'var(--primary)';
+                
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.style.background = 'var(--accent)';
+                }, 2000);
+            })
+        }
         
-        // Change button text temporarily
-        const button = event.target.tagName === 'BUTTON' ? event.target : event.target.closest('button');
-        const originalText = button.innerHTML;
-        button.innerHTML = '<i class="fas fa-check me-1"></i>Copied!';
-        button.style.background = 'var(--primary)';
-        
-        setTimeout(() => {
-            button.innerHTML = originalText;
-            button.style.background = 'var(--accent)';
-        }, 2000);
-    })
-}
-
-// Show copy notification
-function showCopyNotification(message, type = 'success') {
-    const notification = document.createElement('div');
-    notification.className = 'copy-notification';
-    notification.innerHTML = `
-        <div class="d-flex align-items-center">
-            <i class="fas fa-${type === 'success' ? 'check-circle text-success' : 'exclamation-circle text-danger'} me-2"></i>
-            <span>${message}</span>
-        </div>
-    `;
-    document.body.appendChild(notification);
-    
-    setTimeout(() => {
-        notification.style.animation = 'slideIn 0.3s ease reverse';
-        setTimeout(() => {
-            notification.remove();
-        }, 300);
-    }, 3000);
+        // Show copy notification
+        function showCopyNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.className = 'copy-notification';
+            notification.innerHTML = `
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-${type === 'success' ? 'check-circle text-success' : 'exclamation-circle text-danger'} me-2"></i>
+                    <span>${message}</span>
+                </div>
+            `;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideIn 0.3s ease reverse';
+                setTimeout(() => {
+                    notification.remove();
+                }, 300);
+            }, 3000);
         }
         
         async function submitBkashPayment() {
+            // Prevent multiple submissions
+            if (isSubmitting) return;
+            
             const userNumber = document.getElementById('bkashNumber').value;
             const trxId = document.getElementById('bkashTrxId').value;
             const ingameName = document.getElementById('bkashIngameName').value;
@@ -639,6 +688,10 @@ function showCopyNotification(message, type = 'success') {
                 showCopyNotification('Please fill in all required fields', 'error');
                 return;
             }
+            
+            // Set submitting flag and show loading
+            isSubmitting = true;
+            showLoading('bkashSubmitBtn');
             
             const orderId = 'ORDER_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
             
@@ -655,16 +708,26 @@ function showCopyNotification(message, type = 'success') {
             };
             
             try {
+                // Simulate API delay for better UX
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                
                 await sendToDiscordWebhook(paymentData);
                 showSuccessMessage('bKash payment submitted successfully! Staff will review your payment.');
                 document.getElementById('discordInstructions').style.display = 'block';
             } catch (error) {
                 console.error('Error:', error);
                 showSuccessMessage('Order submitted! Please wait for confirmation.');
+            } finally {
+                // Reset submitting flag
+                isSubmitting = false;
+                hideLoading('bkashSubmitBtn');
             }
         }
         
         async function submitNagadPayment() {
+            // Prevent multiple submissions
+            if (isSubmitting) return;
+            
             const userNumber = document.getElementById('nagadNumber').value;
             const trxId = document.getElementById('nagadTrxId').value;
             const ingameName = document.getElementById('nagadIngameName').value;
@@ -674,6 +737,10 @@ function showCopyNotification(message, type = 'success') {
                 showCopyNotification('Please fill in all required fields', 'error');
                 return;
             }
+            
+            // Set submitting flag and show loading
+            isSubmitting = true;
+            showLoading('nagadSubmitBtn');
             
             const orderId = 'ORDER_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
             
@@ -690,16 +757,26 @@ function showCopyNotification(message, type = 'success') {
             };
             
             try {
+                // Simulate API delay for better UX
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                
                 await sendToDiscordWebhook(paymentData);
                 showSuccessMessage('Nagad payment submitted successfully! Staff will review your payment.');
                 document.getElementById('discordInstructions').style.display = 'block';
             } catch (error) {
                 console.error('Error:', error);
                 showSuccessMessage('Order submitted! Please wait for confirmation.');
+            } finally {
+                // Reset submitting flag
+                isSubmitting = false;
+                hideLoading('nagadSubmitBtn');
             }
         }
         
         async function submitDiscordPayment() {
+            // Prevent multiple submissions
+            if (isSubmitting) return;
+            
             const discordUsername = document.getElementById('discordUsername').value;
             const ingameName = document.getElementById('discordIngameName').value;
             const paymentMethod = document.getElementById('discordPaymentMethod').value;
@@ -709,6 +786,10 @@ function showCopyNotification(message, type = 'success') {
                 showCopyNotification('Please fill in all required fields', 'error');
                 return;
             }
+            
+            // Set submitting flag and show loading
+            isSubmitting = true;
+            showLoading('discordSubmitBtn');
             
             const orderId = 'ORDER_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
             
@@ -725,12 +806,19 @@ function showCopyNotification(message, type = 'success') {
             };
             
             try {
+                // Simulate API delay for better UX
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                
                 await sendToDiscordWebhook(paymentData);
                 showSuccessMessage('Discord payment submitted successfully!');
                 document.getElementById('discordInstructions').style.display = 'block';
             } catch (error) {
                 console.error('Error:', error);
                 showSuccessMessage('Order submitted! Please contact support if needed.');
+            } finally {
+                // Reset submitting flag
+                isSubmitting = false;
+                hideLoading('discordSubmitBtn');
             }
         }
         

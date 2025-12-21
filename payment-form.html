@@ -367,6 +367,93 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             display: none;
         }
+        
+        /* Countdown Timer Styles */
+        .countdown-container {
+            background: rgba(30, 30, 30, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid var(--secondary);
+            text-align: center;
+            display: none;
+        }
+        
+        .countdown-timer {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5em;
+            font-weight: 700;
+            color: var(--secondary);
+            margin: 10px 0;
+            letter-spacing: 2px;
+        }
+        
+        .countdown-message {
+            color: var(--text);
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+        
+        .countdown-warning {
+            color: #FF9800;
+            font-size: 0.9em;
+        }
+        
+        .payment-disabled {
+            opacity: 0.5;
+            pointer-events: none;
+            position: relative;
+        }
+        
+        .payment-disabled-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 15px;
+            z-index: 100;
+        }
+        
+        .payment-disabled-message {
+            background: rgba(255, 152, 0, 0.9);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            font-weight: 600;
+            text-align: center;
+            max-width: 80%;
+        }
+        
+        /* Token Amount Badge */
+        .token-amount-badge {
+            background: linear-gradient(45deg, #9C27B0, #7B1FA2);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 1.1em;
+            display: inline-block;
+            margin: 10px 0;
+        }
+        
+        /* Money Amount Badge */
+        .money-amount-badge {
+            background: linear-gradient(45deg, #4CAF50, #2E7D32);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 1.1em;
+            display: inline-block;
+            margin: 10px 0;
+        }
     </style>
 </head>
 <body>
@@ -434,6 +521,18 @@
                 <p class="mb-0 mt-2" id="purchaseType">Custom Rank</p>
             </div>
             
+            <!-- Countdown Timer -->
+            <div class="countdown-container" id="countdownSection">
+                <div class="countdown-message">
+                    <i class="fas fa-clock me-2"></i>Please wait before making another payment
+                </div>
+                <div class="countdown-timer" id="countdownTimer">02:00</div>
+                <div class="countdown-warning">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    Next payment will be available in <span id="countdownText">2 minutes</span>
+                </div>
+            </div>
+            
             <!-- Order Summary -->
             <div class="order-summary-box">
                 <h5><i class="fas fa-receipt me-2"></i>Order Summary</h5>
@@ -453,14 +552,28 @@
                     <span>Color Preference:</span>
                     <strong id="orderColor">-</strong>
                 </div>
-                <div class="d-flex justify-content-between">
-                    <span>Amount:</span>
-                    <strong id="orderAmount">- BDT</strong>
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Price:</span>
+                    <strong id="orderPrice">- BDT</strong>
                 </div>
+                <!-- Token Amount (Only show if tokens > 0) -->
+                <div class="d-flex justify-content-between mb-2" id="tokenAmountRow" style="display: none;">
+                    <span>Token Amount:</span>
+                    <strong><span class="token-amount-badge" id="orderTokenAmount">0 Tokens</span></strong>
+                </div>
+
             </div>
             
             <!-- Payment Method Selection -->
             <div id="paymentSelection">
+                <!-- Disabled Overlay (Shows when countdown is active) -->
+                <div class="payment-disabled-overlay" id="paymentOverlay" style="display: none;">
+                    <div class="payment-disabled-message">
+                        <i class="fas fa-lock me-2"></i>
+                        <div>Please wait <span id="overlayTimer">02:00</span> before making another payment</div>
+                    </div>
+                </div>
+                
                 <h5 class="mb-3">Select Payment Method</h5>
                 
                 <div class="payment-method" onclick="selectPaymentMethod('bkash')">
@@ -632,6 +745,18 @@
                 <p class="mb-0 mt-2" id="normalPurchaseType">Loading...</p>
             </div>
             
+            <!-- Countdown Timer -->
+            <div class="countdown-container" id="normalCountdownSection">
+                <div class="countdown-message">
+                    <i class="fas fa-clock me-2"></i>Please wait before making another payment
+                </div>
+                <div class="countdown-timer" id="normalCountdownTimer">02:00</div>
+                <div class="countdown-warning">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    Next payment will be available in <span id="normalCountdownText">2 minutes</span>
+                </div>
+            </div>
+            
             <!-- Order Summary -->
             <div class="order-summary-box">
                 <h5><i class="fas fa-receipt me-2"></i>Order Summary</h5>
@@ -643,14 +768,28 @@
                     <span>Type:</span>
                     <strong id="normalOrderType">Loading...</strong>
                 </div>
-                <div class="d-flex justify-content-between">
-                    <span>Amount:</span>
-                    <strong id="normalOrderAmount">Loading...</strong>
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Price:</span>
+                    <strong id="normalOrderPrice">Loading...</strong>
                 </div>
+                <!-- Token Amount (Only show if tokens > 0) -->
+                <div class="d-flex justify-content-between mb-2" id="normalTokenAmountRow" style="display: none;">
+                    <span>Token Amount:</span>
+                    <strong><span class="token-amount-badge" id="normalOrderTokenAmount">0 Tokens</span></strong>
+                </div>
+
             </div>
             
             <!-- Payment Method Selection -->
             <div id="normalPaymentSelection">
+                <!-- Disabled Overlay (Shows when countdown is active) -->
+                <div class="payment-disabled-overlay" id="normalPaymentOverlay" style="display: none;">
+                    <div class="payment-disabled-message">
+                        <i class="fas fa-lock me-2"></i>
+                        <div>Please wait <span id="normalOverlayTimer">02:00</span> before making another payment</div>
+                    </div>
+                </div>
+                
                 <h5 class="mb-3">Select Payment Method</h5>
                 
                 <div class="payment-method" onclick="selectNormalPaymentMethod('bkash')">
@@ -809,7 +948,7 @@
         // URL থেকে প্যারামিটার পড়া
         const urlParams = new URLSearchParams(window.location.search);
         let orderData = {};
-        let isSubmitting = false; // Flag to prevent multiple submissions
+        let isSubmitting = false;
         let selectedNormalPaymentMethod = '';
         
         // Custom rank data
@@ -818,13 +957,23 @@
             colorText: ''
         };
         
+        // Countdown variables
+        let countdownInterval;
+        let normalCountdownInterval;
+        let isCountdownActive = false;
+        let isNormalCountdownActive = false;
+        
+        // Storage keys
+        const COUNTDOWN_STORAGE_KEY = 'payment_countdown_timestamp';
+        const NORMAL_COUNTDOWN_STORAGE_KEY = 'normal_payment_countdown_timestamp';
+        
         // Initialize order data from URL parameters
         function initializeOrder() {
             orderData = {
                 type: urlParams.get('type') || 'rank',
                 item: urlParams.get('item') || 'VIP Rank',
                 purchaseType: urlParams.get('purchaseType') || 'Tokens',
-                amount: urlParams.get('amount') || '1500',
+                amount: urlParams.get('amount') || '0',
                 money: urlParams.get('money') || '0',
                 tokens: urlParams.get('tokens') || '0',
                 price: urlParams.get('price') || '0 BDT',
@@ -836,7 +985,7 @@
                                orderData.item.includes('custom') || 
                                orderData.rankType === 'Custom' ||
                                orderData.rankType === 'custom' ||
-                               orderData.price === '3000 BDT'; // Custom rank price
+                               orderData.price === '3000 BDT';
             
             if (isCustomRank) {
                 // Show custom rank page first
@@ -844,16 +993,20 @@
                 document.getElementById('paymentPage').style.display = 'none';
                 document.getElementById('normalPaymentPage').style.display = 'none';
                 
-                // Update title for custom rank
                 document.title = `Custom Rank Design - Drk Survraze SMP`;
+                
+                // Check for active countdown
+                checkCountdownStatus();
             } else {
                 // Show normal payment page
                 document.getElementById('customRankPage').style.display = 'none';
                 document.getElementById('paymentPage').style.display = 'none';
                 document.getElementById('normalPaymentPage').style.display = 'block';
                 
-                // Update normal payment page details
                 updateNormalPaymentPage();
+                
+                // Check for active countdown
+                checkNormalCountdownStatus();
             }
         }
         
@@ -861,9 +1014,19 @@
             document.getElementById('normalPurchaseType').textContent = `${orderData.item} - ${orderData.purchaseType}`;
             document.getElementById('normalOrderItem').textContent = orderData.item;
             document.getElementById('normalOrderType').textContent = orderData.purchaseType;
-            document.getElementById('normalOrderAmount').textContent = orderData.purchaseType.includes('Token') ? 
-                `${orderData.amount} Tokens` : 
-                (orderData.purchaseType.includes('Money') ? `${orderData.money} InGame Money` : orderData.price);
+            document.getElementById('normalOrderPrice').textContent = orderData.price || '0 BDT';
+            
+            const tokens = parseInt(orderData.tokens) || parseInt(orderData.amount) || 0;
+            if (tokens > 0) {
+                document.getElementById('normalTokenAmountRow').style.display = 'flex';
+                document.getElementById('normalOrderTokenAmount').textContent = `${tokens} Tokens`;
+            }
+            
+            const money = parseInt(orderData.money) || 0;
+            if (money > 0) {
+                document.getElementById('normalMoneyAmountRow').style.display = 'flex';
+                document.getElementById('normalOrderMoneyAmount').textContent = `$${money}`;
+            }
             
             document.title = `${orderData.item} - Drk Survraze SMP`;
         }
@@ -877,35 +1040,207 @@
                 return;
             }
             
-            // Save custom rank data
             customRankData = {
                 rankName: rankName,
                 colorText: colorText
             };
             
-            // Update order data for custom rank
             orderData.item = `Custom Rank: ${rankName}`;
             orderData.purchaseType = 'Custom Rank Design';
             
-            // Switch to payment page
             document.getElementById('customRankPage').style.display = 'none';
             document.getElementById('paymentPage').style.display = 'block';
             document.getElementById('normalPaymentPage').style.display = 'none';
             
-            // Update payment page details
             document.getElementById('purchaseType').textContent = `Custom Rank: ${rankName}`;
             document.getElementById('orderItem').textContent = `Custom Rank: ${rankName}`;
             document.getElementById('orderType').textContent = 'Custom Rank Design';
             document.getElementById('orderRankName').textContent = rankName;
             document.getElementById('orderColor').textContent = colorText || 'Not specified';
-            document.getElementById('orderAmount').textContent = orderData.price;
+            document.getElementById('orderPrice').textContent = orderData.price;
             
-            // Update page title
+            const tokens = parseInt(orderData.tokens) || parseInt(orderData.amount) || 0;
+            if (tokens > 0) {
+                document.getElementById('tokenAmountRow').style.display = 'flex';
+                document.getElementById('orderTokenAmount').textContent = `${tokens} Tokens`;
+            }
+            
+            const money = parseInt(orderData.money) || 0;
+            if (money > 0) {
+                document.getElementById('moneyAmountRow').style.display = 'flex';
+                document.getElementById('orderMoneyAmount').textContent = `$${money}`;
+            }
+            
             document.title = `Payment - Custom Rank: ${rankName}`;
+            
+            // Check countdown status for custom rank
+            checkCountdownStatus();
+        }
+        
+        // ========== COUNTDOWN SYSTEM ==========
+        function checkCountdownStatus() {
+            const countdownEnd = localStorage.getItem(COUNTDOWN_STORAGE_KEY);
+            if (countdownEnd) {
+                const now = Date.now();
+                const endTime = parseInt(countdownEnd);
+                const timeLeft = Math.max(0, Math.ceil((endTime - now) / 1000));
+                
+                if (timeLeft > 0) {
+                    // Countdown is still active
+                    isCountdownActive = true;
+                    startCountdownTimer(timeLeft);
+                } else {
+                    // Countdown has finished
+                    localStorage.removeItem(COUNTDOWN_STORAGE_KEY);
+                    enablePayment();
+                }
+            } else {
+                enablePayment();
+            }
+        }
+        
+        function checkNormalCountdownStatus() {
+            const countdownEnd = localStorage.getItem(NORMAL_COUNTDOWN_STORAGE_KEY);
+            if (countdownEnd) {
+                const now = Date.now();
+                const endTime = parseInt(countdownEnd);
+                const timeLeft = Math.max(0, Math.ceil((endTime - now) / 1000));
+                
+                if (timeLeft > 0) {
+                    // Countdown is still active
+                    isNormalCountdownActive = true;
+                    startNormalCountdownTimer(timeLeft);
+                } else {
+                    // Countdown has finished
+                    localStorage.removeItem(NORMAL_COUNTDOWN_STORAGE_KEY);
+                    enableNormalPayment();
+                }
+            } else {
+                enableNormalPayment();
+            }
+        }
+        
+        function startCountdownTimer(initialSeconds = 120) {
+            let remainingTime = initialSeconds;
+            
+            // Show countdown section
+            document.getElementById('countdownSection').style.display = 'block';
+            document.getElementById('paymentSelection').classList.add('payment-disabled');
+            document.getElementById('paymentOverlay').style.display = 'flex';
+            document.getElementById('continueBtn').disabled = true;
+            
+            // Start the timer
+            countdownInterval = setInterval(() => {
+                remainingTime--;
+                updateCountdownDisplay(remainingTime);
+                
+                if (remainingTime <= 0) {
+                    clearInterval(countdownInterval);
+                    isCountdownActive = false;
+                    localStorage.removeItem(COUNTDOWN_STORAGE_KEY);
+                    enablePayment();
+                    showCopyNotification('You can now make another payment!', 'success');
+                }
+            }, 1000);
+            
+            // Initial display update
+            updateCountdownDisplay(remainingTime);
+            
+            // Save the countdown end time
+            const endTime = Date.now() + (remainingTime * 1000);
+            localStorage.setItem(COUNTDOWN_STORAGE_KEY, endTime.toString());
+        }
+        
+        function startNormalCountdownTimer(initialSeconds = 120) {
+            let remainingTime = initialSeconds;
+            
+            // Show countdown section
+            document.getElementById('normalCountdownSection').style.display = 'block';
+            document.getElementById('normalPaymentSelection').classList.add('payment-disabled');
+            document.getElementById('normalPaymentOverlay').style.display = 'flex';
+            document.getElementById('normalContinueBtn').disabled = true;
+            
+            // Start the timer
+            normalCountdownInterval = setInterval(() => {
+                remainingTime--;
+                updateNormalCountdownDisplay(remainingTime);
+                
+                if (remainingTime <= 0) {
+                    clearInterval(normalCountdownInterval);
+                    isNormalCountdownActive = false;
+                    localStorage.removeItem(NORMAL_COUNTDOWN_STORAGE_KEY);
+                    enableNormalPayment();
+                    showCopyNotification('You can now make another payment!', 'success');
+                }
+            }, 1000);
+            
+            // Initial display update
+            updateNormalCountdownDisplay(remainingTime);
+            
+            // Save the countdown end time
+            const endTime = Date.now() + (remainingTime * 1000);
+            localStorage.setItem(NORMAL_COUNTDOWN_STORAGE_KEY, endTime.toString());
+        }
+        
+        function updateCountdownDisplay(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const remainingSeconds = seconds % 60;
+            const displayTime = `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+            
+            document.getElementById('countdownTimer').textContent = displayTime;
+            document.getElementById('overlayTimer').textContent = displayTime;
+            
+            if (minutes > 0) {
+                document.getElementById('countdownText').textContent = `${minutes} minute${minutes !== 1 ? 's' : ''}`;
+            } else {
+                document.getElementById('countdownText').textContent = `${remainingSeconds} second${remainingSeconds !== 1 ? 's' : ''}`;
+            }
+            
+            if (seconds <= 30) {
+                document.getElementById('countdownTimer').style.color = '#FF5252';
+            }
+        }
+        
+        function updateNormalCountdownDisplay(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const remainingSeconds = seconds % 60;
+            const displayTime = `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+            
+            document.getElementById('normalCountdownTimer').textContent = displayTime;
+            document.getElementById('normalOverlayTimer').textContent = displayTime;
+            
+            if (minutes > 0) {
+                document.getElementById('normalCountdownText').textContent = `${minutes} minute${minutes !== 1 ? 's' : ''}`;
+            } else {
+                document.getElementById('normalCountdownText').textContent = `${remainingSeconds} second${remainingSeconds !== 1 ? 's' : ''}`;
+            }
+            
+            if (seconds <= 30) {
+                document.getElementById('normalCountdownTimer').style.color = '#FF5252';
+            }
+        }
+        
+        function enablePayment() {
+            document.getElementById('countdownSection').style.display = 'none';
+            document.getElementById('paymentSelection').classList.remove('payment-disabled');
+            document.getElementById('paymentOverlay').style.display = 'none';
+            document.getElementById('continueBtn').disabled = false;
+            isCountdownActive = false;
+        }
+        
+        function enableNormalPayment() {
+            document.getElementById('normalCountdownSection').style.display = 'none';
+            document.getElementById('normalPaymentSelection').classList.remove('payment-disabled');
+            document.getElementById('normalPaymentOverlay').style.display = 'none';
+            document.getElementById('normalContinueBtn').disabled = false;
+            isNormalCountdownActive = false;
         }
         
         function backToCustomRank() {
-            // Switch back to custom rank page
+            if (countdownInterval) {
+                clearInterval(countdownInterval);
+            }
+            
             document.getElementById('paymentPage').style.display = 'none';
             document.getElementById('normalPaymentPage').style.display = 'none';
             document.getElementById('customRankPage').style.display = 'block';
@@ -915,30 +1250,34 @@
         let selectedPaymentMethod = '';
         
         function selectPaymentMethod(method) {
+            if (isCountdownActive) {
+                showCopyNotification('Please wait for the countdown to finish', 'error');
+                return;
+            }
+            
             selectedPaymentMethod = method;
             
-            // Reset all selections
             document.querySelectorAll('.payment-method').forEach(el => {
                 el.classList.remove('selected');
             });
             
-            // Select clicked method
             event.currentTarget.classList.add('selected');
-            
-            // Enable continue button
             document.getElementById('continueBtn').disabled = false;
         }
         
         function showPaymentForm() {
+            if (isCountdownActive) {
+                showCopyNotification('Please wait for the countdown to finish', 'error');
+                return;
+            }
+            
             if (!selectedPaymentMethod) {
                 showCopyNotification('Please select a payment method', 'error');
                 return;
             }
             
-            // Hide selection
             document.getElementById('paymentSelection').style.display = 'none';
             
-            // Show selected form
             if (selectedPaymentMethod === 'bkash') {
                 document.getElementById('bkashForm').style.display = 'block';
             } else if (selectedPaymentMethod === 'nagad') {
@@ -949,42 +1288,43 @@
         }
         
         function backToPaymentSelection() {
-            // Hide all forms
             document.getElementById('bkashForm').style.display = 'none';
             document.getElementById('nagadForm').style.display = 'none';
             document.getElementById('discordForm').style.display = 'none';
             document.getElementById('successMessage').style.display = 'none';
-            
-            // Show selection
             document.getElementById('paymentSelection').style.display = 'block';
         }
         
         // ========== NORMAL PAYMENT FUNCTIONS ==========
         function selectNormalPaymentMethod(method) {
+            if (isNormalCountdownActive) {
+                showCopyNotification('Please wait for the countdown to finish', 'error');
+                return;
+            }
+            
             selectedNormalPaymentMethod = method;
             
-            // Reset all selections
             document.querySelectorAll('.payment-method').forEach(el => {
                 el.classList.remove('selected');
             });
             
-            // Select clicked method
             event.currentTarget.classList.add('selected');
-            
-            // Enable continue button
             document.getElementById('normalContinueBtn').disabled = false;
         }
         
         function showNormalPaymentForm() {
+            if (isNormalCountdownActive) {
+                showCopyNotification('Please wait for the countdown to finish', 'error');
+                return;
+            }
+            
             if (!selectedNormalPaymentMethod) {
                 showCopyNotification('Please select a payment method', 'error');
                 return;
             }
             
-            // Hide selection
             document.getElementById('normalPaymentSelection').style.display = 'none';
             
-            // Show selected form
             if (selectedNormalPaymentMethod === 'bkash') {
                 document.getElementById('normalBkashForm').style.display = 'block';
             } else if (selectedNormalPaymentMethod === 'nagad') {
@@ -995,18 +1335,21 @@
         }
         
         function backToNormalPaymentSelection() {
-            // Hide all forms
             document.getElementById('normalBkashForm').style.display = 'none';
             document.getElementById('normalNagadForm').style.display = 'none';
             document.getElementById('normalDiscordForm').style.display = 'none';
             document.getElementById('normalSuccessMessage').style.display = 'none';
-            
-            // Show selection
             document.getElementById('normalPaymentSelection').style.display = 'block';
         }
         
         function goBackToStore() {
-            // Main site এর store page এ ফিরে যাওয়া
+            if (countdownInterval) {
+                clearInterval(countdownInterval);
+            }
+            if (normalCountdownInterval) {
+                clearInterval(normalCountdownInterval);
+            }
+            
             window.location.href = 'Store.html';
         }
         
@@ -1031,10 +1374,8 @@
         // Copy to clipboard function
         function copyToClipboard(text, type) {
             navigator.clipboard.writeText(text).then(() => {
-                // Show success notification
                 showCopyNotification(`${type} copied: ${text}`, 'success');
                 
-                // Change button text temporarily
                 const button = event.target.tagName === 'BUTTON' ? event.target : event.target.closest('button');
                 const originalText = button.innerHTML;
                 button.innerHTML = '<i class="fas fa-check me-1"></i>Copied!';
@@ -1104,9 +1445,14 @@
                 await sendToDiscordWebhook(paymentData, true);
                 showCustomSuccessMessage('Custom rank payment submitted successfully! Staff will contact you for design details.');
                 document.getElementById('discordInstructions').style.display = 'block';
+                
+                // Start countdown after successful submission
+                startCountdownTimer();
             } catch (error) {
                 console.error('Error:', error);
                 showCustomSuccessMessage('Order submitted! Please wait for confirmation.');
+                // Start countdown even if webhook fails
+                startCountdownTimer();
             } finally {
                 isSubmitting = false;
                 hideLoading('bkashSubmitBtn');
@@ -1149,12 +1495,17 @@
                 await sendToDiscordWebhook(paymentData, true);
                 showCustomSuccessMessage('Custom rank payment submitted successfully! Staff will contact you for design details.');
                 document.getElementById('discordInstructions').style.display = 'block';
+                
+                // Start countdown after successful submission
+                startCountdownTimer();
             } catch (error) {
                 console.error('Error:', error);
                 showCustomSuccessMessage('Order submitted! Please wait for confirmation.');
+                // Start countdown even if webhook fails
+                startCountdownTimer();
             } finally {
                 isSubmitting = false;
-                hideLoading('nagashSubmitBtn');
+                hideLoading('nagadSubmitBtn');
             }
         }
         
@@ -1194,9 +1545,14 @@
                 await sendToDiscordWebhook(paymentData, true);
                 showCustomSuccessMessage('Discord payment submitted successfully!');
                 document.getElementById('discordInstructions').style.display = 'block';
+                
+                // Start countdown after successful submission
+                startCountdownTimer();
             } catch (error) {
                 console.error('Error:', error);
                 showCustomSuccessMessage('Order submitted! Please contact support if needed.');
+                // Start countdown even if webhook fails
+                startCountdownTimer();
             } finally {
                 isSubmitting = false;
                 hideLoading('discordSubmitBtn');
@@ -1249,9 +1605,14 @@
                 await sendToDiscordWebhook(paymentData, false);
                 showNormalSuccessMessage('bKash payment submitted successfully! Staff will review your payment.');
                 document.getElementById('normalDiscordInstructions').style.display = 'block';
+                
+                // Start countdown after successful submission
+                startNormalCountdownTimer();
             } catch (error) {
                 console.error('Error:', error);
                 showNormalSuccessMessage('Order submitted! Please wait for confirmation.');
+                // Start countdown even if webhook fails
+                startNormalCountdownTimer();
             } finally {
                 isSubmitting = false;
                 hideLoading('normalBkashSubmitBtn');
@@ -1293,9 +1654,14 @@
                 await sendToDiscordWebhook(paymentData, false);
                 showNormalSuccessMessage('Nagad payment submitted successfully! Staff will review your payment.');
                 document.getElementById('normalDiscordInstructions').style.display = 'block';
+                
+                // Start countdown after successful submission
+                startNormalCountdownTimer();
             } catch (error) {
                 console.error('Error:', error);
                 showNormalSuccessMessage('Order submitted! Please wait for confirmation.');
+                // Start countdown even if webhook fails
+                startNormalCountdownTimer();
             } finally {
                 isSubmitting = false;
                 hideLoading('normalNagadSubmitBtn');
@@ -1337,9 +1703,14 @@
                 await sendToDiscordWebhook(paymentData, false);
                 showNormalSuccessMessage('Discord payment submitted successfully!');
                 document.getElementById('normalDiscordInstructions').style.display = 'block';
+                
+                // Start countdown after successful submission
+                startNormalCountdownTimer();
             } catch (error) {
                 console.error('Error:', error);
                 showNormalSuccessMessage('Order submitted! Please contact support if needed.');
+                // Start countdown even if webhook fails
+                startNormalCountdownTimer();
             } finally {
                 isSubmitting = false;
                 hideLoading('normalDiscordSubmitBtn');
@@ -1362,6 +1733,9 @@
             
             let embed, content;
             const customRank = orderData.customRank || {};
+            
+            const tokens = parseInt(orderData.tokens) || parseInt(orderData.amount) || 0;
+            const money = parseInt(orderData.money) || 0;
             
             if (orderData.paymentType === 'discord_form') {
                 embed = {
@@ -1406,6 +1780,22 @@
                     );
                 }
                 
+                if (tokens > 0) {
+                    embed.fields.push({
+                        name: "💰 Token Amount",
+                        value: `${tokens} Tokens`,
+                        inline: true
+                    });
+                }
+                
+                if (money > 0) {
+                    embed.fields.push({
+                        name: "💵 InGame Money",
+                        value: `$${money}`,
+                        inline: true
+                    });
+                }
+                
                 embed.fields.push(
                     {
                         name: "💳 Payment Method",
@@ -1413,7 +1803,7 @@
                         inline: true
                     },
                     {
-                        name: "💰 Amount",
+                        name: "💸 Price",
                         value: orderData.price || "N/A",
                         inline: true
                     },
@@ -1464,6 +1854,22 @@
                     );
                 }
                 
+                if (tokens > 0) {
+                    embed.fields.push({
+                        name: "💰 Token Amount",
+                        value: `${tokens} Tokens`,
+                        inline: true
+                    });
+                }
+                
+                if (money > 0) {
+                    embed.fields.push({
+                        name: "💵 InGame Money",
+                        value: `$${money}`,
+                        inline: true
+                    });
+                }
+                
                 embed.fields.push(
                     {
                         name: "📱 bKash Number",
@@ -1481,7 +1887,7 @@
                         inline: true
                     },
                     {
-                        name: "💰 Amount",
+                        name: "💸 Price",
                         value: orderData.price || "N/A",
                         inline: true
                     }
@@ -1527,6 +1933,22 @@
                     );
                 }
                 
+                if (tokens > 0) {
+                    embed.fields.push({
+                        name: "💰 Token Amount",
+                        value: `${tokens} Tokens`,
+                        inline: true
+                    });
+                }
+                
+                if (money > 0) {
+                    embed.fields.push({
+                        name: "💵 InGame Money",
+                        value: `$${money}`,
+                        inline: true
+                    });
+                }
+                
                 embed.fields.push(
                     {
                         name: "📱 Nagad Number",
@@ -1544,7 +1966,7 @@
                         inline: true
                     },
                     {
-                        name: "💰 Amount",
+                        name: "💸 Price",
                         value: orderData.price || "N/A",
                         inline: true
                     }
@@ -1561,15 +1983,20 @@
                 }
             };
             
-            const response = await fetch(webhookURL, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(payload)
-            });
-            
-            return await response.json();
+            try {
+                const response = await fetch(webhookURL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(payload)
+                });
+                
+                return await response.json();
+            } catch (error) {
+                console.error('Webhook error:', error);
+                throw error;
+            }
         }
         
         // Initialize when page loads

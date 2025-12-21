@@ -598,20 +598,20 @@
                 
                 
         // Change button text temporarily
-const button = event.target.tagName === 'BUTTON'
-  ? event.target
-  : event.target.closest('button');
-
-const originalText = button.innerHTML;
-
-// ✔ right icon + green background
-button.innerHTML = '<i class="fas fa-check-circle me-1"></i>Copied!';
-button.style.background = 'var(--primary)'; // green
-
-setTimeout(() => {
-  button.innerHTML = originalText;
-  button.style.background = 'var(--accent)';
-}, 2000);
+                const button = event.target.tagName === 'BUTTON' ? event.target : event.target.closest('button');
+                const originalText = button.innerHTML;
+                button.innerHTML = '<i class="fas fa-check me-1"></i>Copied!';
+                button.style.background = 'var(--primary)';
+                
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.style.background = 'var(--accent)';
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+                showCopyNotification('Copy Successful.', 'error');
+            });
+        }
         
         // Show copy notification
         function showCopyNotification(message, type = 'success') {

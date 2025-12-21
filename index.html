@@ -251,7 +251,7 @@
             box-shadow: 0 10px 25px rgba(255, 152, 0, 0.3);
         }
         
-                        .btn-ads-custom {
+        .btn-ads-custom {
             background: transparent;
             border: 2px solid purple;
             color: purple;
@@ -270,7 +270,6 @@
             box-shadow: 0 10px 25px rgba(255, 152, 0, 0.3);
         }
         
-      
         .btn-discord-custom {
             background: var(--discord);
             border: none;
@@ -431,6 +430,87 @@
             color: white;
         }
         
+        /* Founder Section Styles */
+        .founder-section {
+            padding: 80px 0;
+            background: rgba(0, 0, 0, 0.7);
+        }
+        
+        .founder-card {
+            background: rgba(40, 40, 40, 0.9);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            border: 2px solid transparent;
+            height: 100%;
+        }
+        
+        .founder-card:hover {
+            transform: translateY(-15px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(76, 175, 80, 0.3);
+        }
+        
+        .founder-skin {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .founder-skin img {
+            width: 120px;
+            height: auto;
+            image-rendering: pixelated;
+            transition: transform 0.3s ease;
+        }
+        
+        .founder-card:hover .founder-skin img {
+            transform: scale(1.1);
+        }
+        
+        .founder-info {
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .founder-name {
+            font-size: 1.4rem;
+            color: var(--primary);
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        
+        .founder-username {
+            font-family: 'Courier New', monospace;
+            color: var(--secondary);
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+        
+        .founder-role {
+            display: inline-block;
+            background: rgba(76, 175, 80, 0.2);
+            color: var(--primary);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .minecraft-head {
+            width: 80px;
+            height: 80px;
+            image-rendering: pixelated;
+            border: 3px solid var(--primary);
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        
         /* Features Section */
         #features {
             padding: 80px 0;
@@ -471,6 +551,10 @@
                 width: 100%;
                 max-width: 250px;
             }
+            
+            .founder-card {
+                margin-bottom: 30px;
+            }
         }
     </style>
 </head>
@@ -488,22 +572,25 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="index.html#home">Home</a>
+                        <a class="nav-link" href="#home">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="Store.html">Store</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="vote.html">Vote</a>
-                    
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.html#features">Features</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="index.html#rules">Rules</a>
+                        <a class="nav-link" href="#founders">Founders</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="index.html#contact">Contact</a>
+                        <a class="nav-link" href="#features">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#rules">Rules</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
                     </li>
                 </ul>
             </div>
@@ -552,13 +639,79 @@
                         <a href="Store.html" class="btn btn-secondary-custom">
                             <i class="fas fa-store me-2"></i>Visit Store
                         </a>
-                        
-
-
-                        
                         <button class="btn btn-discord-custom" onclick="joinDiscord()">
                             <i class="fab fa-discord me-2"></i>Join Discord
                         </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Server Founders Section -->
+    <section id="founders" class="founder-section">
+        <div class="container">
+            <h2 class="section-title minecraft-font">SERVER FOUNDERS</h2>
+            <p class="text-center text-muted mb-5">Meet the team behind Drk Survraze SMP</p>
+            
+            <div class="row g-4">
+                <!-- Founder 1 -->
+                <div class="col-md-3 col-sm-6">
+                    <div class="founder-card">
+                        <div class="founder-skin">
+                            <img src="https://i.ibb.co.com/pBmvF0qh/Screenshot-2025-12-21-21-09-54-67-40deb401b9ffe8e1df2f1cc5ba480b12-removebg-preview.png" alt="Minecraft Skin" class="img-fluid">
+                        </div>
+                        <div class="founder-info">
+                            <img src="https://i.ibb.co.com/W4V5fkrr/avatar-Head.png" alt="Minecraft Head" class="minecraft-head">
+                            <h3 class="founder-name">Musfikur Rahman</h3>
+                            <p class="founder-username">Rxmusfuk</p>
+                            <span class="founder-role">OWNER</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Founder 2 -->
+                <div class="col-md-3 col-sm-6">
+                    <div class="founder-card">
+                        <div class="founder-skin">
+                            <img src="https://i.ibb.co.com/HTryBF5z/Screenshot-2025-12-21-21-44-38-91-40deb401b9ffe8e1df2f1cc5ba480b12-removebg-preview.png" alt="Minecraft Skin" class="img-fluid">
+                        </div>
+                        <div class="founder-info">
+                            <img src="https://i.ibb.co.com/5WSv7mT0/avatar-Head.png" alt="Minecraft Head" class="minecraft-head">
+                            <h3 class="founder-name">Sadnan Nayim</h3>
+                            <p class="founder-username">VOID_BLAZE_</p>
+                            <span class="founder-role">OWNER</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Founder 3 -->
+                <div class="col-md-3 col-sm-6">
+                    <div class="founder-card">
+                        <div class="founder-skin">
+                            <img src="https://i.ibb.co.com/sdBqk9Yw/Screenshot-2025-12-21-21-16-34-20-40deb401b9ffe8e1df2f1cc5ba480b12-removebg-preview.png" alt="Minecraft Skin" class="img-fluid">
+                        </div>
+                        <div class="founder-info">
+                            <img src="https://i.ibb.co.com/4ZLqyxSs/avatar-Head-1.png" alt="Minecraft Head" class="minecraft-head">
+                            <h3 class="founder-name">Mahin Islam</h3>
+                            <p class="founder-username">FlameeRazee</p>
+                            <span class="founder-role">ADMIN</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Founder 4 -->
+                <div class="col-md-3 col-sm-6">
+                    <div class="founder-card">
+                        <div class="founder-skin">
+                            <img src="https://i.ibb.co.com/fz6C7jD1/Screenshot-2025-12-21-22-06-16-65-40deb401b9ffe8e1df2f1cc5ba480b12-removebg-preview.png" alt="Minecraft Skin" class="img-fluid">
+                        </div>
+                        <div class="founder-info">
+                            <img src="https://i.ibb.co.com/mMsg82M/avatar-Head-1.png" alt="Minecraft Head" class="minecraft-head">
+                            <h3 class="founder-name">Adi Islam</h3>
+                            <p class="founder-username">NAPPr0</p>
+                            <span class="founder-role">ADMIN</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -692,7 +845,7 @@
                     <div class="d-flex flex-column">
                         <a href="Store.html" class="text-muted mb-2 text-decoration-none">Store</a>
                         <a href="vote.html" class="text-muted mb-2 text-decoration-none">Vote Now</a>
-                                                
+                        <a href="#founders" class="text-muted mb-2 text-decoration-none">Founders</a>
                         <a href="#rules" class="text-muted mb-2 text-decoration-none">Server Rules</a>
                         <a href="#contact" class="text-muted mb-2 text-decoration-none">Support</a>
                     </div>
@@ -819,7 +972,8 @@
                 });
             });
             
-            document.querySelectorAll('.server-card').forEach(card => {
+            // Animate all server cards including founder cards
+            document.querySelectorAll('.server-card, .founder-card').forEach(card => {
                 card.style.opacity = '0';
                 card.style.transform = 'translateY(50px)';
                 card.style.transition = 'all 0.6s ease';
@@ -847,6 +1001,18 @@
         
         setVH();
         window.addEventListener('resize', setVH);
+        
+        // Founder hover effects
+        const founderCards = document.querySelectorAll('.founder-card');
+        founderCards.forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-15px)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
         
     </script>
 </body>

@@ -382,7 +382,7 @@
             </div>
             
             <!-- Custom Rank Header -->
-            <div class="payment-header" style="background: linear-gradient(45deg, var(--secondary), #FFB74D);">
+            <div class="payment-header" style="background: blur;">
                 <h3 class="minecraft-font mb-0">Design Your Custom Rank</h3>
                 <p class="mb-0 mt-2">Create your unique Minecraft rank</p>
             </div>
@@ -392,28 +392,25 @@
                 <!-- Rank Name -->
                 <div class="mb-4">
                     <label class="form-label fw-bold">Enter Your Rank Name *</label>
-                    <input type="text" id="rankName" class="form-control" placeholder="e.g., DragonLord, NightKing, ShadowWalker" maxlength="20" style="font-size: 1.1em; padding: 15px;">
-                    <small class="text-muted">Choose a unique name for your rank (max 20 characters)</small>
+                    <input type="text" id="rankName" class="form-control" maxlength="20" style="font-size: 1.1em; padding: 15px;">
+                    
                 </div>
                 
                 <!-- Color Text Option (Below Rank Name) -->
                 <div class="mb-4">
                     <label class="form-label fw-bold">Rank Color Preferences</label>
-                    <p class="text-muted mb-2">What color would you like for your rank? Describe below:</p>
-                    <textarea id="colorText" class="form-control" rows="3" placeholder="e.g., I want a golden color with glow effect
-e.g., Red color with black outline
-e.g., Blue gradient with sparkles
-e.g., Purple with neon glow"></textarea>
-                    <small class="text-muted">Describe the color and effects you want for your rank. Our design team will create it accordingly.</small>
+                    <p class="text-muted mb-2"></p>
+                    <textarea id="colorText" class="form-control" rows="3" ></textarea>
+                    
                 </div>
                 
                 <!-- Navigation Buttons -->
                 <div class="d-flex gap-2 mt-4">
-                    <button class="btn btn-secondary w-50" onclick="goBackToStore()" style="padding: 12px; border-radius: 50px;">
+                    <button class="btn btn-secondary w-50" onclick="goBackToStore()" style="padding: 12px; border-radius: 15px;">
                         <i class="fas fa-times me-2"></i>Cancel
                     </button>
-                    <button class="btn btn-primary-custom w-50" onclick="proceedToPayment()" style="background: linear-gradient(45deg, var(--secondary), #FFB74D); padding: 12px;">
-                        <i class="fas fa-arrow-right me-2"></i>Proceed to Payment
+                    <button class="btn btn-primary-custom w-50" onclick="proceedToPayment()" style="background: #3b9440; border-radius: 15px; padding: 12px;">
+                        <i class="fas fa-arrow-right me-2"></i>Next
                     </button>
                 </div>
             </div>

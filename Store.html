@@ -156,30 +156,127 @@
             margin-bottom: 10px;
         }
         
-        .token-purchase-box {
-            background: rgba(30, 30, 30, 0.7);
-            backdrop-filter: blur(10px);
-            border-radius: 12px;
-            padding: 30px;
-            text-align: center;
-            border: 2px solid #9C27B0;
-            max-width: 500px;
+        /* Token Purchase Dropdown Container */
+        .token-dropdown-container {
+            max-width: 600px;
             margin: 40px auto;
         }
         
-        .token-calculator {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 8px;
-            padding: 20px;
-            margin: 20px 0;
+        .token-dropdown-header {
+            background: linear-gradient(45deg, #7B1FA2, #9C27B0);
+            border: 2px solid #9C27B0;
+            border-radius: 12px;
+            padding: 20px 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 10px 25px rgba(156, 39, 176, 0.3);
         }
         
-        .calculation-result {
+        .token-dropdown-header:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(156, 39, 176, 0.4);
+        }
+        
+        .token-dropdown-header h3 {
+            margin: 0;
+            font-size: 1.5rem;
+            color: white;
+        }
+        
+        .dropdown-icon {
+            font-size: 1.5rem;
+            color: white;
+            transition: transform 0.3s ease;
+        }
+        
+        .token-dropdown-content {
+            background: rgba(30, 30, 30, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 0 0 12px 12px;
+            border: 2px solid #9C27B0;
+            border-top: none;
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.5s ease;
+            opacity: 0;
+        }
+        
+        .token-dropdown-content.expanded {
+            padding: 30px;
+            max-height: 1200px;
+            opacity: 1;
+        }
+        
+        /* Token Packages Grid Inside Dropdown */
+        .token-packages-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .token-package-item {
             background: rgba(255, 255, 255, 0.05);
-            border-radius: 8px;
-            padding: 20px;
-            margin-top: 20px;
+            border-radius: 10px;
+            padding: 15px;
             text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(156, 39, 176, 0.3);
+        }
+        
+        .token-package-item:hover {
+            transform: translateY(-5px);
+            background: rgba(156, 39, 176, 0.2);
+            border-color: #9C27B0;
+        }
+        
+        .token-package-item.selected {
+            background: rgba(156, 39, 176, 0.3);
+            border: 2px solid #9C27B0;
+        }
+        
+        .token-amount {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 5px;
+        }
+        
+        .token-price {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+        }
+        
+        .token-info-box {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .selected-package-display {
+            background: rgba(156, 39, 176, 0.2);
+            border: 2px solid #9C27B0;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            display: none;
+        }
+        
+        .selected-package-display.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
         @media (max-width: 768px) {
@@ -193,6 +290,18 @@
             
             .section-title {
                 font-size: 2rem;
+            }
+            
+            .token-dropdown-header {
+                padding: 15px 20px;
+            }
+            
+            .token-dropdown-content.expanded {
+                padding: 20px;
+            }
+            
+            .token-packages-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -213,35 +322,70 @@
             <p class="fs-5 mb-4">Upgrade your experience with our premium ranks and packages! Support our server and get amazing benefits.</p>
         </div>
         
-        <!-- Token Purchase Section -->
-        <div class="token-purchase-box">
-            <h3 class="minecraft-font mb-3"><i class="fas fa-coins me-2"></i>TOKEN PURCHASE</h3>
-            <div class="token-badge fs-5">1 BDT = 12 TOKENS</div>
-            
-            <div class="token-calculator">
-                <div class="form-group mb-3">
-                    <label class="form-label text-white mb-2 fs-5">Enter Token Amount</label>
-                    <input type="number" id="tokenAmount" class="form-control form-control-lg" placeholder="Enter tokens" min="12" step="12" oninput="calculateBDT()">
-                    <small class="text-muted">Minimum 12 tokens</small>
-                </div>
-                
-                <div class="calculation-result">
-                    <div class="row text-center">
-                        <div class="col-6">
-                            <div class="token-badge fs-6">TOKENS</div>
-                            <h3 id="calculatedTokens" class="minecraft-font text-white">0</h3>
-                        </div>
-                        <div class="col-6">
-                            <div class="price-tag">BDT</div>
-                            <h3 id="calculatedBDT" class="minecraft-font text-white">0</h3>
-                        </div>
-                    </div>
+        <!-- Token Purchase Dropdown Section -->
+        <div class="token-dropdown-container">
+            <div class="token-dropdown-header" onclick="toggleTokenDropdown()">
+                <h3 class="minecraft-font">
+                    <i class="fas fa-coins me-2"></i>BUY TOKENS - CLICK TO PURCHASE
+                </h3>
+                <div class="dropdown-icon">
+                    <i class="fas fa-chevron-down"></i>
                 </div>
             </div>
             
-            <button class="btn btn-primary-custom w-100" onclick="openTokenPurchase()">
-                <i class="fas fa-shopping-cart me-2"></i>PURCHASE TOKENS
-            </button>
+            <div class="token-dropdown-content" id="tokenDropdownContent">
+                
+                <!-- Token Packages Grid -->
+                <div class="token-packages-grid">
+<!-- 600 Tokens -->
+<div class="token-package-item"
+onclick="openPaymentForm('Token Purchase','600 Tokens','token','600','0','50','TOKENS')">
+    <div class="token-amount">600 TOKENS</div>
+    <div class="token-price">50 BDT</div>
+</div>
+
+<!-- 1200 Tokens -->
+<div class="token-package-item"
+onclick="openPaymentForm('Token Purchase','1200 Tokens','token','1200','0','100','TOKENS')">
+    <div class="token-amount">1200 TOKENS</div>
+    <div class="token-price">100 BDT</div>
+</div>
+
+<!-- 3000 Tokens -->
+<div class="token-package-item"
+onclick="openPaymentForm('Token Purchase','3000 Tokens','token','3000','0','250','TOKENS')">
+    <div class="token-amount">3000 TOKENS</div>
+    <div class="token-price">250 BDT</div>
+</div>
+
+<!-- 6000 Tokens -->
+<div class="token-package-item"
+onclick="openPaymentForm('Token Purchase','6000 Tokens','token','6000','0','500','TOKENS')">
+    <div class="token-amount">6000 TOKENS</div>
+    <div class="token-price">500 BDT</div>
+</div>
+
+<!-- 12000 Tokens -->
+<div class="token-package-item"
+onclick="openPaymentForm('Token Purchase','12000 Tokens','token','12000','0','1000','TOKENS')">
+    <div class="token-amount">12000 TOKENS</div>
+    <div class="token-price">1000 BDT</div>
+</div>
+
+                    </div>
+                </div>
+                    </div>
+                    <div class="mt-3" id="customTokenResult"></div>
+                </div>
+                
+                <!-- Rate Info -->
+                <div class="text-center mt-4">
+                    <p class="text-muted mb-0">
+                        <i class="fas fa-info-circle me-2"></i>
+                        All purchases are processed through our secure payment system. Tokens will be added to your account immediately after payment confirmation.
+                    </p>
+                </div>
+            </div>
         </div>
         
         <!-- Ranks Section -->
@@ -386,20 +530,124 @@
     </div>
 
     <script>
+        let selectedTokenAmount = 0;
+        let selectedBdtAmount = 0;
+        
         function goBackToHome() {
             window.location.href = 'index.html';
         }
         
-        function calculateBDT() {
-            const tokenAmount = document.getElementById('tokenAmount').value;
-            if (tokenAmount >= 12) {
-                const bdtAmount = Math.ceil(tokenAmount / 12);
-                document.getElementById('calculatedTokens').textContent = tokenAmount;
-                document.getElementById('calculatedBDT').textContent = bdtAmount;
+        function toggleTokenDropdown() {
+            const content = document.getElementById('tokenDropdownContent');
+            const icon = document.querySelector('.dropdown-icon i');
+            
+            content.classList.toggle('expanded');
+            
+            // Rotate icon
+            if (content.classList.contains('expanded')) {
+                icon.classList.remove('fa-chevron-down');
+                icon.classList.add('fa-chevron-up');
             } else {
-                document.getElementById('calculatedTokens').textContent = '0';
-                document.getElementById('calculatedBDT').textContent = '0';
+                icon.classList.remove('fa-chevron-up');
+                icon.classList.add('fa-chevron-down');
             }
+        }
+        
+        function selectTokenPackage(tokenAmount, bdtAmount, element) {
+            // Remove selected class from all packages
+            document.querySelectorAll('.token-package-item').forEach(item => {
+                item.classList.remove('selected');
+            });
+            
+            // Add selected class to clicked package
+            element.classList.add('selected');
+            
+            // Hide custom input if visible
+            document.getElementById('customTokenInput').style.display = 'none';
+            document.getElementById('customTokenResult').innerHTML = '';
+            
+            // Update selected values
+            selectedTokenAmount = tokenAmount;
+            selectedBdtAmount = bdtAmount;
+            
+            // Update display
+            document.getElementById('selectedTokens').textContent = `${tokenAmount} TOKENS`;
+            document.getElementById('selectedBDT').textContent = `${bdtAmount} BDT`;
+            
+            // Show selected package display
+            document.getElementById('selectedPackageDisplay').classList.add('show');
+            
+            // Enable purchase button
+            document.getElementById('purchaseBtn').disabled = false;
+        }
+        
+        function openCustomTokenInput(element) {
+            // Remove selected class from all packages
+            document.querySelectorAll('.token-package-item').forEach(item => {
+                item.classList.remove('selected');
+            });
+            
+            // Add selected class to custom package
+            element.classList.add('selected');
+            
+            // Show custom input
+            document.getElementById('customTokenInput').style.display = 'block';
+            document.getElementById('customTokenAmount').value = '';
+            document.getElementById('customTokenResult').innerHTML = '';
+            
+            // Hide selected package display initially
+            document.getElementById('selectedPackageDisplay').classList.remove('show');
+        }
+        
+        function calculateCustomTokens() {
+            const tokenAmount = document.getElementById('customTokenAmount').value;
+            
+            if (!tokenAmount || tokenAmount < 12) {
+                alert('Please enter a valid token amount (minimum 12 tokens)');
+                return;
+            }
+            
+            const bdtAmount = Math.ceil(tokenAmount / 12);
+            
+            // Update selected values
+            selectedTokenAmount = tokenAmount;
+            selectedBdtAmount = bdtAmount;
+            
+            // Show calculation result
+            document.getElementById('customTokenResult').innerHTML = `
+                <div class="alert alert-info">
+                    <strong>${tokenAmount} TOKENS</strong> = <strong>${bdtAmount} BDT</strong>
+                </div>
+            `;
+            
+            // Update selected package display
+            document.getElementById('selectedTokens').textContent = `${tokenAmount} TOKENS`;
+            document.getElementById('selectedBDT').textContent = `${bdtAmount} BDT`;
+            
+            // Show selected package display
+            document.getElementById('selectedPackageDisplay').classList.add('show');
+            
+            // Enable purchase button
+            document.getElementById('purchaseBtn').disabled = false;
+        }
+        
+        function purchaseSelectedTokens() {
+            if (selectedTokenAmount === 0) {
+                alert('Please select a token package first');
+                return;
+            }
+            
+            const params = new URLSearchParams({
+                type: 'tokens',
+                item: 'Token Purchase',
+                purchaseType: `${selectedTokenAmount} Tokens`,
+                amount: selectedTokenAmount,
+                money: '0',
+                price: `${selectedBdtAmount} BDT`,
+                rankType: 'TOKENS'
+            }).toString();
+            
+            window.location.href = `payment-form.html?${params}`;
         }
         
         function openPaymentForm(item, purchaseType, type, amount, money, price, rankType) {
@@ -411,28 +659,6 @@
                 money: money,
                 price: price,
                 rankType: rankType
-            }).toString();
-            
-            window.location.href = `payment-form.html?${params}`;
-        }
-        
-        function openTokenPurchase() {
-            const tokenAmount = document.getElementById('tokenAmount').value;
-            if (!tokenAmount || tokenAmount < 12) {
-                alert('Please enter a valid token amount (minimum 12 tokens)');
-                return;
-            }
-            
-            const bdtAmount = Math.ceil(tokenAmount / 12);
-            
-            const params = new URLSearchParams({
-                type: 'tokens',
-                item: 'Token Purchase',
-                purchaseType: `${tokenAmount} Tokens`,
-                amount: tokenAmount,
-                money: '0',
-                price: `${bdtAmount} BDT`,
-                rankType: 'TOKENS'
             }).toString();
             
             window.location.href = `payment-form.html?${params}`;
@@ -453,6 +679,7 @@
                 });
             });
             
+            // Animate store items
             document.querySelectorAll('.store-item').forEach(card => {
                 card.style.opacity = '0';
                 card.style.transform = 'translateY(50px)';

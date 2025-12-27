@@ -4,9 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Server Store - Drk Survraze SMP</title>
+    
+    <!-- SEO and URL Optimization -->
+    <meta name="description" content="Purchase premium ranks and tokens for Drk Survraze SMP Minecraft server. Support our server and unlock amazing features!">
+    <meta name="keywords" content="minecraft store, drk survraze store, minecraft ranks, minecraft tokens, premium ranks">
+    <meta name="author" content="Drk Survraze SMP">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://drksurvraze.top/store">
+    
+    <!-- External Libraries -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
         :root {
             --primary: #4CAF50;
@@ -522,19 +532,34 @@ onclick="openPaymentForm('Token Purchase','12000 Tokens','token','12000','0','10
         <footer class="mt-5 pt-4 border-top border-secondary">
             <div class="text-center">
                 <p class="text-muted mb-0">&copy; 2023 Drk Survraze SMP. All Rights Reserved.</p>
-                <a href="index.html" class="btn btn-primary-custom mt-3">
+                <a href="/" class="btn btn-primary-custom mt-3">
                     <i class="fas fa-home me-2"></i>Back to Home
                 </a>
             </div>
         </footer>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         let selectedTokenAmount = 0;
         let selectedBdtAmount = 0;
         
+        // URL Masking Function - Hides .html extension
+        function hideHtmlExtension() {
+            if (window.history && window.history.replaceState) {
+                const currentPath = window.location.pathname;
+                if (currentPath.includes('.html')) {
+                    const cleanPath = currentPath.replace(/\.html$/, '');
+                    if (currentPath !== cleanPath) {
+                        window.history.replaceState({}, document.title, cleanPath);
+                    }
+                }
+            }
+        }
+        
         function goBackToHome() {
-            window.location.href = 'index.html';
+            // Use clean URL without .html
+            window.location.href = '/';
         }
         
         function toggleTokenDropdown() {
@@ -647,7 +672,8 @@ onclick="openPaymentForm('Token Purchase','12000 Tokens','token','12000','0','10
                 rankType: 'TOKENS'
             }).toString();
             
-            window.location.href = `payment-form.html?${params}`;
+            // Use clean URL for payment form
+            window.location.href = `/payment-form?${params}`;
         }
         
         function openPaymentForm(item, purchaseType, type, amount, money, price, rankType) {
@@ -661,15 +687,20 @@ onclick="openPaymentForm('Token Purchase','12000 Tokens','token','12000','0','10
                 rankType: rankType
             }).toString();
             
-            window.location.href = `payment-form.html?${params}`;
+            // Use clean URL for payment form
+            window.location.href = `/payment-form?${params}`;
         }
         
         function openCustomRank() {
-            window.location.href = 'payment-form.html?type=custom&item=Custom%20Rank&purchaseType=Custom%20Rank&amount=0&money=0&price=500%20BDT&rankType=CUSTOM';
+            // Use clean URL for payment form
+            window.location.href = '/payment-form?type=custom&item=Custom%20Rank&purchaseType=Custom%20Rank&amount=0&money=0&price=500%20BDT&rankType=CUSTOM';
         }
         
-        // Initialize animations
+        // Initialize animations and URL masking
         document.addEventListener('DOMContentLoaded', function() {
+            // Hide .html extension from URL
+            hideHtmlExtension();
+            
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -686,54 +717,20 @@ onclick="openPaymentForm('Token Purchase','12000 Tokens','token','12000','0','10
                 card.style.transition = 'all 0.6s ease';
                 observer.observe(card);
             });
-        });
-        <!-- নিচের script টি body tag-এর ঠিক আগে বা পরে যুক্ত করুন -->
-
-    // Function to hide .html from URL
-    function hideHtmlFromURL() {
-        if (window.history && window.history.replaceState) {
-            // Get current URL
-            let currentURL = window.location.href;
             
-            // Remove .html extension
-            if (currentURL.includes('.html')) {
-                let cleanURL = currentURL.replace('.html', '');
-                window.history.replaceState({}, document.title, cleanURL);
-            }
-        }
-    }
-    
-    // Function to handle back button
-    function goBackToHome() {
-        // First hide .html from current URL
-        hideHtmlFromURL();
-        
-        // Then navigate to home page without .html
-        setTimeout(() => {
-            window.location.href = 'index'; // Without .html
-        }, 100);
-    }
-    
-    // DOM ready function
-    document.addEventListener('DOMContentLoaded', function() {
-        // Hide .html from URL when page loads
-        hideHtmlFromURL();
-        
-        // Update all links to remove .html
-        document.querySelectorAll('a[href$=".html"]').forEach(link => {
-            let href = link.getAttribute('href');
-            link.setAttribute('href', href.replace('.html', ''));
+            // Update all internal links to use clean URLs
+            document.querySelectorAll('a[href$=".html"]').forEach(link => {
+                const href = link.getAttribute('href');
+                if (href.includes('.html')) {
+                    link.setAttribute('href', href.replace(/\.html$/, ''));
+                }
+            });
         });
-    });
-    
-    // Add event listener to back button if exists
-    document.addEventListener('DOMContentLoaded', function() {
-        const backButton = document.querySelector('[onclick="goBackToHome()"]');
-        if (backButton) {
-            backButton.onclick = goBackToHome;
-        }
-    });
-
+        
+        // Handle browser back/forward buttons
+        window.addEventListener('popstate', function() {
+            hideHtmlExtension();
+        });
     </script>
 </body>
 </html>

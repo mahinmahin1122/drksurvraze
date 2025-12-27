@@ -687,6 +687,53 @@ onclick="openPaymentForm('Token Purchase','12000 Tokens','token','12000','0','10
                 observer.observe(card);
             });
         });
+        <!-- নিচের script টি body tag-এর ঠিক আগে বা পরে যুক্ত করুন -->
+
+    // Function to hide .html from URL
+    function hideHtmlFromURL() {
+        if (window.history && window.history.replaceState) {
+            // Get current URL
+            let currentURL = window.location.href;
+            
+            // Remove .html extension
+            if (currentURL.includes('.html')) {
+                let cleanURL = currentURL.replace('.html', '');
+                window.history.replaceState({}, document.title, cleanURL);
+            }
+        }
+    }
+    
+    // Function to handle back button
+    function goBackToHome() {
+        // First hide .html from current URL
+        hideHtmlFromURL();
+        
+        // Then navigate to home page without .html
+        setTimeout(() => {
+            window.location.href = 'index'; // Without .html
+        }, 100);
+    }
+    
+    // DOM ready function
+    document.addEventListener('DOMContentLoaded', function() {
+        // Hide .html from URL when page loads
+        hideHtmlFromURL();
+        
+        // Update all links to remove .html
+        document.querySelectorAll('a[href$=".html"]').forEach(link => {
+            let href = link.getAttribute('href');
+            link.setAttribute('href', href.replace('.html', ''));
+        });
+    });
+    
+    // Add event listener to back button if exists
+    document.addEventListener('DOMContentLoaded', function() {
+        const backButton = document.querySelector('[onclick="goBackToHome()"]');
+        if (backButton) {
+            backButton.onclick = goBackToHome;
+        }
+    });
+
     </script>
 </body>
 </html>

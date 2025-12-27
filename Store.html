@@ -19,6 +19,8 @@
             --light: #f8f9fa;
             --text: #e0e0e0;
             --text-muted: #a0a0a0;
+            --warning: #ff9800;
+            --danger: #f44336;
         }
         
         body {
@@ -87,6 +89,40 @@
         .btn-primary-custom:hover {
             transform: translateY(-3px);
             box-shadow: 0 10px 25px rgba(76, 175, 80, 0.4);
+            color: white;
+        }
+        
+        .btn-discord {
+            background: linear-gradient(45deg, var(--discord), #4752c4);
+            border: none;
+            color: white;
+            font-weight: 600;
+            padding: 12px 30px;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .btn-discord:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(88, 101, 242, 0.4);
+            color: white;
+        }
+        
+        .btn-warning {
+            background: linear-gradient(45deg, var(--warning), #f57c00);
+            border: none;
+            color: white;
+            font-weight: 600;
+            padding: 12px 30px;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-warning:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255, 152, 0, 0.4);
             color: white;
         }
         
@@ -274,9 +310,76 @@
             animation: fadeIn 0.3s ease;
         }
         
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.85);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            padding: 20px;
+        }
+        
+        .modal-overlay.active {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .warning-modal {
+            background: rgba(30, 30, 30, 0.95);
+            backdrop-filter: blur(15px);
+            border-radius: 15px;
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            border: 2px solid var(--warning);
+            box-shadow: 0 20px 50px rgba(255, 152, 0, 0.3);
+            text-align: center;
+        }
+        
+        .warning-icon {
+            font-size: 4rem;
+            color: var(--warning);
+            margin-bottom: 20px;
+        }
+        
+        .warning-modal h3 {
+            color: var(--warning);
+            margin-bottom: 20px;
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .warning-modal p {
+            color: var(--text);
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+        
+        .modal-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(-10px); }
             to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+        
+        .shake {
+            animation: shake 0.5s ease;
         }
         
         @media (max-width: 768px) {
@@ -303,6 +406,14 @@
             .token-packages-grid {
                 grid-template-columns: 1fr;
             }
+            
+            .warning-modal {
+                padding: 30px 20px;
+            }
+            
+            .modal-buttons {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
@@ -319,7 +430,7 @@
         <!-- Store Header -->
         <div class="store-header">
             <h1 class="minecraft-font display-4 mb-3">SERVER <span style="color: var(--secondary);">STORE</span></h1>
-            <p class="fs-5 mb-4">Upgrade your experience with our premium ranks and packages! Support our server and get amazing benefits.</p>
+            <p class="fs-5 mb-4">Upgrade your experience with our premium ranks and packages! Support our server and get amazing benefits./p>
         </div>
         
         <!-- Token Purchase Dropdown Section -->
@@ -334,57 +445,44 @@
             </div>
             
             <div class="token-dropdown-content" id="tokenDropdownContent">
-                
                 <!-- Token Packages Grid -->
                 <div class="token-packages-grid">
-<!-- 600 Tokens -->
-<div class="token-package-item"
-onclick="openPaymentForm('Token Purchase','600 Tokens','token','600','0','50','TOKENS')">
-    <div class="token-amount">600 TOKENS</div>
-    <div class="token-price">50 BDT</div>
-</div>
+                    <!-- 600 Tokens -->
+                    <div class="token-package-item" onclick="showWarningModal('600 Tokens', '50 BDT')">
+                        <div class="token-amount">600 TOKENS</div>
+                        <div class="token-price">50 BDT</div>
+                    </div>
 
-<!-- 1200 Tokens -->
-<div class="token-package-item"
-onclick="openPaymentForm('Token Purchase','1200 Tokens','token','1200','0','100','TOKENS')">
-    <div class="token-amount">1200 TOKENS</div>
-    <div class="token-price">100 BDT</div>
-</div>
+                    <!-- 1200 Tokens -->
+                    <div class="token-package-item" onclick="showWarningModal('1200 Tokens', '100 BDT')">
+                        <div class="token-amount">1200 TOKENS</div>
+                        <div class="token-price">100 BDT</div>
+                    </div>
 
-<!-- 3000 Tokens -->
-<div class="token-package-item"
-onclick="openPaymentForm('Token Purchase','3000 Tokens','token','3000','0','250','TOKENS')">
-    <div class="token-amount">3000 TOKENS</div>
-    <div class="token-price">250 BDT</div>
-</div>
+                    <!-- 3000 Tokens -->
+                    <div class="token-package-item" onclick="showWarningModal('3000 Tokens', '250 BDT')">
+                        <div class="token-amount">3000 TOKENS</div>
+                        <div class="token-price">250 BDT</div>
+                    </div>
 
-<!-- 6000 Tokens -->
-<div class="token-package-item"
-onclick="openPaymentForm('Token Purchase','6000 Tokens','token','6000','0','500','TOKENS')">
-    <div class="token-amount">6000 TOKENS</div>
-    <div class="token-price">500 BDT</div>
-</div>
+                    <!-- 6000 Tokens -->
+                    <div class="token-package-item" onclick="showWarningModal('6000 Tokens', '500 BDT')">
+                        <div class="token-amount">6000 TOKENS</div>
+                        <div class="token-price">500 BDT</div>
+                    </div>
 
-<!-- 9600 Tokens -->
-<div class="token-package-item"
-onclick="openPaymentForm('Token Purchase','9600 Tokens','token','9600','0','800','TOKENS')">
-    <div class="token-amount">9600 TOKENS</div>
-    <div class="token-price">800 BDT</div>
-</div>                    
-<!-- 12000 Tokens -->
-<div class="token-package-item"
-onclick="openPaymentForm('Token Purchase','12000 Tokens','token','12000','0','1000','TOKENS')">
-    <div class="token-amount">12000 TOKENS</div>
-    <div class="token-price">1000 BDT</div>
-</div>
-
+                    <!-- 9600 Tokens -->
+                    <div class="token-package-item" onclick="showWarningModal('9600 Tokens', '800 BDT')">
+                        <div class="token-amount">9600 TOKENS</div>
+                        <div class="token-price">800 BDT</div>
+                    </div>
+                    
+                    <!-- 12000 Tokens -->
+                    <div class="token-package-item" onclick="showWarningModal('12000 Tokens', '1000 BDT')">
+                        <div class="token-amount">12000 TOKENS</div>
+                        <div class="token-price">1000 BDT</div>
                     </div>
                 </div>
-                    </div>
-                    <div class="mt-3" id="customTokenResult"></div>
-                </div>
-                
-                
             </div>
         </div>
         
@@ -408,7 +506,7 @@ onclick="openPaymentForm('Token Purchase','12000 Tokens','token','12000','0','10
                         <li class="mb-2"><i class="fas fa-check text-success me-2"></i>/workbench</li>
                     </ul>
                     
-                    <button class="btn btn-primary-custom w-100" onclick="openPaymentForm('ROYAL Rank', '1200 Tokens', 'token', '1200', '0', '100', 'RIYAL')">
+                    <button class="btn btn-primary-custom w-100" onclick="showWarningModal('ROYAL Rank', '100 BDT')">
                         <i class="fas fa-shopping-cart me-2"></i>Purchase Now
                     </button>
                 </div>
@@ -417,7 +515,7 @@ onclick="openPaymentForm('Token Purchase','12000 Tokens','token','12000','0','10
             <!-- LEGEND Rank -->
             <div class="col-md-4">
                 <div class="store-item">
-                    <h3 class="minecraft-font mb-3">LEGEND RANK</h4>
+                    <h3 class="minecraft-font mb-3">LEGEND RANK</h3>
                     <div class="token-badge">2400 TOKENS = 200 BDT</div>
                     
                     <ul class="list-unstyled text-start mb-4">
@@ -427,12 +525,12 @@ onclick="openPaymentForm('Token Purchase','12000 Tokens','token','12000','0','10
                         <li class="mb-2"><i class="fas fa-check text-success me-2"></i>LEGEND Kits [ On Every Month ]</li>
                         <li class="mb-2"><i class="fas fa-check text-success me-2"></i>/back</li>
                         <li class="mb-2"><i class="fas fa-check text-success me-2"></i>/smithing table</li>
-                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>/griendstone</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>/grindstone</li>
                         <li class="mb-2"><i class="fas fa-check text-success me-2"></i>/workbench</li>
                         <li class="mb-2"><i class="fas fa-check text-success me-2"></i>/hat</li>
                     </ul>
                     
-                    <button class="btn btn-primary-custom w-100" onclick="openPaymentForm('LEGEND Rank', '2400 Tokens', 'token', '2400', '0', '200', 'LEGEND')">
+                    <button class="btn btn-primary-custom w-100" onclick="showWarningModal('LEGEND Rank', '200 BDT')">
                         <i class="fas fa-shopping-cart me-2"></i>Purchase Now
                     </button>
                 </div>
@@ -445,7 +543,7 @@ onclick="openPaymentForm('Token Purchase','12000 Tokens','token','12000','0','10
                     <div class="token-badge">3600 TOKENS = 300 BDT</div>
                     
                     <ul class="list-unstyled text-start mb-4">
-                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Previous Ranks Features [ RIYAL, LEGEND, Default ]</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Previous Ranks Features [ ROYAL, LEGEND, Default ]</li>
                         <li class="mb-2"><i class="fas fa-check text-success me-2"></i>OVERLORD Prefix in Chat</li>
                         <li class="mb-2"><i class="fas fa-check text-success me-2"></i>OVERLORD kits [ On Every Month ]</li>
                         <li class="mb-2"><i class="fas fa-check text-success me-2"></i>7 Homes</li>
@@ -457,7 +555,7 @@ onclick="openPaymentForm('Token Purchase','12000 Tokens','token','12000','0','10
                         <li class="mb-2"><i class="fas fa-check text-success me-2"></i>/hat</li>
                     </ul>
                     
-                    <button class="btn btn-primary-custom w-100" onclick="openPaymentForm('OVERLORD Rank', '3600 Tokens', 'token', '3600', '0', '300', 'OVERLORD')">
+                    <button class="btn btn-primary-custom w-100" onclick="showWarningModal('OVERLORD Rank', '300 BDT')">
                         <i class="fas fa-shopping-cart me-2"></i>Purchase Now
                     </button>
                 </div>
@@ -466,24 +564,24 @@ onclick="openPaymentForm('Token Purchase','12000 Tokens','token','12000','0','10
             <!-- GODTIER Rank -->
             <div class="col-md-4">
                 <div class="store-item">
-                    <h3 class="minecraft-font mb-3">GODTIER RANK</h4>
+                    <h3 class="minecraft-font mb-3">GODTIER RANK</h3>
                     <div class="token-badge">4800 TOKENS = 400 BDT</div>
                     
                     <ul class="list-unstyled text-start mb-4">
-                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>All GODTIER Features [ ROYAL, LEGEND, OVERLORD, Default ]</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>All Previous Rank Features [ ROYAL, LEGEND, OVERLORD, Default ]</li>
                         <li class="mb-2"><i class="fas fa-check text-success me-2"></i>GODTIER Prefix in Chat</li>
                         <li class="mb-2"><i class="fas fa-check text-success me-2"></i>9 Homes</li>
                         <li class="mb-2"><i class="fas fa-check text-success me-2"></i>GODTIER Kits [ On Every Month ]</li>
                         <li class="mb-2"><i class="fas fa-check text-success me-2"></i>/repair</li>
                         <li class="mb-2"><i class="fas fa-check text-success me-2"></i>/anvil</li>
-                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>/back-btn</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>/back</li>
                         <li class="mb-2"><i class="fas fa-check text-success me-2"></i>/smithing table</li>
                         <li class="mb-2"><i class="fas fa-check text-success me-2"></i>/grindstone</li>
                         <li class="mb-2"><i class="fas fa-check text-success me-2"></i>/workbench</li>
                         <li class="mb-2"><i class="fas fa-check text-success me-2"></i>/hat</li>
                     </ul>
                     
-                    <button class="btn btn-primary-custom w-100" onclick="openPaymentForm('GODTIER Rank', '4800 Tokens', 'token', '4800', '0', '500', 'GODTIER')">
+                    <button class="btn btn-primary-custom w-100" onclick="showWarningModal('GODTIER Rank', '400 BDT')">
                         <i class="fas fa-shopping-cart me-2"></i>Purchase Now
                     </button>
                 </div>
@@ -503,7 +601,7 @@ onclick="openPaymentForm('Token Purchase','12000 Tokens','token','12000','0','10
                         <li class="mb-2"><i class="fas fa-check text-success me-2"></i>12 Home</li>
                         <li class="mb-2"><i class="fas fa-check text-success me-2"></i>/feed</li>
                         <li class="mb-2"><i class="fas fa-check text-success me-2"></i>/repair</li>
-                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>/anvi</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>/anvil</li>
                         <li class="mb-2"><i class="fas fa-check text-success me-2"></i>/back</li>
                         <li class="mb-2"><i class="fas fa-check text-success me-2"></i>/smithing table</li>
                         <li class="mb-2"><i class="fas fa-check text-success me-2"></i>/grindstone</li>
@@ -511,7 +609,7 @@ onclick="openPaymentForm('Token Purchase','12000 Tokens','token','12000','0','10
                         <li class="mb-2"><i class="fas fa-check text-success me-2"></i>/hat</li>
                     </ul>
                     
-                    <button class="btn btn-primary-custom w-100" onclick="openCustomRank()">
+                    <button class="btn btn-primary-custom w-100" onclick="showWarningModal('CUSTOM RANK', '500 BDT')">
                         <i class="fas fa-shopping-cart me-2"></i>Purchase Custom Rank
                     </button>
                 </div>
@@ -529,9 +627,37 @@ onclick="openPaymentForm('Token Purchase','12000 Tokens','token','12000','0','10
         </footer>
     </div>
 
+    <!-- Warning Modal -->
+    <div class="modal-overlay" id="warningModal">
+        <div class="warning-modal">
+            <div class="warning-icon shake">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <h3 class="minecraft-font">TECHNICAL ISSUE DETECTED!</h3>
+            <p><strong id="selectedItemName">ROYAL Rank</strong> - <strong id="selectedItemPrice">100 BDT</strong></p>
+            <p class="mb-4">Due to ongoing technical issues, our automatic purchase system is temporarily unavailable.</p>
+            <p class="text-warning"><strong>Please create a ticket in our Discord server to complete your purchase.</strong></p>
+            <p class="text-muted small mt-3">Our staff will assist you manually with the purchase process.</p>
+            
+            <div class="modal-buttons">
+                <button class="btn btn-warning w-100" onclick="createDiscordTicket()">
+                    <i class="fab fa-discord me-2"></i>Create Ticket in Discord
+                </button>
+                <button class="btn btn-primary-custom w-100" onclick="closeWarningModal()">
+                    <i class="fas fa-times me-2"></i>Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script>
-        let selectedTokenAmount = 0;
-        let selectedBdtAmount = 0;
+        // Your Discord server URL
+        const DISCORD_SERVER_URL = "https://discord.com/channels/1417372883973439611/1441344298426830919";
+        
+        let currentSelectedItem = {
+            name: '',
+            price: ''
+        };
         
         function goBackToHome() {
             window.location.href = 'index.html';
@@ -543,7 +669,6 @@ onclick="openPaymentForm('Token Purchase','12000 Tokens','token','12000','0','10
             
             content.classList.toggle('expanded');
             
-            // Rotate icon
             if (content.classList.contains('expanded')) {
                 icon.classList.remove('fa-chevron-down');
                 icon.classList.add('fa-chevron-up');
@@ -553,120 +678,62 @@ onclick="openPaymentForm('Token Purchase','12000 Tokens','token','12000','0','10
             }
         }
         
-        function selectTokenPackage(tokenAmount, bdtAmount, element) {
-            // Remove selected class from all packages
-            document.querySelectorAll('.token-package-item').forEach(item => {
-                item.classList.remove('selected');
-            });
+        function showWarningModal(itemName, itemPrice) {
+            // Store the selected item info
+            currentSelectedItem.name = itemName;
+            currentSelectedItem.price = itemPrice;
             
-            // Add selected class to clicked package
-            element.classList.add('selected');
+            // Update modal content
+            document.getElementById('selectedItemName').textContent = itemName;
+            document.getElementById('selectedItemPrice').textContent = itemPrice;
             
-            // Hide custom input if visible
-            document.getElementById('customTokenInput').style.display = 'none';
-            document.getElementById('customTokenResult').innerHTML = '';
+            // Show modal
+            document.getElementById('warningModal').classList.add('active');
             
-            // Update selected values
-            selectedTokenAmount = tokenAmount;
-            selectedBdtAmount = bdtAmount;
-            
-            // Update display
-            document.getElementById('selectedTokens').textContent = `${tokenAmount} TOKENS`;
-            document.getElementById('selectedBDT').textContent = `${bdtAmount} BDT`;
-            
-            // Show selected package display
-            document.getElementById('selectedPackageDisplay').classList.add('show');
-            
-            // Enable purchase button
-            document.getElementById('purchaseBtn').disabled = false;
+            // Add shake animation to icon
+            const icon = document.querySelector('.warning-icon');
+            icon.classList.remove('shake');
+            void icon.offsetWidth; // Trigger reflow
+            icon.classList.add('shake');
         }
         
-        function openCustomTokenInput(element) {
-            // Remove selected class from all packages
-            document.querySelectorAll('.token-package-item').forEach(item => {
-                item.classList.remove('selected');
-            });
-            
-            // Add selected class to custom package
-            element.classList.add('selected');
-            
-            // Show custom input
-            document.getElementById('customTokenInput').style.display = 'block';
-            document.getElementById('customTokenAmount').value = '';
-            document.getElementById('customTokenResult').innerHTML = '';
-            
-            // Hide selected package display initially
-            document.getElementById('selectedPackageDisplay').classList.remove('show');
+        function closeWarningModal() {
+            document.getElementById('warningModal').classList.remove('active');
         }
         
-        function calculateCustomTokens() {
-            const tokenAmount = document.getElementById('customTokenAmount').value;
+        function createDiscordTicket() {
+            // Close modal first
+            closeWarningModal();
             
-            if (!tokenAmount || tokenAmount < 12) {
-                alert('Please enter a valid token amount (minimum 12 tokens)');
-                return;
+            // Create a message with purchase details
+            const message = `I want to purchase: ${currentSelectedItem.name} for ${currentSelectedItem.price}`;
+            
+            // Try to open Discord with pre-filled message (if supported)
+            // Note: Discord web client doesn't support pre-filled messages in invites
+            // So we'll just open the server
+            window.open(DISCORD_SERVER_URL, '_blank');
+            
+            // Show a confirmation message
+            alert(`Opening Discord server...\n\nPlease create a ticket and mention:\n"Purchase: ${currentSelectedItem.name} - ${currentSelectedItem.price}"`);
+        }
+        
+        function openDiscord() {
+            window.open(DISCORD_SERVER_URL, '_blank');
+        }
+        
+        // Close modal when clicking outside
+        document.getElementById('warningModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeWarningModal();
             }
-            
-            const bdtAmount = Math.ceil(tokenAmount / 12);
-            
-            // Update selected values
-            selectedTokenAmount = tokenAmount;
-            selectedBdtAmount = bdtAmount;
-            
-            // Show calculation result
-            document.getElementById('customTokenResult').innerHTML = `
-                <div class="alert alert-info">
-                    <strong>${tokenAmount} TOKENS</strong> = <strong>${bdtAmount} BDT</strong>
-                </div>
-            `;
-            
-            // Update selected package display
-            document.getElementById('selectedTokens').textContent = `${tokenAmount} TOKENS`;
-            document.getElementById('selectedBDT').textContent = `${bdtAmount} BDT`;
-            
-            // Show selected package display
-            document.getElementById('selectedPackageDisplay').classList.add('show');
-            
-            // Enable purchase button
-            document.getElementById('purchaseBtn').disabled = false;
-        }
+        });
         
-        function purchaseSelectedTokens() {
-            if (selectedTokenAmount === 0) {
-                alert('Please select a token package first');
-                return;
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeWarningModal();
             }
-            
-            const params = new URLSearchParams({
-                type: 'tokens',
-                item: 'Token Purchase',
-                purchaseType: `${selectedTokenAmount} Tokens`,
-                amount: selectedTokenAmount,
-                money: '0',
-                price: `${selectedBdtAmount} BDT`,
-                rankType: 'TOKENS'
-            }).toString();
-            
-            window.location.href = `payment-form.html?${params}`;
-        }
-        
-        function openPaymentForm(item, purchaseType, type, amount, money, price, rankType) {
-            const params = new URLSearchParams({
-                type: type,
-                item: item,
-                purchaseType: purchaseType,
-                amount: amount,
-                money: money,
-                price: price,
-                rankType: rankType
-            }).toString();
-            
-            window.location.href = `payment-form.html?${params}`;
-        }
-        
-        function openCustomRank() {
-            window.location.href = 'payment-form.html?type=custom&item=Custom%20Rank&purchaseType=Custom%20Rank&amount=0&money=0&price=500%20BDT&rankType=CUSTOM';
-        }
+        });
         
         // Initialize animations
         document.addEventListener('DOMContentLoaded', function() {
@@ -685,6 +752,16 @@ onclick="openPaymentForm('Token Purchase','12000 Tokens','token','12000','0','10
                 card.style.transform = 'translateY(50px)';
                 card.style.transition = 'all 0.6s ease';
                 observer.observe(card);
+            });
+            
+            // Add click effect to all purchase buttons
+            document.querySelectorAll('.btn-primary-custom, .token-package-item').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 150);
+                });
             });
         });
     </script>

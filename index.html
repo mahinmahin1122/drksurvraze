@@ -167,36 +167,60 @@
             left: 0;
         }
         
-        .sidebar-header {
-            padding: 25px 20px;
-            border-bottom: 1px solid rgba(76, 175, 80, 0.3);
-            background: rgba(18, 18, 18, 0.9);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .sidebar-header h4 {
-            color: var(--primary);
-            margin: 0;
-            font-size: 1.4rem;
-        }
-        
-        .sidebar-close {
-            background: transparent;
-            border: none;
-            color: var(--text);
-            font-size: 1.5rem;
-            cursor: pointer;
-            padding: 5px;
-            transition: all 0.3s ease;
-        }
-        
-        .sidebar-close:hover {
-            color: var(--primary);
-            transform: rotate(90deg);
-        }
-        
+/* Add these styles to your existing CSS */
+
+.sidebar-header {
+    padding: 20px 15px;
+    border-bottom: 1px solid rgba(76, 175, 80, 0.3);
+    background: rgba(18, 18, 18, 0.9);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 80px;
+}
+
+.sidebar-header img {
+    height: 40px;
+    width: auto;
+    border-radius: 5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease;
+}
+
+.sidebar-header img:hover {
+    transform: scale(1.05);
+}
+
+.sidebar-header h4 {
+    color: var(--primary);
+    margin: 0;
+    font-size: 1.2rem;
+    flex-grow: 1;
+    text-align: center;
+}
+
+.sidebar-close {
+    background: transparent;
+    border: none;
+    color: var(--text);
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 8px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    margin-left: 10px;
+}
+
+.sidebar-close:hover {
+    color: var(--primary);
+    background: rgba(255, 255, 255, 0.1);
+    transform: rotate(90deg);
+}
         .sidebar-menu {
             padding: 20px;
         }
@@ -813,38 +837,42 @@
         </div>
     </nav>
 
-    <!-- Mobile Sidebar -->
-    <div class="mobile-sidebar" id="mobileSidebar">
-        <div class="sidebar-header">
-            <h4 class="minecraft-font">Drk Survraze SMP</h4>
-            <button class="sidebar-close" id="sidebarCloseBtn">
-                <i class="fas fa-times"></i>
-            </button>
+<!-- Mobile Sidebar -->
+<div class="mobile-sidebar" id="mobileSidebar">
+    <div class="sidebar-header">
+        <!-- Logo Added Here -->
+        <div class="d-flex align-items-center">
+            <img src="drk.png" alt="Server Logo" style="height: 40px; width: auto; margin-right: 12px;">
+            <h4 class="minecraft-font mb-0">Drk Survraze</h4>
         </div>
-        
-        <div class="sidebar-menu">
-            <ul>
-                <li><a href="#home"><i class="fas fa-home"></i> Home</a></li>
-                <li><a href="Store.html"><i class="fas fa-store"></i> Store</a></li>
-                <li><a href="vote.html"><i class="fas fa-vote-yea"></i> Vote Now</a></li>
-                <li><a href="https://discord.gg/PXmH4E2q6"><i class="fab fa-discord"></i> Discord</a></li>
-                <li><a href="#founders"><i class="fas fa-users"></i> Founders</a></li>
-                <li><a href="#features"><i class="fas fa-star"></i> Features</a></li>
-                <li><a href="#rules"><i class="fas fa-gavel"></i> Rules</a></li>
-                <li><a href="#contact"><i class="fas fa-headset"></i> Contact</a></li>
-            </ul>
-        </div>
-        
-        <div class="sidebar-footer">
-            <div class="sidebar-ip">
-                <code>play.drksurvraze.top:25655</code>
-            </div>
-            <button class="copy-btn w-100 mb-3" onclick="copyIP()">
-                <i class="fas fa-copy me-2"></i>Copy IP
-            </button>
-            <p>© 2023 Drk Survraze SMP</p>
-        </div>
+        <button class="sidebar-close" id="sidebarCloseBtn">
+            <i class="fas fa-times"></i>
+        </button>
     </div>
+    
+    <div class="sidebar-menu">
+        <ul>
+            <li><a href="#home"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="Store.html"><i class="fas fa-store"></i> Store</a></li>
+            <li><a href="vote.html"><i class="fas fa-vote-yea"></i> Vote Now</a></li>
+            <li><a href="https://discord.gg/PXmH4E2q6"><i class="fab fa-discord"></i> Discord</a></li>
+            <li><a href="#founders"><i class="fas fa-users"></i> Founders</a></li>
+            <li><a href="#features"><i class="fas fa-star"></i> Features</a></li>
+            <li><a href="#rules"><i class="fas fa-gavel"></i> Rules</a></li>
+            <li><a href="#contact"><i class="fas fa-headset"></i> Contact</a></li>
+        </ul>
+    </div>
+    
+    <div class="sidebar-footer">
+        <div class="sidebar-ip">
+            <code>play.drksurvraze.top:25655</code>
+        </div>
+        <button class="copy-btn w-100 mb-3" onclick="copyIP()">
+            <i class="fas fa-copy me-2"></i>Copy IP
+        </button>
+        <p>© 2023 Drk Survraze SMP</p>
+    </div>
+</div>
     
     <!-- Sidebar Overlay -->
     <div class="sidebar-overlay" id="sidebarOverlay"></div>

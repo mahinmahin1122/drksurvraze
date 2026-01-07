@@ -895,7 +895,7 @@
         
         <div class="sidebar-footer">
             <div class="sidebar-ip">
-                <code>play.drksurvraze.top:25655</code>
+                <code>play.drksurvraze.top</code>
             </div>
             <button class="copy-btn w-100 mb-3" onclick="copyIP()">
                 <i class="fas fa-copy me-2"></i>Copy IP
@@ -915,31 +915,28 @@
                     <h1 class="hero-title minecraft-font">DRK SURVRAZE <span style="color: var(--primary);">SMP</span></h1>
                     <p class="hero-subtitle">Experience the ultimate Minecraft Survival Multiplayer adventure. Join our thriving community today!</p>
                     
-                    <!-- Server Status -->
-                    <div class="d-flex justify-content-center align-items-center mb-4 flex-wrap">
-                        <span id="serverStatus" class="status-badge me-3 mb-2">
-                            <i class="fas fa-circle me-2"></i>Checking...
-                        </span>
-                        <span id="playerCount" class="fs-5 mb-2">
-                            <i class="fas fa-users me-2"></i>Loading...
-                        </span>
-                    </div>
-
                     <!-- Server IP Box -->
-                    <div class="ip-box mb-4">
-                        <div class="row align-items-center">
-                            <div class="col-md-8 text-start">
-                                <code class="fs-4 text-white">
-  play.drksurvraze.top:25655
-</code>
-                            </div>
-                            <div class="col-md-4 text-end">
-                                <button class="copy-btn" onclick="copyIP()">
-                                    <i class="fas fa-copy me-2"></i>Copy IP
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+<div class="ip-box mb-4">
+    <div class="row align-items-center">
+        <div class="col-md-8 text-start">
+            <div class="d-flex flex-column">
+                <div class="mb-2">
+                    <span class="fs-5 text-white">IP:</span>
+                    <code class="fs-5 text-white">play.drksurvraze.top</code>
+                </div>
+                <div>
+                    <span class="fs-5 text-white">Port:</span>
+                    <code class="fs-5 text-white">25655</code>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 text-end">
+            <button class="copy-btn" onclick="copyIP()">
+                <i class="fas fa-copy me-2"></i>Copy IP
+            </button>
+        </div>
+    </div>
+</div>
 
                     <!-- Quick Actions -->
                     <div class="d-flex justify-content-center gap-3 flex-wrap hero-buttons">

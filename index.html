@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drk SurvRaze Official Website</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: #121212;
+            color: #e0e0e0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+        }
+        
+        .container {
+            text-align: center;
+            padding: 2rem;
+            max-width: 800px;
+            width: 90%;
+        }
+        
+        .logo {
+            max-width: 350px;
+            width: 100%;
+            height: auto;
+            margin-bottom: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            animation: float 3s ease-in-out infinite;
+            transition: transform 0.3s ease;
+        }
+        
+        .logo:hover {
+            transform: scale(1.02);
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+        
+        .redirect-text {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+            letter-spacing: 1px;
+            font-weight: 300;
+            background: linear-gradient(90deg, #ff6b6b, #4ecdc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .countdown {
+            font-size: 1.2rem;
+            color: #4ecdc4;
+            font-weight: bold;
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            background: rgba(78, 205, 196, 0.1);
+            display: inline-block;
+        }
+        
+        .loading-bar {
+            width: 100%;
+            height: 4px;
+            background-color: #333;
+            border-radius: 2px;
+            margin-top: 1rem;
+            overflow: hidden;
+            max-width: 300px;
+        }
+        
+        .loading-progress {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, #ff6b6b, #4ecdc4);
+            animation: loading 1s linear forwards;
+        }
+        
+        @keyframes loading {
+            from {
+                width: 0%;
+            }
+            to {
+                width: 100%;
+            }
+        }
+        
+        .footer {
+            position: fixed;
+            bottom: 20px;
+            color: #666;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .logo {
+                max-width: 280px;
+            }
+            
+            .redirect-text {
+                font-size: 1.2rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .logo {
+                max-width: 220px;
+            }
+            
+            .redirect-text {
+                font-size: 1rem;
+            }
+            
+            .countdown {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- No header section as requested -->
+        
+        <!-- Main Image -->
+        <img src="drk.png" alt="Drk SurvRaze Logo" class="logo" onerror="this.src='https://via.placeholder.com/350x200/333333/ffffff?text=Drk+SurvRaze'">
+        
+        <!-- Redirect Message -->
+        <div class="redirect-text">
+            Auto redirecting to Drk SurvRaze Official Website...
+        </div>
+        
+        <!-- Countdown Timer -->
+        <div class="countdown" id="countdown">
+            Redirecting in 1 second
+        </div>
+        
+        <!-- Loading Bar -->
+        <div class="loading-bar">
+            <div class="loading-progress"></div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        © 2026 Drk SurvRaze. Made by Mahin Islam
+    </div>
+
+    <script>
+        // Countdown and redirect logic
+        let secondsLeft = 1;
+        const countdownElement = document.getElementById('countdown');
+        
+        // Update countdown display
+        const updateCountdown = () => {
+            if (secondsLeft > 0) {
+                countdownElement.textContent = `Redirecting in ${secondsLeft} second${secondsLeft !== 1 ? 's' : ''}`;
+            } else {
+                countdownElement.textContent = 'Redirecting now...';
+            }
+        };
+        
+        // Initial display
+        updateCountdown();
+        
+        // Start countdown
+        const countdownInterval = setInterval(() => {
+            secondsLeft--;
+            updateCountdown();
+            
+            if (secondsLeft < 0) {
+                clearInterval(countdownInterval);
+                // Redirect to official website
+                window.location.href = 'https://drksurvraze.top';
+            }
+        }, 1000);
+        
+        // Optional: Allow immediate click redirect
+        document.querySelector('.container').addEventListener('click', () => {
+            clearInterval(countdownInterval);
+            window.location.href = 'https://drksurvraze.top';
+        });
+        
+        // Add some interactive effects
+        document.addEventListener('DOMContentLoaded', () => {
+            // Add some subtle animation to the container
+            const container = document.querySelector('.container');
+            container.style.opacity = '0';
+            container.style.transform = 'translateY(20px)';
+            
+            setTimeout(() => {
+                container.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                container.style.opacity = '1';
+                container.style.transform = 'translateY(0)';
+            }, 100);
+        });
+    </script>
+</body>
+</html>
